@@ -6,7 +6,7 @@
 - Donitha
 - Niro
 - Vahan
-- **PM/TC: Vicky**
+- **TC: Vicky**
 
 ## Team 2
 
@@ -14,7 +14,7 @@
 - Nic D
 - Kurumi
 - Sonitta
-- **PM/TC: Vicky**
+- **TC: Vicky**
 
 ## Team 3
 
@@ -22,7 +22,7 @@
 - Kulbir
 - Lirca
 - Matt
-- **PM/TC: Sadnan**
+- **TC: Sadnan**
 
 ## Team 4
 
@@ -30,14 +30,14 @@
 - Heather
 - Nic BG
 - Ranero
-- **PM/TC: Sadnan**
+- **TC: Sadnan**
 
 ## Team 5
 
 - Andrew
 - Marie
 - Victoria
-- **PM/TC: Daniel**
+- **TC: Daniel**
 
 ## Team 6
 
@@ -45,5 +45,5 @@
 - Hajar
 - Riley
 - Sarah
-- **PM/TC: Daniel**
+- **TC: Daniel**
 
