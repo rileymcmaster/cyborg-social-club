@@ -57,4 +57,26 @@ The most important aspect of this project is the ability to work in a team. No m
 
 ## GitHub
 
+### GitHub Projects
+- Team lead fork repo
+- Team members clone from team lead
+- Make sure you check 'Issues' and 'Projects' under Settings
+- Create project
+- Create columns: To do, Doing, In review, Done
+- Create issues (features)
+- Drag issues into board and assign
+
+### Git
+- git pull : pull the latest update (usually on master branch)
+- git branch : to see which branch you're on
+- git branch BRANCH_NAME : create new branch with name BRANCH_NAME
+- git checkout BRANCH_NAME : checkout branch with name BRANCH_NAME
+- git merge master : merge latest master to your current branch
+- git status : to see status of your branch
+- git log : to see all commits to master (q to quit)
+
+#### To fix merge conflicts
+- usually happens when you git merge master into your branch
+- fix merge conflicts in VSCode, stage, commit, then push
+
 see the [GITHUB Document](__documentation/GITHUB.md)
