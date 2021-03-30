@@ -90,37 +90,36 @@ const Form = () => {
       <ReviewContainer>
         <ItemReview>
           <span>
-          <img src="" alt="product"/>
-          <h3>productName</h3> 
+            <img src="" alt="product" />
+            <h3>productName</h3>
           </span>
-          <h4>40$</h4>  
-          </ItemReview>
-          <CouponCode>
-            <input type="number" placeholder="Coupon Code"/>
-            <Button>Apply</Button>
-          </CouponCode>
-          
-          <SubtotalContainer>
-            <span>
+          <h4>40$</h4>
+        </ItemReview>
+        <CouponCode>
+          <input type="number" placeholder="Coupon Code" />
+          <Button>Apply</Button>
+        </CouponCode>
+
+        <SubtotalContainer>
+          <span>
             <h4>Subtotal </h4>
             <h4>40$ </h4>
-            </span>
-            <span>
+          </span>
+          <span>
             <h4>Shipping </h4>
             <h4>Free </h4>
-            </span>
-          </SubtotalContainer>
-          <TotalsReview>
-            <h2>Total </h2>
-            <h2>CAD 40$</h2>
-          </TotalsReview>
+          </span>
+        </SubtotalContainer>
+        <TotalsReview>
+          <h2>Total </h2>
+          <h2>CAD 40$</h2>
+        </TotalsReview>
       </ReviewContainer>
     </Body>
   );
 };
 const Body = styled.div`
-display: flex;
-  border: solid orange;
+  display: flex;
   background-color: var(--accent-bg-color);
 `;
 
@@ -177,69 +176,59 @@ const SubmitContainer = styled.div`
   background-color: white;
 `;
 
-const SubtotalContainer = styled.div `
-border-top: 1px solid rgba(0, 0, 0, 0.2);
-border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-padding: 15px 0px 15px;
-width: 75%;
- span {
-   display: flex;
-   justify-content: space-between;
-   margin: 10px;
- }
-
+const SubtotalContainer = styled.div`
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 15px 0px 15px;
+  width: 75%;
+  span {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+  }
 `;
 
 const ReviewContainer = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-evenly;
-
-width: 50%;
-height: 40vh;
-
-
-`
-
-const ItemReview = styled.div `
-display: flex;
-border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-width: 75%;
-justify-content: space-between;
-padding: 15px 0px 15px;
-
-
-img {
- width: 80px;
-  height: 80px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 7px;
-  margin-right: 10px;
-}
-span {
   display: flex;
-}
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
 
+  width: 50%;
+  height: 40vh;
+`;
 
+const ItemReview = styled.div`
+  display: flex;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  width: 75%;
+  justify-content: space-between;
+  padding: 15px 0px 15px;
 
-`
-const TotalsReview = styled.div `
-width: 75%;
-display: flex;
-justify-content: space-between;
-border-top: 1px solid rgba(0, 0, 0, 0.2);
-padding-top: 15px;
+  img {
+    width: 80px;
+    height: 80px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 7px;
+    margin-right: 10px;
+  }
+  span {
+    display: flex;
+  }
+`;
+const TotalsReview = styled.div`
+  width: 75%;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+`;
 
+const CouponCode = styled.div`
+  display: flex;
+  width: 75%;
 
-`
-
-const CouponCode = styled.div `
-
-display: flex;
-width: 75%;
-
- input {
+  input {
     height: 50px;
     border-radius: 7px;
     max-width: 90%;
@@ -248,5 +237,5 @@ width: 75%;
     margin-bottom: 4px;
     width: 100%;
   }
-`
+`;
 export default Form;
