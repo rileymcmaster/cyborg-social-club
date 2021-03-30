@@ -1,27 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
-const Dropdown = () => {
+const Dropdown = ({ title, children }) => {
   const [openMenu, setOpenMenu] = useState(false);
-
   const toggleMenu = () => {
     setOpenMenu(!openMenu);
   };
 
   return (
-    <DropdownWrapper>
-      <Menu onClick={() => toggleMenu()}>Categories</Menu>
-      {openMenu ? (
-        <DropdownMenu>
-          <DropdownLink to={"/"}>Link 1</DropdownLink>
-          <DropdownLink to={"/"}>Link 2</DropdownLink>
-          <DropdownLink to={"/"}>Link 3</DropdownLink>
-          <DropdownLink to={"/"}>Link 4</DropdownLink>
-        </DropdownMenu>
-      ) : (
-        <></>
-      )}
+    <DropdownWrapper onMouseLeave={() => toggleMenu()}>
+      <Menu onMouseOver={() => toggleMenu()}>{title}</Menu>
+      {openMenu ? <DropdownMenu>{children}</DropdownMenu> : <></>}
     </DropdownWrapper>
   );
 };
@@ -29,31 +19,23 @@ const Dropdown = () => {
 const Menu = styled.button`
   text-decoration: none;
   outline: none;
-  border: 2px solid black;
+  border: 2px solid;
+  border-color: (--primary-color);
   width: 150px;
   height: 50px;
-  color: black;
-  background-color: transparent;
+  color: var(--primary-color);
+  background-color: var(--secondary-color);
   &:hover {
-  }
-`;
-
-const DropdownLink = styled(NavLink)`
-  /* padding: 20px; */
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
-  text-decoration: none;
-  color: black;
-  &:hover {
-    color: blue;
-    background-color: orange;
+    /* border-color: (--accent-bg-color); */
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 `;
 
 const DropdownMenu = styled.div`
   width: 100%;
-  /* background-color: black; */
+  max-height: 500px;
+  overflow-y: auto;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -64,6 +46,7 @@ const DropdownMenu = styled.div`
 const DropdownWrapper = styled.div`
   position: relative;
   display: inline-block;
+  margin: 0 10px;
 `;
 
 export default Dropdown;

@@ -4,6 +4,8 @@ import Header from "./Header/";
 import Signin from "./Signin";
 import Products from "./Products";
 import Footer from "./Footer";
+import GlobalStyles from "../GlobalStyles";
+import ItemGrid from "./ItemGrid";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -19,6 +21,8 @@ function App() {
 
   return (
     <>
+      <GlobalStyles />
+      <Header />
       <Router>
         <Header />
         <Switch>
