@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from './Button';
 
 const Form = () => {
   return (
@@ -81,7 +82,11 @@ const Form = () => {
 
             <input required type="number" placeholder="Security code" />
           </form>
+          <div>
+            <Button />
+          </div>
         </FormContainer>
+
       </Container>
     </div>
   );
