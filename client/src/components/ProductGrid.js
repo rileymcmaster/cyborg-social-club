@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Item from "./Item";
+import ProductGridItem from "./ProductGridItem";
 
-const ItemGrid = () => {
+const ProductGrid = () => {
   const [items, setItems] = useState(null);
+
   useEffect(() => {
     fetch("/items")
       .then((res) => res.json())
@@ -20,7 +21,8 @@ const ItemGrid = () => {
           {items.map((item) => {
             return (
               <>
-                <Item
+                <ProductGridItem
+                  items={items}
                   id={item._id}
                   name={item.name}
                   price={item.price}
@@ -42,4 +44,4 @@ const ProductList = styled.div`
   justify-content: center;
 `;
 
-export default ItemGrid;
+export default ProductGrid;
