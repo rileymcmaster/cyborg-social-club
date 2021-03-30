@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import Item from "./Item";
+
 const ItemGrid = () => {
   const [items, setItems] = useState(null);
   useEffect(() => {
@@ -14,7 +16,7 @@ const ItemGrid = () => {
   return (
     <>
       {items && (
-        <ul>
+        <ProductList>
           {items.map((item) => {
             return (
               <>
@@ -27,10 +29,17 @@ const ItemGrid = () => {
               </>
             );
           })}
-        </ul>
+        </ProductList>
       )}
     </>
   );
 };
+
+const ProductList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+`;
 
 export default ItemGrid;
