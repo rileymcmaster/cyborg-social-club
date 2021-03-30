@@ -13,22 +13,74 @@ const Form = () => {
         <FormContainer>
           <h1>Shipping address</h1>
           <span>
-            <input type="text" name="first-name" placeholder="First Name" />
-            <input type="text" name="last-name" placeholder="Last Name" />
+            <input
+              required
+              type="text"
+              name="first-name"
+              placeholder="First Name"
+            />
+            <input
+              required
+              type="text"
+              name="last-name"
+              placeholder="Last Name"
+            />
           </span>
-          <input type="address" name="address" placeholder="Address" />
+          <input required type="address" name="address" placeholder="Address" />
           <input
             type="address"
             name="address-2"
             placeholder="Apartment, suite, etc. (optional)"
           />
-          <input type="city" name="city" placeholder="City" />
+          <input required type="city" name="city" placeholder="City" />
           <span>
-            <input type="country" name="country" placeholder="Country" />
+            <input
+              required
+              type="country"
+              name="country"
+              placeholder="Country"
+            />
 
-            <input type="text" name="province" placeholder="Province" />
-            <input type="postal" name="postal-code" placeholder="Postal code" />
+            <input
+              required
+              type="text"
+              name="province"
+              placeholder="Province"
+            />
+            <input
+              required
+              type="postal"
+              name="postal-code"
+              placeholder="Postal code"
+            />
           </span>
+
+          <form>
+            <h1>Payment</h1>
+            <div>
+              <label for="credit">Credit card</label>
+              <input name="credit" type="radio" checked required />
+            </div>
+            <input
+              required
+              id="ccn"
+              type="number"
+              min="15"
+              inputmode="numeric"
+              pattern="[0-9\s]{13,19}"
+              autocomplete="cc-number"
+              maxlength="19"
+              placeholder="Card number"
+            />
+            <input required type="text" placeholder="Name on card" />
+            <input
+              required
+              type="month"
+              placeholder="Expiration date (MM/YY)"
+            />
+
+            <input required type="number" placeholder="Security code" />
+          </form>
         </FormContainer>
       </Container>
     </div>
@@ -38,19 +90,16 @@ const Form = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-
 `;
 
-const FormContainer = styled.form `
-display: flex;
-flex-direction: column;
-border: solid red;
-width: 50%;
+const FormContainer = styled.form`
+  display: flex;
+  flex-direction: column;
+  border: solid red;
+  width: 50%;
 
-input{
-
-}
-
-`
+  input {
+  }
+`;
 
 export default Form;
