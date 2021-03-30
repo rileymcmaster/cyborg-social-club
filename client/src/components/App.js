@@ -4,6 +4,7 @@ import Header from "./Header";
 import Signin from "./Signin";
 import Products from "./Products";
 import Footer from "./Footer";
+import Form from "./Form";
 import GlobalStyles from "../GlobalStyles";
 import ProductGrid from "./ProductGrid";
 import ProductPage from "./ProductPage";
@@ -38,6 +39,9 @@ function App() {
           </Route>
           <Route exact path="/signin">
             <Signin />
+          </Route>
+          <Route exact path="/form">
+            <Form />
           </Route>
         </Switch>
       </Router>
