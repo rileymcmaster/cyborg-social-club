@@ -42,6 +42,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   position: absolute;
+  justify-content: space-between;
   width: 100%;
   height: 100px;
   /* height: var(--header-height); */

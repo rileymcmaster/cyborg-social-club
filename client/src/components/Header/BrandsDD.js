@@ -9,7 +9,7 @@ const CategoriesDD = () => {
     fetch("/companies")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setCompanies(data.data);
       });
   }, []);

@@ -130,8 +130,8 @@ const SearchResults = styled.ul`
 const Input = styled.input`
   border: none;
   outline: none;
-  height: 20px;
-  padding: 0 20px 0 0;
+  height: 40px;
+  padding: 0 20px 0 5px;
 `;
 
 const SearchButton = styled.button`
