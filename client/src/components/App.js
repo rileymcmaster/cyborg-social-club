@@ -4,6 +4,7 @@ import Header from "./Header";
 import Signin from "./Signin";
 import Products from "./Products";
 import Footer from "./Footer";
+import Form from "./Form";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -28,6 +29,9 @@ function App() {
           <Route exact path="/item/:id"></Route>
           <Route exact path="/signin">
             <Signin />
+          </Route>
+          <Route exact path="/form">
+            <Form />
           </Route>
         </Switch>
       </Router>
