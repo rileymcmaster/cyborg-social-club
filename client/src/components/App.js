@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Header from "./Header";
+import Header from "./Header/";
 import Signin from "./Signin";
 import Products from "./Products";
 import Footer from "./Footer";
@@ -19,8 +19,8 @@ function App() {
 
   return (
     <>
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/products">
             <Products />
