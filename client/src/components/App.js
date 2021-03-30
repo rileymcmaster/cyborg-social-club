@@ -4,8 +4,11 @@ import Header from "./Header/";
 import Signin from "./Signin";
 import Products from "./Products";
 import Footer from "./Footer";
+import Form from "./Form";
 import GlobalStyles from "../GlobalStyles";
-import ItemGrid from "./ItemGrid";
+import ProductGrid from "./ProductGrid";
+import ProductPage from "./ProductPage";
+import HomePage from "./HomePage";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -26,12 +29,20 @@ function App() {
       <Router>
         <Header />
         <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
           <Route exact path="/products">
             <Products />
           </Route>
-          <Route exact path="/item/:id"></Route>
+          <Route exact path="/item/:id">
+            <ProductPage />
+          </Route>
           <Route exact path="/signin">
             <Signin />
+          </Route>
+          <Route exact path="/form">
+            <Form />
           </Route>
         </Switch>
       </Router>
