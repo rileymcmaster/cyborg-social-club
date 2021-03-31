@@ -12,9 +12,13 @@ import {
   FaPaypal,
 } from "react-icons/fa";
 import { Divider } from "./CartItem";
+import { useSelector } from "react-redux";
 
 const Cart = () => {
   const [couponValue, setCouponValue] = useState(null);
+  const state = useSelector((state) => state);
+
+  console.log(state);
 
   return (
     <CartWrapper>
