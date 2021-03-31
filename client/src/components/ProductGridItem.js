@@ -19,6 +19,7 @@ const ProductGridItem = ({ id, name, price, imageSrc }) => {
             <ItemName>{name}</ItemName>
             <ItemPrice>{price}</ItemPrice>
           </StyledLink>
+          <Button>Add to Cart</Button>
         </ItemWrapper>
       ) : (
         <p>Product Not Found</p>
@@ -39,8 +40,8 @@ const StyledLink = styled(Link)`
 `;
 
 const ItemWrapper = styled.div`
-  width: 20vw;
-  height: 40vh;
+  width: 300px;
+  height: 350px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,7 +56,7 @@ const ImgDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 300px;
   height: 50%;
   overflow: hidden;
 `;
@@ -64,13 +65,16 @@ const ItemImg = styled.img`
   /* padding: 20px; */
 `;
 const ItemName = styled.h1`
-  padding: 20px;
   color: var(--primary-color);
-
   text-align: center;
+  width: 250px;
+  margin-top: 10px;
 `;
+
 const ItemPrice = styled.p`
+  color: var(--secondary-color);
   font-size: 15px;
+  margin-top: 10px;
 `;
 
 export default ProductGridItem;

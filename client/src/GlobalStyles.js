@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   :root {
-      --primary-color: #006a39;
+      --primary-color: #5bb462;
       --secondary-color: #111820;
       --accent-bg-color: #D7ECEF;
       --page-horizontal-padding: 20px;
