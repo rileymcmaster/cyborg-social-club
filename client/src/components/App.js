@@ -6,6 +6,7 @@ import Products from "./Products";
 import Footer from "./Footer";
 import GlobalStyles from "../GlobalStyles";
 import ItemGrid from "./ItemGrid";
+import Cart from "./Cart/Cart";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -22,19 +23,22 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <Header />
       <Router>
+        <Header />
         <Switch>
           <Route exact path="/products">
             <Products />
+          </Route>
+          <Route exact path="/cart">
+            <Cart />
           </Route>
           <Route exact path="/item/:id"></Route>
           <Route exact path="/signin">
             <Signin />
           </Route>
         </Switch>
+        <Footer />
       </Router>
-      <Footer />
     </>
     // {/* <div>{items ? items[0].name : `...where's my stuff eh?...`}</div>
     // <div>{companies ? companies[0].name : `...where's my stuff eh?...`}</div>

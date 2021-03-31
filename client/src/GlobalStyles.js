@@ -58,7 +58,7 @@ html, body, div, span, applet, object, iframe,
         display: block;
     }
     body {
-        line-height: 1;
+        line-height: 1.5;
     }
     ol, ul {
         list-style: none;
@@ -75,7 +75,11 @@ html, body, div, span, applet, object, iframe,
       color: var(--primary-color);
       font-family: var(--heading-font-family);
     }
+    h1 {
+        font-size: 24px;
+    }
+
     h2 {
-      font-size: 28px;
+      font-size: 19px;
     }
 `;
