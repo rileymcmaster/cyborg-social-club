@@ -4,14 +4,17 @@ import Button from "../Button";
 
 const CartItem = () => {
   const [quantity, setQuantity] = useState(1);
+  const [quantityInputValue, setQuantityInputValue] = useState(1);
 
   const handlePlusClick = () => {
     setQuantity(quantity + 1);
+    setQuantityInputValue(quantityInputValue + 1);
   };
 
   const handleMinusClick = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      setQuantityInputValue(quantityInputValue - 1);
     }
   };
 
@@ -31,10 +34,19 @@ const CartItem = () => {
         <SelectQuantity>
           <Input>
             <button onClick={handleMinusClick}>-</button>
-            <input type="text" placeholder="1" value={quantity}></input>
+            <input
+              type="text"
+              value={quantityInputValue}
+              onChange={(ev) => {
+                setQuantityInputValue(Number(ev.target.value));
+              }}
+            ></input>
             <button onClick={handlePlusClick}>+</button>
           </Input>
           <Button
+            onClick={() => {
+              setQuantity(quantityInputValue);
+            }}
             style={{
               background: "black",
               color: "white",

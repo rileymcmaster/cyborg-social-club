@@ -2,6 +2,7 @@ import React, { createRef, useRef, useState } from "react";
 import Button from "../Button";
 import styled from "styled-components";
 import CartItem from "./CartItem";
+import { Link } from "react-router-dom";
 import { SiVisa } from "react-icons/si";
 import {
   FaCcMastercard,
@@ -82,9 +83,12 @@ const Cart = () => {
             </Button>
           </div>
         </Discount>
-        <Button style={{ margin: "0", width: "100%", fontSize: "18px" }}>
+        <Link
+          to="/form"
+          style={{ margin: "0", width: "100%", fontSize: "18px" }}
+        >
           Checkout
-        </Button>
+        </Link>
         <Info>
           <h4>Need help?</h4>
           <a href="#">FAQ </a>
