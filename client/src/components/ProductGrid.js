@@ -9,7 +9,6 @@ const ProductGrid = () => {
     fetch("/items")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setItems(data.data);
       });
   }, []);

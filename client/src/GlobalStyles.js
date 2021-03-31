@@ -2,8 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   :root {
-      --primary-color: #46433e;
-      --secondary-color: #d7e0e7;
+      --primary-color: #006a39;
+      --secondary-color: #111820;
       --accent-bg-color: #D7ECEF;
       --page-horizontal-padding: 20px;
       --page-vertical-padding: 50px;
@@ -74,8 +74,5 @@ html, body, div, span, applet, object, iframe,
     h1, h2, h3 {
       color: var(--primary-color);
       font-family: var(--heading-font-family);
-    }
-    h2 {
-      font-size: 28px;
     }
 `;
