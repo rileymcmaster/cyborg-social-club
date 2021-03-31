@@ -16,16 +16,31 @@ import { useSelector } from "react-redux";
 
 const Cart = () => {
   const [couponValue, setCouponValue] = useState(null);
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => Object.values(state.cart));
 
   console.log(state);
 
+  let totalPrice;
+
+  if (state.length !== 0) {
+    const prices = state.map((product) => Number(product.price.slice(1)));
+    const quantities = state.map((product) => Number(product.quantity));
+    const subtotals = prices.map((price, index) => price * quantities[index]);
+
+    totalPrice = subtotals.reduce((accumulator, currentValue) => {
+      return (accumulator = accumulator + currentValue);
+    });
+  } else {
+    totalPrice = 0;
+  }
+
+  const formattedTotalPrice = parseFloat(totalPrice).toFixed(2);
   return (
     <CartWrapper>
       <CartDetails>
         <CartHeader>
           <h1>Your Cart</h1>
-          <div>You have 3 items in your cart</div>
+          <div>You have {state.length} items in your cart</div>
           <CartHeadings>
             <Heading>Product</Heading>
             <Heading style={{ marginLeft: "370px" }}>Quantity</Heading>
@@ -33,14 +48,9 @@ const Cart = () => {
           </CartHeadings>
         </CartHeader>
         <div>
-          {/* {state.map((item) => {
-          return (
-            <CartItem id={item.id} price={item.price} title={item.title} />
-          );
-        })} */}
-          <CartItem />
-          <CartItem />
-          <CartItem />
+          {state.map((product) => {
+            return <CartItem product={product} />;
+          })}
         </div>
         <CartFooter>
           <h2>Items related to your order</h2>
@@ -61,7 +71,7 @@ const Cart = () => {
         </Info>
         <CartTotal>
           <div>Total:</div>
-          <div>$CAD 200 </div>
+          <div>$CAD {formattedTotalPrice} </div>
         </CartTotal>
         <Discount>
           <h4>Discount code</h4>
