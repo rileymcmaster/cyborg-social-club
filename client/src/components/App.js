@@ -9,7 +9,7 @@ import GlobalStyles from "../GlobalStyles";
 import ProductGrid from "./ProductGrid";
 import ProductPage from "./ProductPage";
 import HomePage from "./HomePage";
-import Cart from "./Cart/Cart";
+import Cart from "./Cart";
 
 function App() {
   // const [companies, setCompanies] = useState(null);

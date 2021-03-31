@@ -4,9 +4,16 @@ import { addItem } from "../actions";
 import styled from "styled-components";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import { addCartProduct } from "../actions";
 
-const ProductGridItem = ({ id, name, price, imageSrc }) => {
+const ProductGridItem = ({ id, name, price, imageSrc, numInStock }) => {
+  const dispatch = useDispatch();
   const productFound = true;
+  const handleAddToCart = () => {
+    if (numInStock > 0) {
+      dispatch(addCartProduct({ id, name, price, imageSrc }));
+    }
+  };
 
   return (
     <>
@@ -19,7 +26,7 @@ const ProductGridItem = ({ id, name, price, imageSrc }) => {
             <ItemName>{name}</ItemName>
             <ItemPrice>{price}</ItemPrice>
           </StyledLink>
-          <Button>Add to Cart</Button>
+          <Button onClick={handleAddToCart}>Add to Cart</Button>
         </ItemWrapper>
       ) : (
         <p>Product Not Found</p>

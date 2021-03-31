@@ -1,6 +1,6 @@
-// import { combineReducers } from "redux";
+import { combineReducers } from "redux";
 
-// import cart from "./cart-reducer";
-// import signin from "./signin-reducer";
+import cart from "./cart-reducer";
+import signin from "./signin-reducer";
 
-// export default combineReducers({ cart, signin });
+export default combineReducers({ cart, signin });
