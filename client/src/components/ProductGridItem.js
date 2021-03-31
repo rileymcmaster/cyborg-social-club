@@ -5,15 +5,9 @@ import styled from "styled-components";
 import Button from "./Button";
 import { Link } from "react-router-dom";
 
-const ProductGridItem = ({ items, id, name, price, imageSrc }) => {
-  //need to see if any of the Id's match the id
-  //
-  // const productFound = items.some((item) => {
-  //   return item._id === id;
-  // });
-  // console.log(productFound);
+const ProductGridItem = ({ id, name, price, imageSrc }) => {
   const productFound = true;
-  // console.log(id);
+
   return (
     <>
       {productFound ? (
@@ -25,7 +19,6 @@ const ProductGridItem = ({ items, id, name, price, imageSrc }) => {
             <ItemName>{name}</ItemName>
             <ItemPrice>{price}</ItemPrice>
           </StyledLink>
-          {/* <Button>Add to Cart</Button> */}
         </ItemWrapper>
       ) : (
         <p>Product Not Found</p>

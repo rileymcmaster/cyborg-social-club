@@ -2,19 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = styled.button`
-  margin: 15px;
   text-decoration: none;
-  border: none;
-  padding: 10px;
+  outline: none;
+  border: 2px solid;
+  border-color: (--primary-color);
+  width: 150px;
+  height: 50px;
+  color: var(--primary-color);
   background-color: var(--secondary-color);
-  cursor: pointer;
-  border-radius: 5px;
   &:hover {
-    color: white;
+    /* border-color: (--accent-bg-color); */
+    color: var(--secondary-color);
     background-color: var(--primary-color);
-  }
-  &:focus {
-    outline: none;
   }
 `;
 
