@@ -17,7 +17,11 @@ const CategoriesDD = () => {
   return companies ? (
     <Dropdown title="Brands">
       {companies.map((company) => {
-        return <DropdownLink to={"/"}>{company.name}</DropdownLink>;
+        return (
+          <DropdownLink to={`/category/${company.name}`}>
+            {company.name}
+          </DropdownLink>
+        );
       })}
       {/* FIGURE OUT THE BRAND LAYOUT HERE */}
       {/* choose a couple brands with the most products and show their logo? */}

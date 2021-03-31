@@ -10,6 +10,7 @@ import ProductGrid from "./ProductGrid";
 import ProductPage from "./ProductPage";
 import HomePage from "./HomePage";
 import Cart from "./Cart/Cart";
+import FilterProduct from "./FilterProduct";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -43,6 +44,9 @@ function App() {
           </Route>
           <Route exact path="/signin">
             <Signin />
+          </Route>
+          <Route exact path="/category/:category">
+            <FilterProduct />
           </Route>
           <Route exact path="/form">
             <Form />
