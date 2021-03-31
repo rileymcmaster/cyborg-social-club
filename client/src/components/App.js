@@ -9,6 +9,7 @@ import GlobalStyles from "../GlobalStyles";
 import ProductGrid from "./ProductGrid";
 import ProductPage from "./ProductPage";
 import HomePage from "./HomePage";
+import Cart from "./Cart/Cart";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -34,6 +35,9 @@ function App() {
           <Route exact path="/products">
             <Products />
           </Route>
+          <Route exact path="/cart">
+            <Cart />
+          </Route>
           <Route exact path="/item/:id">
             <ProductPage />
           </Route>
@@ -44,8 +48,9 @@ function App() {
             <Form />
           </Route>
         </Switch>
+        <Footer />
       </Router>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
