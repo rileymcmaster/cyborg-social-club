@@ -26,6 +26,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
+      {/* <Header /> */}
       <Router>
         <Header />
         <Switch>
@@ -50,6 +51,7 @@ function App() {
         </Switch>
         <Footer />
       </Router>
+      {/* <Footer /> */}
     </>
     // {/* <div>{items ? items[0].name : `...where's my stuff eh?...`}</div>
     // <div>{companies ? companies[0].name : `...where's my stuff eh?...`}</div>

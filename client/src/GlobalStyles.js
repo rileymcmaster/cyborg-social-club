@@ -25,7 +25,7 @@ export default createGlobalStyle`
     input, button, select, option,
     h1, h2, h3, h4, h5, h6, p,
     text {
-        font-family: sans-serif;
+        font-family: 'Rubik', sans-serif;
     }
 
     html, body {
@@ -58,7 +58,7 @@ html, body, div, span, applet, object, iframe,
         display: block;
     }
     body {
-        line-height: 1.5;
+        line-height: 1;
     }
     ol, ul {
         list-style: none;
@@ -75,11 +75,7 @@ html, body, div, span, applet, object, iframe,
       color: var(--primary-color);
       font-family: var(--heading-font-family);
     }
-    h1 {
-        font-size: 24px;
-    }
-
     h2 {
-      font-size: 19px;
+      font-size: 28px;
     }
 `;
