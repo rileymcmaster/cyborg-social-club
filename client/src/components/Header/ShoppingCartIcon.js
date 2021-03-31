@@ -47,6 +47,7 @@ const Logo = styled.div`
   position: relative;
   font-size: 3rem;
   margin: 10px;
+  color: white;
   &:active {
     transform: scale(0.9);
   }
