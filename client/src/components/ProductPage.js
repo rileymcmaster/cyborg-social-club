@@ -40,20 +40,54 @@ const ProductPage = () => {
           <ProductDiv2>
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
-            <Button disabled={item.numInStock <= 0}>
-              {item.numInStock <= 0 ? "Out of Stock" : "Add to Cart"}
-            </Button>
-            <MainInput>
-              <Button onClick={handleMinusClick}>-</Button>
-              <Input
-                type="text"
-                value={quantityInputValue}
-                onChange={(ev) => {
-                  setQuantityInputValue(Number(ev.target.value));
-                }}
-              ></Input>
-              <Button onClick={handlePlusClick}>+</Button>
-            </MainInput>
+            <AddToCartDiv>
+              <Button disabled={item.numInStock <= 0}>
+                {item.numInStock <= 0 ? "Out of Stock" : "Add to Cart"}
+              </Button>
+              <MainInput>
+                <button
+                  onClick={handleMinusClick}
+                  style={{
+                    background: "var(--secondary-color)",
+                    color: "var(--primary-color)",
+                    width: "30px",
+                    padding: "10px",
+                    margin: "5px",
+                    border: "none",
+                  }}
+                >
+                  -
+                </button>
+                <input
+                  type="text"
+                  value={quantityInputValue}
+                  onChange={(ev) => {
+                    setQuantityInputValue(Number(ev.target.value));
+                  }}
+                  style={{
+                    background: "var(--secondary-color)",
+                    color: "var(--primary-color)",
+                    width: "40px",
+                    padding: "10px",
+                    margin: "5px",
+                    border: "none",
+                  }}
+                ></input>
+                <button
+                  onClick={handlePlusClick}
+                  style={{
+                    background: "var(--secondary-color)",
+                    color: "var(--primary-color)",
+                    width: "30px",
+                    padding: "10px",
+                    margin: "5px",
+                    border: "none",
+                  }}
+                >
+                  +
+                </button>
+              </MainInput>
+            </AddToCartDiv>
           </ProductDiv2>
         </ProductDiv>
       ) : (
@@ -63,12 +97,44 @@ const ProductPage = () => {
   );
 };
 
-const ProductDiv = styled.div``;
-const ProductDiv2 = styled.div``;
-const ProductImg = styled.img``;
-const Name = styled.p``;
-const Price = styled.p``;
+const ProductDiv = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+`;
+const ProductDiv2 = styled.div`
+  background-color: var(--primary-color);
+  height: 70vh;
+  width: 50%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+`;
+
+const AddToCartDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20px;
+`;
+
+const ProductImg = styled.img`
+  width: 30%;
+`;
+const Name = styled.h1`
+  color: var(--secondary-color);
+  font-size: 30px;
+  padding-bottom: 40px;
+`;
+const Price = styled.p`
+  font-size: 20px;
+  border-bottom: 1px solid var(--secondary-color);
+  padding-bottom: 40px;
+`;
 const MainInput = styled.div``;
-const Input = styled.div``;
 
 export default ProductPage;

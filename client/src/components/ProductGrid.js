@@ -26,6 +26,7 @@ const ProductGrid = () => {
                   name={item.name}
                   price={item.price}
                   imageSrc={item.imageSrc}
+                  numInStock={item.numInStock}
                 />
               </>
             );
