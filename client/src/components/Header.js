@@ -1,6 +1,6 @@
 import React from "react";
-const Form = () => {
+const Header = () => {
   return <div></div>;
 };
 
-export default Form;
+export default Header;

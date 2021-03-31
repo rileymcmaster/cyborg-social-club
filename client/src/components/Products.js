@@ -1,12 +1,13 @@
 import React from "react";
-import ProductGrid from "./ProductGrid";
-// import Cart from "./Cart";
+import ItemGrid from "./ItemGrid";
+import Cart from "./Cart";
 
 const Products = () => {
   return (
-    <div>
-      <ProductGrid />
-    </div>
+    <>
+      <ItemGrid />
+      <Cart />
+    </>
   );
 };
 
