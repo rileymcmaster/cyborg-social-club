@@ -3,9 +3,9 @@ export const addCartProduct = (product) => ({
   product,
 });
 
-export const removeItem = (productId) => ({
+export const removeProduct = (productId) => ({
   type: "REMOVE_CART_PRODUCT",
-  product,
+  productId,
 });
 
 export const updateQuantity = (product, newQuantity) => ({
