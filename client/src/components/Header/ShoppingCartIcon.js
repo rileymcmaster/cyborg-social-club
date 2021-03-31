@@ -9,7 +9,6 @@ const ShoppingCartIcon = () => {
   const NumItems = 4;
 
   return (
-    //   <NavLink to={"/"}>
     <Logo>
       {NumItems > 0 ? (
         <NumAlert>
@@ -20,7 +19,6 @@ const ShoppingCartIcon = () => {
       )}
       <GiShoppingCart />
     </Logo>
-    //   {/* </NavLink> */}
   );
 };
 
@@ -47,8 +45,10 @@ const NumAlert = styled.div`
 
 const Logo = styled.div`
   position: relative;
-  /* display: flex; */
   font-size: 3rem;
   margin: 10px;
+  &:active {
+    transform: scale(0.9);
+  }
 `;
 export default ShoppingCartIcon;

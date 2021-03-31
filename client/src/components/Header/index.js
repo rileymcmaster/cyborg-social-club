@@ -12,12 +12,14 @@ import CurrentUser from "./CurrentUser";
 const Header = () => {
   return (
     <Wrapper>
-      {/* <NavLink to={"/"}> */}
-      <Logo>
-        <GiRobotAntennas />
-      </Logo>
-      <h1>Cyborg Social Club</h1>
-      {/* </NavLink> */}
+      <NavigationLink to={"/"}>
+        <Title>
+          <Logo>
+            <GiRobotAntennas />
+          </Logo>
+          <h1>Cyborg Social Club</h1>
+        </Title>
+      </NavigationLink>
       <SearchBar />
 
       {/* DROPDOWN MENUS */}
@@ -28,20 +30,34 @@ const Header = () => {
       {/* SIGNUP OR LOGIN */}
       <CurrentUser />
       {/* SHOPPING CART */}
-      <ShoppingCartIcon />
+      <NavigationLink to={"/cart"}>
+        <ShoppingCartIcon />
+      </NavigationLink>
     </Wrapper>
   );
 };
 
+const NavigationLink = styled(NavLink)`
+  color: black;
+  text-decoration: none;
+`;
+
+const Title = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 const Logo = styled.div`
   font-size: 3rem;
   margin: 10px;
+  color: var(--primary-color);
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  position: absolute;
+  position: relative;
   justify-content: space-between;
   width: 100%;
   height: 100px;
