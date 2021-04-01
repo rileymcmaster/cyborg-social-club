@@ -67,11 +67,13 @@ const FilterProduct = () => {
           ) : (
             <Title>Search for : {urlCategory}</Title>
           )}
-          <PreviousButton onClick={() => handlePageBefore()}>
-            {previousPage}
-          </PreviousButton>
-          <CurrentButton>{currentPage}</CurrentButton>
-          <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+          <Pagination>
+            <PreviousButton onClick={() => handlePageBefore()}>
+              {previousPage}
+            </PreviousButton>
+            <CurrentButton>{currentPage}</CurrentButton>
+            <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+          </Pagination>
           <GenerateProductGrid items={filteredItems} />
         </>
       ) : filteredItems && urlCategory === "undefined" ? (
@@ -82,6 +84,13 @@ const FilterProduct = () => {
     </Wrapper>
   );
 };
+
+const Pagination = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Wrapper = styled.div`
   min-height: var(--page-height);
 `;
