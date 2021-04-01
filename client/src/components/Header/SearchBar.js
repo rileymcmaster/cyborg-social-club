@@ -15,13 +15,15 @@ const SearchBar = () => {
   ///TEMP WORKING WITH CATEGORIES this way
   const [items, setItems] = useState(null);
   useEffect(() => {
+    console.log("starting fetch");
     fetch("/items")
       .then((res) => res.json())
       .then((data) => {
-        setItems(data.data);
+        console.log(data);
+        setItems(data.data.results);
+        console.log("ending fetch", data);
       });
   }, []);
-
   //FIND UNIQUE CATEGORIES
   let categoriesArray = [];
   if (items) {
