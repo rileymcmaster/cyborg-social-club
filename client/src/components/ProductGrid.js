@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
 import { useParams } from "react-router-dom";
+import SidebarFilter from "./SidebarFilter";
 
 const ProductGrid = () => {
   const [items, setItems] = useState(null);
@@ -45,22 +46,43 @@ const ProductGrid = () => {
         <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
       </Div>
       {/* END PAGINATION */}
-      {/* ITEM GRID */}
-      <GenerateProductGrid items={items} />
-      {/* END ITEM GRID */}
-      <Div>
-        {/* PAGINATION */}
-        <PreviousButton onClick={() => handlePageBefore()}>
-          {previousPage}
-        </PreviousButton>
-        <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-      </Div>
-      {/* </ProductList> */}
-      {/* )} */}
+      <GridLayout>
+        <SidebarArea>
+          <SidebarFilter />
+        </SidebarArea>
+        {/* ITEM GRID */}
+        <MainArea>
+          <GenerateProductGrid items={items} />
+        </MainArea>
+        {/* END ITEM GRID */}
+        <Div>
+          {/* PAGINATION */}
+          <PreviousButton onClick={() => handlePageBefore()}>
+            {previousPage}
+          </PreviousButton>
+          <CurrentButton>{currentPage}</CurrentButton>
+          <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+        </Div>
+        {/* </ProductList> */}
+        {/* )} */}
+      </GridLayout>
     </>
   );
 };
+const MainArea = styled.div`
+  grid-area: main;
+`;
+
+const SidebarArea = styled.div`
+  margin-top: 20px;
+  grid-area: sidebar;
+`;
+const GridLayout = styled.div`
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto;
+  grid-template-areas: "sidebar main";
+`;
 
 const ProductList = styled.div`
   display: flex;
