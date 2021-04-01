@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../actions";
 import styled from "styled-components";
 import Button from "./Button";
@@ -9,10 +9,34 @@ import { addCartProduct } from "../actions";
 const ProductGridItem = ({ id, name, price, imageSrc, numInStock }) => {
   const dispatch = useDispatch();
   const productFound = true;
+  const userState = useSelector((state) => state.signin);
   //should we remove this and just disable button?
   const handleAddToCart = () => {
     if (numInStock > 0) {
-      dispatch(addCartProduct({ id, name, price, imageSrc }));
+      if (userState.isSignedIn) {
+        let email = userState.email;
+        let cartItem = {  id, name, price, imageSrc };
+        const requestOptions = {
+          method: 'POST',
+          body: JSON.stringify({email, cartItem}),
+          headers: {"Content-Type": "application/json"},
+    
+        }
+        fetch("/updateusercart", requestOptions ).then((res)=> res.json()).then((json)=> {
+          if (json.status === 200) {
+            console.log("hello")
+            dispatch(addCartProduct({ id, name, price, imageSrc }))
+            return 
+          } else if (json.status === 404) {
+            return window.alert("user does not exist");
+          }
+    
+    
+          
+        })
+      } else {
+        dispatch(addCartProduct({ id, name, price, imageSrc }));
+      }
     }
   };
 

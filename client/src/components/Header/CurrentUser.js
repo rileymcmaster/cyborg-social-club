@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FiUser } from "react-icons/fi";
+import { useSelector } from "react-redux";
 
 const CurrentUser = () => {
   //CHECK GLOBAL STATE IF LOGGED IN???
   const [loggedIn, setLoggedIn] = useState(true);
+  const userState = useSelector((state) => state.signin);
+  console.log(userState);
 
   return (
     <Wrapper>
       <Icon>
-        {loggedIn ? (
+        {userState.isSignedIn ? (
           <>
-            <FiUser /> <p>Welcome back, ~username~ </p>
+            <FiUser /> <p>Welcome back, {userState.email} </p>
           </>
         ) : (
           <>
