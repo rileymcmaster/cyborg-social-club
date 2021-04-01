@@ -8,7 +8,7 @@ const HomePage = () => {
     <MainDiv>
       <FreeShippingBanner>Free shipping on orders over $99</FreeShippingBanner>
       <ImgDiv>
-        <ShopNowButton to="/products">View All Porducts!</ShopNowButton>
+        <ShopNowButton to="/products">View All Products!</ShopNowButton>
       </ImgDiv>
       <CategoryP>Shop Categories</CategoryP>
       <Categories>
@@ -56,7 +56,7 @@ const HomePage = () => {
         <TopBrands to="/category/Samsung">
           <BrandImg src="/images/Samsung.png" />
         </TopBrands>
-        <TopBrands to="/category/Casion">
+        <TopBrands to="/category/Casio">
           <BrandImg src="/images/Casio.png" />
         </TopBrands>
         <TopBrands to="/category/Fitbit">
@@ -71,7 +71,7 @@ const HomePage = () => {
       </BrandDiv>
       <NewsLetter>
         <CategoryP>
-          Subscribe to our Mailing List for the Lastest News!
+          Subscribe To Our Mailing List For The Lastest News!
         </CategoryP>
         <Form>
           <input
@@ -186,9 +186,9 @@ const CategoryImg = styled.img`
 
 const CategoryP = styled.h1`
   text-align: center;
-  font-size: 30px;
+  font-size: 25px;
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const FreeShippingBanner = styled.p`
