@@ -13,6 +13,8 @@ import HomePage from "./HomePage";
 import FilterProduct from "./FilterProduct";
 import Cart from "./Cart";
 
+
+
 function App() {
   // const [companies, setCompanies] = useState(null);
   // //determine where the fetch will go
@@ -51,6 +53,9 @@ function App() {
           </Route>
           <Route exact path="/form">
             <Form />
+          </Route>
+          <Route exact path="/sign-in">
+            <Signin />
           </Route>
         </Switch>
         <Footer />
