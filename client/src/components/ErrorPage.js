@@ -19,6 +19,18 @@ const HomeLink = styled(Link)`
   margin: 50px;
   font-size: 2rem;
   font-weight: bold;
+  color: var(--secondary-color);
+  padding: 10px 20px;
+  /* border-radius: 20px; */
+  border: 4px solid var(--primary-color);
+  &:hover {
+    background-color: var(--primary-color);
+    border-color: black;
+  }
+  &:active {
+    color: white;
+    box-shadow: 2px 2px 5px black inset;
+  }
 `;
 
 const Image = styled.img`
