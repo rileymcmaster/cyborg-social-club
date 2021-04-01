@@ -24,7 +24,7 @@ const getItems = (req, res) => {
       limit: limit,
     };
   }
-  console.log(startIndex, endIndex, lastPage);
+  // console.log(startIndex, endIndex, lastPage);
   results.results = items.slice(startIndex, endIndex);
   // console.log(results);
 
