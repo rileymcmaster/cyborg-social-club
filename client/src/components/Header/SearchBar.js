@@ -17,16 +17,18 @@ const SearchBar = () => {
   const [items, setItems] = useState(null);
   const [companies, setCompanies] = useState(null);
   useEffect(() => {
+    console.log("starting fetch");
     fetch("/items")
       .then((res) => res.json())
       .then((data) => {
-        setItems(data.data);
+        console.log(data);
+        setItems(data.data.results);
+        console.log("ending fetch", data);
       });
     fetch("/companies")
       .then((res) => res.json())
       .then((data) => setCompanies(data.data));
   }, []);
-
   //FIND UNIQUE CATEGORIES
   let categoriesArray = [];
   if (items) {

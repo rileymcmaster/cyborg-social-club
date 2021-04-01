@@ -14,7 +14,7 @@ const CategoriesDD = () => {
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
-        setItems(data.data);
+        setItems(data.data.results);
       });
   }, []);
 
