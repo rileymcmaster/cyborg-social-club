@@ -29,7 +29,7 @@ const BodyPartsDD = () => {
 
   //CATEGORIES
   return items ? (
-    <Dropdown title="Body parts">
+    <Dropdown title="Parts">
       {uniqueCategories.map((item) => {
         //might need to set a value?? or set the url somehow
         return <DropdownLink to={`/category/${item}`}>{item}</DropdownLink>;

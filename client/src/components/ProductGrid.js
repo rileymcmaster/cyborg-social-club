@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import ProductGridItem from "./ProductGridItem";
+import GenerateProductGrid from "./GenerateProductGrid";
+import { useParams } from "react-router-dom";
 
 const ProductGrid = () => {
   const [items, setItems] = useState(null);
@@ -10,15 +11,15 @@ const ProductGrid = () => {
   let previousPage = currentPage - 1;
 
   useEffect(() => {
-    console.log("starting fetch in product grid");
+    // console.log("starting fetch in product grid");
     fetch(`/items?page=${currentPage}&limit=24`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setItems(data.data.results);
       });
   }, [currentPage]);
-  console.log(items);
+  // console.log(items);
 
   const handlePageNext = () => {
     if (currentPage >= items.length) {
@@ -34,44 +35,35 @@ const ProductGrid = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Div>
+        {/* PAGINATION */}
         <PreviousButton onClick={() => handlePageBefore()}>
           {previousPage}
         </PreviousButton>
         <CurrentButton>{currentPage}</CurrentButton>
         <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
       </Div>
-      {items && (
-        <ProductList>
-          {console.log(items)}
-          {items.map((item) => {
-            return (
-              <>
-                <ProductGridItem
-                  items={items}
-                  id={item._id}
-                  name={item.name}
-                  price={item.price}
-                  imageSrc={item.imageSrc}
-                  numInStock={item.numInStock}
-                />
-              </>
-            );
-          })}
-          <Div>
-            <PreviousButton onClick={() => handlePageBefore()}>
-              {previousPage}
-            </PreviousButton>
-            <CurrentButton>{currentPage}</CurrentButton>
-            <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-          </Div>
-        </ProductList>
-      )}
-    </>
+      {/* END PAGINATION */}
+      {/* ITEM GRID */}
+      <GenerateProductGrid items={items} />
+      {/* END ITEM GRID */}
+      <Div>
+        {/* PAGINATION */}
+        <PreviousButton onClick={() => handlePageBefore()}>
+          {previousPage}
+        </PreviousButton>
+        <CurrentButton>{currentPage}</CurrentButton>
+        <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+      </Div>
+      {/* </ProductList> */}
+      {/* )} */}
+    </Wrapper>
   );
 };
-
+const Wrapper = styled.div`
+  min-height: var(--page-height);
+`;
 const ProductList = styled.div`
   display: flex;
   flex-wrap: wrap;

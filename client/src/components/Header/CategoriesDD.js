@@ -34,30 +34,16 @@ const CategoriesDD = () => {
   return items ? (
     <Dropdown title="Categories">
       {uniqueCategories.map((item) => {
-        // const removeSpaces = item.toLowerCase().split(" ").join("");
-        return <DropdownLink to={`/category/${item}`}>{item}</DropdownLink>;
+        const removeSpaces = item.split(" ").join("");
+        return (
+          <DropdownLink to={`/category/${removeSpaces}`}>{item}</DropdownLink>
+        );
       })}
     </Dropdown>
   ) : (
     <Dropdown title="" />
   );
 };
-
-const Menu = styled.button`
-  text-decoration: none;
-  outline: none;
-  border: 2px solid;
-  border-color: (--primary-color);
-  width: 150px;
-  height: 50px;
-  color: var(--primary-color);
-  background-color: var(--secondary-color);
-  &:hover {
-    border-color: (--secondary-color);
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-  }
-`;
 
 const DropdownLink = styled(NavLink)`
   width: 100%;

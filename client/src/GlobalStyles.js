@@ -13,6 +13,7 @@ export default createGlobalStyle`
       --user-img-width: 120px;
       --user-img-margin: 5px;
       --nav-width: 250px;
+      --page-height: 100vh;
     }
     *,
     *:before,
@@ -30,6 +31,7 @@ export default createGlobalStyle`
 
     html, body {
         max-width: 100vw;
+
     }
 html, body, div, span, applet, object, iframe,
     h1, h2, h3, h4, h5, h6, p, blockquote, pre,
