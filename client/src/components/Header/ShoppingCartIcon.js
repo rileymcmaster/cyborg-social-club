@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import { GiShoppingCart } from "react-icons/gi";
+import { useSelector } from "react-redux";
 
 const ShoppingCartIcon = () => {
   //GET STATE OF ## of items in cart
-
-  const NumItems = 4;
+  const cartState = useSelector((state) => Object.values(state.cart));
+  const NumItems = cartState.length;
 
   return (
     <Logo>
@@ -17,10 +18,28 @@ const ShoppingCartIcon = () => {
       ) : (
         <></>
       )}
-      <GiShoppingCart />
+      <Cart>
+        <GiShoppingCart />
+      </Cart>
     </Logo>
   );
 };
+
+const Cart = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  vertical-align: center;
+  text-align: center;
+  justify-content: center;
+  z-index: 1;
+  /* align-items: flex-end; */
+  top: 5px;
+  &:active {
+    transform: scale(0.8);
+    opacity: 50%;
+  }
+`;
 
 const Number = styled.p`
   position: relative;
@@ -41,15 +60,22 @@ const NumAlert = styled.div`
   border-radius: 50%;
   background-color: rgba(255, 0, 0, 0.9);
   box-shadow: 1px 1px 2px black;
+  z-index: 999;
 `;
 
 const Logo = styled.div`
   position: relative;
+
   font-size: 3rem;
   margin: 10px;
-  color: white;
-  &:active {
-    transform: scale(0.9);
+  /* padding: auto; */
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  color: var(--primary-color);
+  &:hover {
+    color: var(--secondary-color);
+    background-color: var(--primary-color);
   }
 `;
 export default ShoppingCartIcon;

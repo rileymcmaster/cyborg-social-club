@@ -47,6 +47,7 @@ const DropdownWrapper = styled.div`
   position: relative;
   display: inline-block;
   margin: 0 10px;
+  z-index: 99999;
 `;
 
 export default Dropdown;
