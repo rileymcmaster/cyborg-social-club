@@ -18,7 +18,13 @@ const Button = styled.button`
   }
   &:disabled {
     color: white;
-    opacity: 50%;
+    background-color: grey;
+    border: 1px solid grey;
+  }
+  &:disabled:hover {
+    color: white;
+    background-color: grey;
+    border: 1px solid grey;
   }
 `;
 

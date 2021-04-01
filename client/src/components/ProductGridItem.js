@@ -51,7 +51,9 @@ const ProductGridItem = ({ id, name, price, imageSrc, numInStock }) => {
             <ItemName>{name}</ItemName>
             <ItemPrice>{price}</ItemPrice>
           </StyledLink>
-          <Button onClick={handleAddToCart}>Add to Cart</Button>
+          <Button disabled={numInStock <= 0} onClick={handleAddToCart}>
+            {numInStock <= 0 ? "Out of Stock" : "Add to Cart"}
+          </Button>
         </ItemWrapper>
       ) : (
         <p>Product Not Found</p>

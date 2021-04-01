@@ -28,7 +28,10 @@ const Header = () => {
       <BrandsDD />
 
       {/* SIGNUP OR LOGIN */}
-      <CurrentUser />
+      {/* NEED STATE TO DETERMINE IF IT IS LOGIN OR WELCOME */}
+      <NavigationLink to={"/"}>
+        <CurrentUser />
+      </NavigationLink>
       {/* SHOPPING CART */}
       <NavigationLink to={"/cart"}>
         <ShoppingCartIcon />

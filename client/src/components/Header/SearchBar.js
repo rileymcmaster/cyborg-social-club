@@ -17,18 +17,29 @@ const SearchBar = () => {
   const [items, setItems] = useState(null);
   const [companies, setCompanies] = useState(null);
   useEffect(() => {
-    console.log("starting fetch");
+    // console.log("starting fetch");
     fetch("/items")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setItems(data.data.results);
-        console.log("ending fetch", data);
+        // console.log("ending fetch", data);
       });
     fetch("/companies")
       .then((res) => res.json())
       .then((data) => setCompanies(data.data));
+    const closeSearch = () => {
+      setCloseResults(true);
+    };
   }, []);
+  //or style a select instead of "li"
+  useEffect(() => {
+    const clickToClose = () => {
+      setCloseResults(true);
+    };
+    window.addEventListener("click", clickToClose);
+    return () => window.removeEventListener("click", clickToClose);
+  });
   //FIND UNIQUE CATEGORIES
   let categoriesArray = [];
   if (items) {
@@ -182,12 +193,13 @@ const Suggestion = styled.li`
   padding: 20px;
   margin: 10px;
 `;
+
 const SearchResults = styled.ul`
   position: absolute;
   width: 400px;
-  /* border: 5px solid red; */
-  margin-top: 10px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+  margin-top: 5px;
+  background-color: white;
+  box-shadow: 2px 2px 5px var(--primary-color), 5px 5px 10px rgba(0, 0, 0, 0.5);
 `;
 const Input = styled.input`
   border: none;
@@ -206,7 +218,6 @@ const SearchButton = styled.button`
   color: black;
   font-size: 1.5rem;
   border: none;
-  /* background-color: blue; */
   outline: none;
   &:active {
     font-size: 1rem;
