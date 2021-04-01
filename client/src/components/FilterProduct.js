@@ -62,7 +62,11 @@ const FilterProduct = () => {
     <Wrapper>
       {filteredItems && filteredItems.length > 0 ? (
         <>
-          <Title>Search for : {urlCategory}</Title>
+          {urlCategory === "PetsandAnimals" ? (
+            <Title>Search for : Pets and Animsl</Title>
+          ) : (
+            <Title>Search for : {urlCategory}</Title>
+          )}
           <PreviousButton onClick={() => handlePageBefore()}>
             {previousPage}
           </PreviousButton>

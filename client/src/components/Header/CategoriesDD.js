@@ -34,7 +34,7 @@ const CategoriesDD = () => {
   return items ? (
     <Dropdown title="Categories">
       {uniqueCategories.map((item) => {
-        const removeSpaces = item.toLowerCase().split(" ").join("");
+        const removeSpaces = item.split(" ").join("");
         return (
           <DropdownLink to={`/category/${removeSpaces}`}>{item}</DropdownLink>
         );
