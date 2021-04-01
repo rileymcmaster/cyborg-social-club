@@ -5,7 +5,7 @@ export const addCartProduct = (product) => ({
 
 export const removeItem = (productId) => ({
   type: "REMOVE_CART_PRODUCT",
-  product,
+  productId,
 });
 
 export const updateQuantity = (product, newQuantity) => ({
@@ -13,3 +13,16 @@ export const updateQuantity = (product, newQuantity) => ({
   product,
   newQuantity,
 });
+
+export const signIn = (email, password) => ({
+
+    type: "SIGN_IN",
+    email,
+    password,
+  
+});
+export const signOut = (userId) => {
+  return {
+    type: "SIGN_OUT",
+  };
+};
