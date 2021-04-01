@@ -2,24 +2,32 @@ import React from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Button from "./Button";
-// import Cart from "./Cart";
+import { addCartProduct, updateQuantity } from "../actions";
+import { useDispatch } from "react-redux";
 
 const ProductPage = () => {
+  const dispatch = useDispatch();
   const [item, setItem] = React.useState(null);
   const [quantity, setQuantity] = React.useState(1);
-  const [quantityInputValue, setQuantityInputValue] = React.useState(1);
-
+  //should we remove this and just disable button?
+  const handleAddToCart = () => {
+    const id = item._id;
+    const name = item.name;
+    const price = item.price;
+    const imageSrc = item.imageSrc;
+    if (item.numInStock > 0) {
+      dispatch(addCartProduct({ id, name, price, imageSrc }));
+    }
+  };
   let { id } = useParams();
 
   const handlePlusClick = () => {
     setQuantity(quantity + 1);
-    setQuantityInputValue(quantityInputValue + 1);
   };
 
   const handleMinusClick = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      setQuantityInputValue(quantityInputValue - 1);
     }
   };
 
@@ -41,7 +49,12 @@ const ProductPage = () => {
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
             <AddToCartDiv>
-              <Button disabled={item.numInStock <= 0}>
+              <Button
+                disabled={item.numInStock <= 0}
+                onClick={() => {
+                  dispatch(updateQuantity(item, quantity));
+                }}
+              >
                 {item.numInStock <= 0 ? "Out of Stock" : "Add to Cart"}
               </Button>
               <MainInput>
@@ -60,9 +73,9 @@ const ProductPage = () => {
                 </button>
                 <input
                   type="text"
-                  value={quantityInputValue}
+                  value={quantity}
                   onChange={(ev) => {
-                    setQuantityInputValue(Number(ev.target.value));
+                    setQuantity(Number(ev.target.value));
                   }}
                   style={{
                     background: "var(--secondary-color)",

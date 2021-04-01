@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Button from "../Button";
+import { updateQuantity, removeProduct } from "../../actions";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
-const CartItem = () => {
-  const [quantity, setQuantity] = useState(1);
-  const [quantityInputValue, setQuantityInputValue] = useState(1);
+const CartItem = ({ product }) => {
+  const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(product.quantity);
+  const formattedUnitPrice = Number(product.price.slice(1));
+  const subtotalPrice = formattedUnitPrice * quantity;
+  const formattedSubtotalPrice = parseFloat(subtotalPrice).toFixed(2);
 
   const handlePlusClick = () => {
     setQuantity(quantity + 1);
-    setQuantityInputValue(quantityInputValue + 1);
   };
 
   const handleMinusClick = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      setQuantityInputValue(quantityInputValue - 1);
     }
   };
 
@@ -22,13 +26,15 @@ const CartItem = () => {
     <>
       <CartItemWrapper>
         <ProductInfo>
-          <ProductImage src="https://cdn.shopify.com/s/files/1/0255/9062/8401/products/product-image-1312142062_394x.jpg?v=1587617282"></ProductImage>
+          <Link to={`/item/${product.id}`}>
+            <ProductImage src={product.imageSrc}></ProductImage>
+          </Link>
           <div>
             <div style={{ width: "300px" }}>
-              Barska GB12166 Fitness Watch with Heart Rate Monitor
+              <Link to={`/item/${product.id}`}>{product.name}</Link>
             </div>
-            <div style={{ color: "gray" }}>SKU: 6543</div>
-            <div style={{ marginTop: "2em" }}>Price: $ 20</div>
+            <div style={{ color: "gray" }}>SKU: {product.id}</div>
+            <div style={{ marginTop: "2em" }}>Price: {product.price}</div>
           </div>
         </ProductInfo>
         <SelectQuantity>
@@ -36,16 +42,16 @@ const CartItem = () => {
             <button onClick={handleMinusClick}>-</button>
             <input
               type="text"
-              value={quantityInputValue}
+              value={quantity}
               onChange={(ev) => {
-                setQuantityInputValue(Number(ev.target.value));
+                setQuantity(Number(ev.target.value));
               }}
             ></input>
             <button onClick={handlePlusClick}>+</button>
           </Input>
           <Button
             onClick={() => {
-              setQuantity(quantityInputValue);
+              dispatch(updateQuantity(product, quantity));
             }}
             style={{
               background: "black",
@@ -56,7 +62,7 @@ const CartItem = () => {
             Update
           </Button>
         </SelectQuantity>
-        <Price>$200</Price>
+        <Price>${formattedSubtotalPrice}</Price>
       </CartItemWrapper>
       <DeleteProduct>
         <Button
@@ -66,6 +72,7 @@ const CartItem = () => {
             textAlign: "left",
             marginLeft: "0",
           }}
+          onClick={() => dispatch(removeProduct(product.id))}
         >
           Remove
         </Button>
