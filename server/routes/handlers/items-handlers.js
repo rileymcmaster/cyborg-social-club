@@ -66,7 +66,10 @@ const getItemsByCategory = (req, res) => {
     let removeSpacesBody = item.body_location.toLowerCase().split(" ").join("");
     //MATCH THE COMPANY ID
     let companyIdMatch = companies.filter((company) => {
-      if (req.params.category.toLowerCase() === company.name.toLowerCase()) {
+      if (
+        req.params.category.toLowerCase() === company.name.toLowerCase() ||
+        company.name.toLowerCase().includes(req.params.category.toLowerCase())
+      ) {
         return company;
       }
     });

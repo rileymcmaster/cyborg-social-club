@@ -17,13 +17,13 @@ const SearchBar = () => {
   const [items, setItems] = useState(null);
   const [companies, setCompanies] = useState(null);
   useEffect(() => {
-    console.log("starting fetch");
+    // console.log("starting fetch");
     fetch("/items")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setItems(data.data.results);
-        console.log("ending fetch", data);
+        // console.log("ending fetch", data);
       });
     fetch("/companies")
       .then((res) => res.json())
