@@ -21,7 +21,7 @@ const ProductGrid = () => {
   console.log(items);
 
   const handlePageNext = () => {
-    if (currentPage >= 15) {
+    if (currentPage >= items.length) {
       return;
     }
     setCurrentPage(currentPage + 1);
