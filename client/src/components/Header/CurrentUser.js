@@ -11,7 +11,10 @@ const CurrentUser = () => {
       <Icon>
         {loggedIn ? (
           <>
-            <FiUser /> <p>Welcome back, ~username~ </p>
+            <FiUser />
+            <p>
+              <NoBreak>Welcome back,</NoBreak>~username~
+            </p>
           </>
         ) : (
           <>
@@ -22,22 +25,38 @@ const CurrentUser = () => {
     </Wrapper>
   );
 };
+const NoBreak = styled.p`
+  white-space: nowrap;
+`;
 
-const Icon = styled.div`
-  color: white;
+const Icon = styled.p`
+  user-select: none;
+  z-index: 999;
+  color: var(--primary-color);
   font-size: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  max-width: 120px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50px;
   & p {
     font-size: 1rem;
+  }
+  &:hover {
+    color: white;
+    background-color: var(--primary-color);
+    text-shadow: 0 0 1px white;
   }
 `;
 
 const Wrapper = styled.div`
   margin: 5px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 export default CurrentUser;
