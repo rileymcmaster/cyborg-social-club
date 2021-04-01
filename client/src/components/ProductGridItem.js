@@ -9,6 +9,7 @@ import { addCartProduct } from "../actions";
 const ProductGridItem = ({ id, name, price, imageSrc, numInStock }) => {
   const dispatch = useDispatch();
   const productFound = true;
+  //should we remove this and just disable button?
   const handleAddToCart = () => {
     if (numInStock > 0) {
       dispatch(addCartProduct({ id, name, price, imageSrc }));
