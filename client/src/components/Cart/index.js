@@ -16,15 +16,18 @@ import { useSelector } from "react-redux";
 
 const Cart = () => {
   const [couponValue, setCouponValue] = useState(null);
-  const state = useSelector((state) => Object.values(state.cart));
+  const guestUserState = useSelector((state) => Object.values(state.cart));
+  const loggedInState = useSelector((state) => state.signin);
+const loggedInCart = Object.values(loggedInState.cart);
 
-  console.log(state);
+let cartMap = [];
+
 
   let totalPrice;
 
-  if (state.length !== 0) {
-    const prices = state.map((product) => Number(product.price.slice(1)));
-    const quantities = state.map((product) => Number(product.quantity));
+  if (guestUserState.length !== 0) {
+    const prices = guestUserState.map((product) => Number(product.price.slice(1)));
+    const quantities = guestUserState.map((product) => Number(product.quantity));
     const subtotals = prices.map((price, index) => price * quantities[index]);
 
     totalPrice = subtotals.reduce((accumulator, currentValue) => {
@@ -35,12 +38,13 @@ const Cart = () => {
   }
 
   const formattedTotalPrice = parseFloat(totalPrice).toFixed(2);
-  return (
+
+  return  (
     <CartWrapper>
       <CartDetails>
         <CartHeader>
           <h1>Your Cart</h1>
-          <div>You have {state.length} items in your cart</div>
+          <div>You have {guestUserState.length} items in your cart</div>
           <CartHeadings>
             <Heading>Product</Heading>
             <Heading style={{ marginLeft: "370px" }}>Quantity</Heading>
@@ -48,7 +52,7 @@ const Cart = () => {
           </CartHeadings>
         </CartHeader>
         <div>
-          {state.map((product) => {
+          {loggedInState.isSignedIn ? loggedInCart.map((product)=> {return <CartItem product={product} /> }) : guestUserState.map((product) => {
             return <CartItem product={product} />;
           })}
         </div>

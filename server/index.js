@@ -5,6 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { getItemById } = require("../server/routes/handlers/items-handlers");
+const { getUserById, updateUserCart } = require("../server/routes/handlers/users-handler");
 const itemsRouter = require("./routes/items");
 const companiesRouter = require("./routes/companies");
 
@@ -30,6 +31,10 @@ express()
   .use("/items", itemsRouter)
   .use("/companies", companiesRouter)
   .get("/item/:id", getItemById)
+
+  ////// Sign in //////
+  .post("/user", getUserById)
+  .post("/updateusercart", updateUserCart)
 
   // REST endpoints?
   .get("/bacon", (req, res) => res.status(200).json("🥓"))

@@ -39,7 +39,7 @@ const ProductPage = () => {
         console.log(data.data);
       });
   }, [id]);
-
+console.log(item);
   return (
     <>
       {item ? (
@@ -52,7 +52,7 @@ const ProductPage = () => {
               <Button
                 disabled={item.numInStock <= 0}
                 onClick={() => {
-                  dispatch(updateQuantity(item, quantity));
+                  dispatch(addCartProduct(item));
                 }}
               >
                 {item.numInStock <= 0 ? "Out of Stock" : "Add to Cart"}

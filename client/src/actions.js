@@ -1,7 +1,11 @@
-export const addCartProduct = (product) => ({
-  type: "ADD_CART_PRODUCT",
-  product,
-});
+export const addCartProduct = (product) => {
+  console.log(product);
+  return {
+    type: "ADD_CART_PRODUCT",
+
+    product,
+  };
+};
 
 export const removeProduct = (productId) => ({
   type: "REMOVE_CART_PRODUCT",
@@ -14,12 +18,9 @@ export const updateQuantity = (product, newQuantity) => ({
   newQuantity,
 });
 
-export const signIn = (email, password) => ({
-
-    type: "SIGN_IN",
-    email,
-    password,
-  
+export const signIn = (user) => ({
+  type: "SIGN_IN",
+  user,
 });
 export const signOut = (userId) => {
   return {

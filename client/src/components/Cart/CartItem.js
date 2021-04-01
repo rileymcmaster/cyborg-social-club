@@ -11,7 +11,7 @@ const CartItem = ({ product }) => {
   const formattedUnitPrice = Number(product.price.slice(1));
   const subtotalPrice = formattedUnitPrice * quantity;
   const formattedSubtotalPrice = parseFloat(subtotalPrice).toFixed(2);
-
+  
   const handlePlusClick = () => {
     setQuantity(quantity + 1);
   };
