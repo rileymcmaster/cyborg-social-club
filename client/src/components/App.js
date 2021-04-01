@@ -12,8 +12,7 @@ import HomePage from "./HomePage";
 
 import FilterProduct from "./FilterProduct";
 import Cart from "./Cart";
-
-
+import ErrorPage from "./ErrorPage";
 
 function App() {
   // const [companies, setCompanies] = useState(null);
@@ -56,6 +55,9 @@ function App() {
           </Route>
           <Route exact path="/sign-in">
             <Signin />
+          </Route>
+          <Route path="/">
+            <ErrorPage />
           </Route>
         </Switch>
         <Footer />
