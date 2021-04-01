@@ -45,22 +45,6 @@ const CategoriesDD = () => {
   );
 };
 
-const Menu = styled.button`
-  text-decoration: none;
-  outline: none;
-  border: 2px solid;
-  border-color: (--primary-color);
-  width: 150px;
-  height: 50px;
-  color: var(--primary-color);
-  background-color: var(--secondary-color);
-  &:hover {
-    border-color: (--secondary-color);
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-  }
-`;
-
 const DropdownLink = styled(NavLink)`
   width: 100%;
   padding: 10px 0;
