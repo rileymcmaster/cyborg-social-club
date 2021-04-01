@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
 import { useParams } from "react-router-dom";
+import SidebarFilter from "./SidebarFilter";
 
 const ProductGrid = () => {
   const [items, setItems] = useState(null);
@@ -46,7 +47,15 @@ const ProductGrid = () => {
       </Div>
       {/* END PAGINATION */}
       {/* ITEM GRID */}
-      <GenerateProductGrid items={items} />
+      <GridDisplay>
+        <SidebarGrid>
+          <SidebarFilter />
+        </SidebarGrid>
+
+        <GridArea>
+          <GenerateProductGrid items={items} />
+        </GridArea>
+      </GridDisplay>
       {/* END ITEM GRID */}
       <Div>
         {/* PAGINATION */}
@@ -61,7 +70,26 @@ const ProductGrid = () => {
     </Wrapper>
   );
 };
+
+const GridDisplay = styled.div`
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto;
+  grid-template-areas: "sidebar main";
+`;
+
+const SidebarGrid = styled.div`
+  grid-area: sidebar;
+`;
+const GridArea = styled.div`
+  grid-area: main;
+`;
+
 const Wrapper = styled.div`
+  /* display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-rows: auto;
+  grid-template-areas: "sidebar main"; */
   min-height: var(--page-height);
 `;
 const ProductList = styled.div`
