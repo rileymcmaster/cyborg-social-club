@@ -11,7 +11,7 @@ const BodyPartsDD = () => {
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
-        setItems(data.data);
+        setItems(data.data.results);
       });
   }, []);
 
@@ -32,7 +32,7 @@ const BodyPartsDD = () => {
     <Dropdown title="Body parts">
       {uniqueCategories.map((item) => {
         //might need to set a value?? or set the url somehow
-        return <DropdownLink to={`/`}>{item}</DropdownLink>;
+        return <DropdownLink to={`/category/${item}`}>{item}</DropdownLink>;
       })}
     </Dropdown>
   ) : (

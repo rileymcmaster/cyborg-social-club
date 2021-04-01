@@ -4,7 +4,7 @@ import { FiUser } from "react-icons/fi";
 
 const CurrentUser = () => {
   //CHECK GLOBAL STATE IF LOGGED IN???
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   return (
     <Wrapper>
@@ -24,6 +24,7 @@ const CurrentUser = () => {
 };
 
 const Icon = styled.div`
+  color: white;
   font-size: 2rem;
   display: flex;
   flex-direction: column;

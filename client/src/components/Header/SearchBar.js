@@ -9,19 +9,26 @@ const SearchBar = () => {
   const history = useHistory();
   const [searchValue, setSearchValue] = useState("");
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
+  const [closeResults, setCloseResults] = useState(false);
 
-  //   console.log("SEARCH", searchValue);
+  ///Search results aren't marked if they are category, bodypart, or company.
+  // They are just combined but I would like to do that later :)
 
-  ///TEMP WORKING WITH CATEGORIES this way
   const [items, setItems] = useState(null);
+  const [companies, setCompanies] = useState(null);
   useEffect(() => {
+    console.log("starting fetch");
     fetch("/items")
       .then((res) => res.json())
       .then((data) => {
-        setItems(data.data);
+        console.log(data);
+        setItems(data.data.results);
+        console.log("ending fetch", data);
       });
+    fetch("/companies")
+      .then((res) => res.json())
+      .then((data) => setCompanies(data.data));
   }, []);
-
   //FIND UNIQUE CATEGORIES
   let categoriesArray = [];
   if (items) {
@@ -29,6 +36,7 @@ const SearchBar = () => {
       categoriesArray.push(item.category);
     });
   }
+
   const onlyUniqueValues = (value, index, self) => {
     return self.indexOf(value) === index;
   };
@@ -36,19 +44,55 @@ const SearchBar = () => {
   /////////end of catgeories
 
   //FIND MATCHING CATEGORIES to SEARCH VALUE
-  const titleMatch = uniqueCategories.filter((category) => {
+  const categoryTitleMatch = uniqueCategories.filter((category) => {
     if (searchValue.length >= 2) {
+      // setCloseResults(false);
       return category.toLowerCase().includes(searchValue.toLowerCase());
     }
   });
-  //   console.log("TM", titleMatch);
+
+  //FIND UNIQUE BODY PARTS
+  let bodyPartsArray = [];
+  if (items) {
+    items.map((item) => {
+      bodyPartsArray.push(item.body_location);
+    });
+  }
+  const uniqueBodyParts = bodyPartsArray.filter(onlyUniqueValues);
+  const bodyPartTitleMatch = uniqueBodyParts.filter((body) => {
+    if (searchValue.length >= 2) {
+      // setCloseResults(false);
+      return body.toLowerCase().includes(searchValue.toLowerCase());
+    }
+  });
+
+  //FIND COMPANIES
+  let companiesArray = [];
+  if (companies) {
+    companies.map((company) => {
+      companiesArray.push(company.name);
+    });
+  }
+  const companyTitleMatch = companiesArray.filter((company) => {
+    if (searchValue.length >= 2) {
+      // setCloseResults(false);
+      return company.toLowerCase().includes(searchValue.toLowerCase());
+    }
+  });
+
+  //add it all together
+  const titleMatch = [
+    ...categoryTitleMatch,
+    ...bodyPartTitleMatch,
+    ...companyTitleMatch,
+  ];
 
   return (
     <>
       <Wrapper>
         <SearchButton
           onClick={() => {
-            history.push(`/${titleMatch[selectedSuggestionIndex]}`);
+            history.push(`/category/${titleMatch[selectedSuggestionIndex]}`);
             setSearchValue("");
           }}
         >
@@ -58,11 +102,21 @@ const SearchBar = () => {
           type="text"
           placeholder="Search"
           value={searchValue}
-          onChange={(ev) => setSearchValue(ev.target.value)}
+          onChange={(ev) => {
+            setSearchValue(ev.target.value);
+            setCloseResults(false);
+          }}
           onKeyDown={(ev) => {
             switch (ev.key) {
               case "Enter": {
-                history.push(`/${titleMatch[selectedSuggestionIndex]}`);
+                if (closeResults) {
+                  history.push(`/category/${searchValue}`);
+                } else {
+                  history.push(
+                    `/category/${titleMatch[selectedSuggestionIndex]}`
+                  );
+                }
+                setCloseResults(true);
                 setSearchValue("");
                 return;
               }
@@ -76,12 +130,19 @@ const SearchBar = () => {
                 selectedSuggestionIndex >= titleMatch.length - 1
                   ? setSelectedSuggestionIndex(selectedSuggestionIndex)
                   : setSelectedSuggestionIndex(selectedSuggestionIndex + 1);
+                setCloseResults(false);
+                return;
+              }
+              case "Escape": {
+                setCloseResults(true);
+                setSelectedSuggestionIndex(-1);
+                return;
               }
             }
           }}
         />
 
-        {titleMatch.length >= 1 ? (
+        {titleMatch.length >= 1 && !closeResults && (
           <SearchResults>
             {titleMatch.map((category, index) => {
               let removeSpaces = category.split(" ").join("");
@@ -101,15 +162,16 @@ const SearchBar = () => {
                     color: isSelected ? "white" : "var(--primary-color)",
                   }}
                   /////THIS WILL NEED TO FIGURED OUT WITH THE ROUTING
-                  onClick={() => history.push(`/${removeSpaces}`)}
+                  onClick={() => {
+                    history.push(`/category/${removeSpaces}`);
+                    setSearchValue("");
+                  }}
                 >
                   {category}
                 </Suggestion>
               );
             })}
           </SearchResults>
-        ) : (
-          <div></div>
         )}
       </Wrapper>
     </>
