@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
 
+//PETS AND ANIMALS IS BROKEN.
+//it doesn't like the spaces for some reason
+//will come back to it.
+
 const CategoriesDD = () => {
-  //SET ITEMS. should be replaced with global states when that is ready
   const [items, setItems] = useState(null);
   useEffect(() => {
     fetch("/items")
@@ -31,8 +34,8 @@ const CategoriesDD = () => {
   return items ? (
     <Dropdown title="Categories">
       {uniqueCategories.map((item) => {
-        //might need to set a value?? or set the url somehow
-        return <DropdownLink to={`/`}>{item}</DropdownLink>;
+        // const removeSpaces = item.toLowerCase().split(" ").join("");
+        return <DropdownLink to={`/category/${item}`}>{item}</DropdownLink>;
       })}
     </Dropdown>
   ) : (
