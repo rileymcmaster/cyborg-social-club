@@ -20,7 +20,7 @@ const FilterProduct = () => {
   ) {
     resultsArray.push(i);
   }
-  console.log(resultsArray);
+  // console.log(resultsArray);
 
   const urlCategory = useParams().category;
 
@@ -50,9 +50,6 @@ const FilterProduct = () => {
       return;
     }
     setCurrentPage(currentPage + 1);
-    //take the page number. Generate 24 consecutive numbers
-
-    // setPageItems(filteredItems[1*currentPage])
   };
   const handlePageBefore = () => {
     if (currentPage <= 1) {
@@ -61,35 +58,47 @@ const FilterProduct = () => {
     setCurrentPage(currentPage - 1);
   };
 
-  return filteredItems && filteredItems.length > 0 ? (
-    <>
-      <Title>Search for : {urlCategory}</Title>
-      <PreviousButton onClick={() => handlePageBefore()}>
-        {previousPage}
-      </PreviousButton>
-      <CurrentButton>{currentPage}</CurrentButton>
-      <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-      <GenerateProductGrid items={filteredItems} />
-    </>
-  ) : filteredItems && urlCategory === "undefined" ? (
-    <Title>No search results</Title>
-  ) : (
-    <div>LOADING</div>
+  return (
+    <Wrapper>
+      {filteredItems && filteredItems.length > 0 ? (
+        <>
+          {urlCategory === "PetsandAnimals" ? (
+            <Title>Search for : Pets and Animsl</Title>
+          ) : (
+            <Title>Search for : {urlCategory}</Title>
+          )}
+          <Pagination>
+            <PreviousButton onClick={() => handlePageBefore()}>
+              {previousPage}
+            </PreviousButton>
+            <CurrentButton>{currentPage}</CurrentButton>
+            <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+          </Pagination>
+          <GenerateProductGrid items={filteredItems} />
+        </>
+      ) : filteredItems && urlCategory === "undefined" ? (
+        <Title>No search results</Title>
+      ) : (
+        <div>LOADING</div>
+      )}
+    </Wrapper>
   );
 };
 
+const Pagination = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Wrapper = styled.div`
+  min-height: var(--page-height);
+`;
 const Title = styled.h1`
   padding: 10px;
   font-size: 3rem;
   text-align: center;
   margin-top: 20px;
-`;
-
-const ProductList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
 `;
 
 const PreviousButton = styled.button`

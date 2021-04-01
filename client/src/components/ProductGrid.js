@@ -35,7 +35,7 @@ const ProductGrid = () => {
   };
 
   return (
-    <>
+    <Wrapper>
       <Div>
         {/* PAGINATION */}
         <PreviousButton onClick={() => handlePageBefore()}>
@@ -58,10 +58,12 @@ const ProductGrid = () => {
       </Div>
       {/* </ProductList> */}
       {/* )} */}
-    </>
+    </Wrapper>
   );
 };
-
+const Wrapper = styled.div`
+  min-height: var(--page-height);
+`;
 const ProductList = styled.div`
   display: flex;
   flex-wrap: wrap;
