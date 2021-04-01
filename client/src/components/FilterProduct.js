@@ -67,17 +67,19 @@ const FilterProduct = () => {
           ) : (
             <Title>Search for : {urlCategory}</Title>
           )}
-          <Pagination>
+          {/* <Pagination>
             <PreviousButton onClick={() => handlePageBefore()}>
               {previousPage}
             </PreviousButton>
             <CurrentButton>{currentPage}</CurrentButton>
             <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-          </Pagination>
+          </Pagination> */}
           <GenerateProductGrid items={filteredItems} />
         </>
       ) : filteredItems && urlCategory === "undefined" ? (
         <Title>No search results</Title>
+      ) : filteredItems && filteredItems.length === 0 ? (
+        <Title>No products found. Try again</Title>
       ) : (
         <div>LOADING</div>
       )}
