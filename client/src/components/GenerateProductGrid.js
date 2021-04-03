@@ -1,10 +1,15 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import ProductGridItem from "./ProductGridItem";
+import { VscLoading } from "react-icons/vsc";
 
 const GenerateProductGrid = ({ loading, items }) => {
   return loading ? (
-    <h1>LOADING</h1>
+    <ProductList>
+      <Icon>
+        <VscLoading />
+      </Icon>
+    </ProductList>
   ) : (
     items && (
       <ProductList>
@@ -27,6 +32,21 @@ const GenerateProductGrid = ({ loading, items }) => {
     )
   );
 };
+const Rotate = keyframes`
+from {
+  transform: rotate(0deg)
+}
+to {
+  transform: rotate(360deg)
+}
+`;
+const Icon = styled.div`
+  color: black;
+  display: inline-block;
+  font-size: 5rem;
+  height: 80px;
+  animation: ${Rotate} 2s steps(9) infinite;
+`;
 const ProductList = styled.div`
   display: flex;
   flex-wrap: wrap;

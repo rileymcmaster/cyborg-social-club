@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import SidebarFilter from "./SidebarFilter";
+import ErrorPage from "./ErrorPage";
 
 const ProductGrid = () => {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  // const [currentItems, setCurrentItems] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
@@ -25,6 +26,10 @@ const ProductGrid = () => {
       .then((data) => {
         // console.log(data);
         setItems(data.data.results);
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+        setError(true);
       });
     setLoading(false);
   }, []);
@@ -76,7 +81,9 @@ const ProductGrid = () => {
       ? filteredItems.slice(indexOfFirstItem, indexOfLastItem)
       : items.slice(indexOfFirstItem, indexOfLastItem);
 
-  return (
+  return error ? (
+    <ErrorPage />
+  ) : (
     <Wrapper>
       <Div>
         {/* PAGINATION */}
@@ -109,7 +116,6 @@ const ProductGrid = () => {
         {/* ITEM GRID */}
         <ProductGridArea>
           <GenerateProductGrid
-            // items={filteredItems.length > 0 ? filteredItems : items}
             items={currentItems}
             loading={loading}
             setCurrentPage={() => setCurrentPage(1)}
