@@ -29,7 +29,7 @@ const Header = () => {
 
       {/* SIGNUP OR LOGIN */}
       {/* NEED STATE TO DETERMINE IF IT IS LOGIN OR WELCOME */}
-      <NavigationLink to={"/"}>
+      <NavigationLink to={"/sign-in"}>
         <CurrentUser />
       </NavigationLink>
       {/* SHOPPING CART */}

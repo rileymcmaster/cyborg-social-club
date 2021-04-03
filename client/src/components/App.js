@@ -9,6 +9,7 @@ import GlobalStyles from "../GlobalStyles";
 import ProductGrid from "./ProductGrid";
 import ProductPage from "./ProductPage";
 import HomePage from "./HomePage";
+import SignUp from './SignUp';
 
 import FilterProduct from "./FilterProduct";
 import Cart from "./Cart";
@@ -44,7 +45,7 @@ function App() {
           <Route exact path="/item/:id">
             <ProductPage />
           </Route>
-          <Route exact path="/signin">
+          <Route exact path="/sign-in">
             <Signin />
           </Route>
           <Route exact path="/category/:category">
@@ -53,8 +54,8 @@ function App() {
           <Route exact path="/form">
             <Form />
           </Route>
-          <Route exact path="/sign-in">
-            <Signin />
+          <Route exact path="/sign-up">
+            <SignUp />
           </Route>
           <Route path="/">
             <ErrorPage />
