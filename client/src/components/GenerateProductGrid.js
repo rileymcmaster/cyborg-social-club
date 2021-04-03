@@ -2,8 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import ProductGridItem from "./ProductGridItem";
 
-const GenerateProductGrid = ({ items }) => {
-  return (
+const GenerateProductGrid = ({ loading, items }) => {
+  return loading ? (
+    <h1>LOADING</h1>
+  ) : (
     items && (
       <ProductList>
         {/* {console.log(items)} */}
