@@ -11,28 +11,32 @@ const FilterProduct = () => {
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
-  const maxResults = 24;
-  let resultsArray = [];
-  for (
-    let i = (currentPage - 1) * maxResults;
-    i < (currentPage - 1) * maxResults + maxResults;
-    i++
-  ) {
-    resultsArray.push(i);
-  }
+
+  // const maxResults = 24;
+  // let resultsArray = [];
+  // for (
+  //   let i = (currentPage - 1) * maxResults;
+  //   i < (currentPage - 1) * maxResults + maxResults;
+  //   i++
+  // ) {
+  //   resultsArray.push(i);
+  // }
   // console.log(resultsArray);
 
   const urlCategory = useParams().category;
 
   useEffect(() => {
-    fetch(`/items/category/${urlCategory.toLowerCase()}`)
+    fetch(
+      `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=24`
+    )
       .then((res) => res.json())
       .then((data) => {
+        console.log(data.data);
         // console.log("Data", data);
-        setFilteredItems(data.data);
+        setFilteredItems(data.data.results);
       })
       .catch((error) => console.log("ERROR", error));
-  }, [useParams()]);
+  }, [useParams(), currentPage]);
 
   ///PAGINATION attempt
   // useEffect(() => {
@@ -57,23 +61,37 @@ const FilterProduct = () => {
     }
     setCurrentPage(currentPage - 1);
   };
-
+  // console.log(filteredItems);
   return (
     <Wrapper>
       {filteredItems && filteredItems.length > 0 ? (
         <>
           {urlCategory === "PetsandAnimals" ? (
-            <Title>Search for : Pets and Animsl</Title>
+            <Title>Search for : Pets and Animals</Title>
           ) : (
             <Title>Search for : {urlCategory}</Title>
           )}
-          {/* <Pagination>
-            <PreviousButton onClick={() => handlePageBefore()}>
+          <Div>
+            {/* PAGINATION */}
+            <PreviousButton
+              onClick={() => handlePageBefore()}
+              style={{
+                opacity: currentPage <= 1 ? "0%" : "100%",
+              }}
+            >
               {previousPage}
             </PreviousButton>
             <CurrentButton>{currentPage}</CurrentButton>
-            <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-          </Pagination> */}
+            <NextButton
+              // disabled={filteredItems.length <= 24}
+              onClick={() => handlePageNext()}
+              style={{
+                opacity: currentPage >= filteredItems.length ? "0%" : "100%",
+              }}
+            >
+              {nextPage}
+            </NextButton>
+          </Div>
           <GenerateProductGrid items={filteredItems} />
         </>
       ) : filteredItems && urlCategory === "undefined" ? (
@@ -103,6 +121,14 @@ const Title = styled.h1`
   margin-top: 20px;
 `;
 
+const Div = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 30px;
+`;
+
 const PreviousButton = styled.button`
   border: 3px solid;
   border-color: (--primary-color);
@@ -111,7 +137,6 @@ const PreviousButton = styled.button`
   opacity: 90%;
   padding: 5px 10px 5px 10px;
   font-size: 10px;
-  cursor: pointer;
   outline: none;
   &:hover {
     border: 3px solid;
@@ -140,7 +165,6 @@ const NextButton = styled.button`
   opacity: 90%;
   padding: 5px 10px 5px 10px;
   font-size: 10px;
-  cursor: pointer;
   outline: none;
   &:hover {
     border: 3px solid;

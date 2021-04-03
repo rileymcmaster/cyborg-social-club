@@ -38,11 +38,23 @@ const ProductGrid = () => {
     <Wrapper>
       <Div>
         {/* PAGINATION */}
-        <PreviousButton onClick={() => handlePageBefore()}>
+        <PreviousButton
+          onClick={() => handlePageBefore()}
+          style={{
+            opacity: currentPage <= 1 ? "0%" : "100%",
+          }}
+        >
           {previousPage}
         </PreviousButton>
         <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+        <NextButton
+          onClick={() => handlePageNext()}
+          style={{
+            opacity: currentPage >= 15 ? "0%" : "100%",
+          }}
+        >
+          {nextPage}
+        </NextButton>
       </Div>
       {/* END PAGINATION */}
       {/* ITEM GRID */}
@@ -50,11 +62,23 @@ const ProductGrid = () => {
       {/* END ITEM GRID */}
       <Div>
         {/* PAGINATION */}
-        <PreviousButton onClick={() => handlePageBefore()}>
+        <PreviousButton
+          onClick={() => handlePageBefore()}
+          style={{
+            opacity: currentPage <= 1 ? "0%" : "100%",
+          }}
+        >
           {previousPage}
         </PreviousButton>
         <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
+        <NextButton
+          onClick={() => handlePageNext()}
+          style={{
+            opacity: currentPage >= 15 ? "0%" : "100%",
+          }}
+        >
+          {nextPage}
+        </NextButton>
       </Div>
       {/* </ProductList> */}
       {/* )} */}
@@ -64,12 +88,12 @@ const ProductGrid = () => {
 const Wrapper = styled.div`
   min-height: var(--page-height);
 `;
-const ProductList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-`;
+// const ProductList = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 const Div = styled.div`
   display: flex;
@@ -87,7 +111,6 @@ const PreviousButton = styled.button`
   opacity: 90%;
   padding: 5px 10px 5px 10px;
   font-size: 10px;
-  cursor: pointer;
   outline: none;
   &:hover {
     border: 3px solid;
@@ -116,7 +139,6 @@ const NextButton = styled.button`
   opacity: 90%;
   padding: 5px 10px 5px 10px;
   font-size: 10px;
-  cursor: pointer;
   outline: none;
   &:hover {
     border: 3px solid;
