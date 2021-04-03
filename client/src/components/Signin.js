@@ -1,20 +1,20 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signIn } from "../actions";
 import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import Button from "./Button";
 import { Link } from "react-router-dom";
-import { GiRobotAntennas } from "react-icons/gi";
+import { GiEdgeCrack, GiRobotAntennas, GiWhiteBook } from "react-icons/gi";
 import { HiOutlineArrowCircleRight } from "react-icons/hi";
+import { FiAlertTriangle } from "react-icons/fi";
 
 const Signin = () => {
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   let history = useHistory();
-
-
+  const [passwordError, setPasswordError] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -29,11 +29,22 @@ const Signin = () => {
     fetch("/user", requestOptions)
       .then((res) => res.json())
       .then((json) => {
-        if (json.status === 200) {
+        console.log(json);
+        if (
+          json.status === 200 &&
+          json.user.email === email &&
+          json.user.password === password
+        ) {
           dispatch(signIn(json.user));
           return history.push("/products");
+        } else if (
+          (json.status === 200 && json.user.email != email) ||
+          json?.user?.password != password
+        ) {
+          setPasswordError(true);
+          return;
         } else if (json.status === 404) {
-          return window.alert("user does not exist");
+          setPasswordError(true);
         }
       });
   };
@@ -43,6 +54,30 @@ const Signin = () => {
       <div>
         <form onSubmit={handleSubmit}>
           <h1>Sign in</h1>
+          <AuthErrorMsg
+            style={
+              passwordError === true
+                ? { border: " solid red ", borderRadius: "7px" }
+                : { backgroundColor: "white" }
+            }
+          >
+            {passwordError === false ? (
+              <span>
+                <p></p>
+              </span>
+            ) : (
+              <span>
+                <ErrorMessage style={{ color: "white" }}>
+                  <FiAlertTriangle style={{ height: "40px", width: "40px" }} />
+                </ErrorMessage>
+                <p>
+                  {" "}
+                  Sorry, the e-mail address and password you entered don’t
+                  match. Please try again.
+                </p>
+              </span>
+            )}
+          </AuthErrorMsg>
           <label for="email">
             <b>Email</b>
           </label>
@@ -123,10 +158,9 @@ const Container = styled.div`
     margin-right: 3px;
     margin-bottom: 4px;
     min-width: 380px;
-    max-width: 400px;
   }
   h1 {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
     font-size: 50px;
   }
 `;
@@ -181,6 +215,33 @@ const CreateAccLink = styled(Link)`
   &:hover {
     border-bottom: solid 3px var(--primary-color);
   }
+`;
+
+const AuthErrorMsg = styled.div`
+  display: flex;
+
+  min-width: 380px;
+  max-width: 70%;
+  min-height: 80px;
+  max-height: 80px;
+  margin-bottom: 10px;
+  color: var(--secondary-color);
+  text-align: center;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  display: flex;
+  color: white;
+  width: 20%;
+  height: 100%;
+  background-color: red;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default Signin;
