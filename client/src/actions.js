@@ -22,7 +22,7 @@ export const signIn = (user) => ({
   type: "SIGN_IN",
   user,
 });
-export const signOut = (userId) => {
+export const signOut = (user) => {
   return {
     type: "SIGN_OUT",
   };

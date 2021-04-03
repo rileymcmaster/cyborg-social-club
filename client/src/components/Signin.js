@@ -1,19 +1,20 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signIn } from "../actions";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import Button from "./Button";
+import { Link } from "react-router-dom";
+import { GiRobotAntennas } from "react-icons/gi";
+import { HiOutlineArrowCircleRight } from "react-icons/hi";
 
 const Signin = () => {
-  const state = useSelector((state) => state.signin);
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
   let history = useHistory();
 
-  const handleChange = (e) => {
-    console.log(e.target.value);
-  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,51 +38,76 @@ const Signin = () => {
       });
   };
 
-  console.log(state);
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
-        <label for="email">
-          <b>Email</b>
-        </label>
-        <input
-          ref={emailRef}
-          type="email"
-          placeholder="Enter Email"
-          name="email"
-          required
-          onChange={handleChange}
-        />
+      <div>
+        <form onSubmit={handleSubmit}>
+          <h1>Sign in</h1>
+          <label for="email">
+            <b>Email</b>
+          </label>
+          <input
+            ref={emailRef}
+            type="email"
+            placeholder="Enter Email"
+            name="email"
+            required
+            maxlength="50"
+          />
 
-        <label for="password">
-          <b>Password</b>
-        </label>
-        <input
-          ref={passwordRef}
-          type="password"
-          onChange={handleChange}
-          placeholder="Enter Password"
-          name="password"
-          required
-        />
+          <label for="password">
+            <b>Password</b>
+          </label>
+          <input
+            ref={passwordRef}
+            type="password"
+            placeholder="Enter Password"
+            name="password"
+            maxlength="40"
+            required
+          />
 
-        <div>
-          <button type="submit" onClick="submit">
-            Login
-          </button>
-          <button type="button">Cancel</button>
-        </div>
-      </form>
+          <ButtonContainer>
+            <Button type="submit" onClick="submit" style={{ marginTop: "5px" }}>
+              Login
+            </Button>
+            <Link
+              style={{ textDecoration: "none", color: "var(--primary-color)" }}
+            >
+              Forgot password?
+            </Link>
+          </ButtonContainer>
+        </form>
+      </div>
+      <SignUpContainer>
+        <Logo>
+          <GiRobotAntennas />
+        </Logo>
+        <h2> Don't have an account?</h2>
+        <p>Here are some of the benefits you’ll enjoy:</p>
+        <h3>Exclusive Deals</h3>
+        <p>Be first to know about new products and specials. </p>
+        <h3>Free Shipping</h3>
+        <p>Enjoy free shipping on orders over $24.99. </p>
+
+        <h3>Cyborg Points Program</h3>
+        <p>Get 1 Reward point per dollar spent with every purchse.</p>
+        <CreateAccLink to="/sign-up">
+          Create an account <HiOutlineArrowCircleRight />{" "}
+        </CreateAccLink>
+      </SignUpContainer>
     </Container>
   );
 };
 
 const Container = styled.div`
+  display: flex;
   width: 100%;
-  height: 80vh;
+  height: 83vh;
+  justify-content: center;
+  align-items: center;
 
   form {
-    border: solid red;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -96,8 +122,64 @@ const Container = styled.div`
     margin-top: 4px;
     margin-right: 3px;
     margin-bottom: 4px;
-    min-width: 250px;
+    min-width: 380px;
     max-width: 400px;
+  }
+  h1 {
+    margin-bottom: 60px;
+    font-size: 50px;
+  }
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  min-width: 400px;
+  max-width: 400px;
+`;
+
+const SignUpContainer = styled.div`
+  margin-left: 10%;
+  width: 40%;
+  max-width: 40%;
+  height: 600px;
+  border: var(--primary-color) solid 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  h2 {
+    color: var(--secondary-color);
+    padding: 30px;
+    font-size: 40px;
+  }
+  h3,
+  p {
+    padding: 10px;
+  }
+  h3 {
+    color: var(--prim-color);
+    font-size: 20px;
+  }
+`;
+const Logo = styled.div`
+  font-size: 5rem;
+  margin: 10px;
+  color: var(--primary-color);
+`;
+
+const CreateAccLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: 800;
+  margin-top: 20px;
+
+  &:hover {
+    border-bottom: solid 3px var(--primary-color);
   }
 `;
 
