@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import SidebarFilter from "./SidebarFilter";
+import ErrorPage from "./ErrorPage";
 
 const ProductGrid = () => {
-  const [items, setItems] = useState(null);
+  const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
 
   useEffect(() => {
+    setLoading(true);
     // console.log("starting fetch in product grid");
-    fetch(`/items?page=${currentPage}&limit=24`)
+    //BACKEND PAGINATION VVV
+    // fetch(`/items?page=${currentPage}&limit=24`)
+    //FRONTEND PAGINATION VVV
+    fetch(`/items`)
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
         setItems(data.data.results);
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+        setError(true);
       });
-  }, [currentPage]);
-  // console.log(items);
+    setLoading(false);
+  }, []);
+  // ^^this was dependent on currentPage. Might have to put it back
 
   const handlePageNext = () => {
     if (currentPage >= items.length) {
@@ -34,7 +48,42 @@ const ProductGrid = () => {
     setCurrentPage(currentPage - 1);
   };
 
-  return (
+  //FILTER
+  const [checkedFilter, setCheckedFilter] = useState([]);
+  let filteredItems = [];
+  if (items && checkedFilter) {
+    items.filter((item) => {
+      // console.log("item", item.body_location);
+      checkedFilter.find((filter) => {
+        //CATEGORY
+        if (filter.kind === "category" && filter.name === item.category) {
+          filteredItems.push(item);
+        } else if (
+          //PARTS
+          filter.kind === "parts" &&
+          filter.name === item.body_location
+        ) {
+          filteredItems.push(item);
+        }
+      });
+    });
+  }
+  //RESET TO FIRST PAGE when filters are changed
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [checkedFilter]);
+
+  //GET CURRENT ITEMS PER PAGE
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems =
+    filteredItems.length > 0
+      ? filteredItems.slice(indexOfFirstItem, indexOfLastItem)
+      : items.slice(indexOfFirstItem, indexOfLastItem);
+
+  return error ? (
+    <ErrorPage />
+  ) : (
     <Wrapper>
       <Div>
         {/* PAGINATION */}
@@ -57,9 +106,24 @@ const ProductGrid = () => {
         </NextButton>
       </Div>
       {/* END PAGINATION */}
-      {/* ITEM GRID */}
-      <GenerateProductGrid items={items} />
-      {/* END ITEM GRID */}
+      <GridDisplay>
+        <SidebarGrid>
+          <SidebarFilter
+            checked={checkedFilter}
+            setChecked={setCheckedFilter}
+          />
+        </SidebarGrid>
+        {/* ITEM GRID */}
+        <ProductGridArea>
+          <GenerateProductGrid
+            items={currentItems}
+            loading={loading}
+            setCurrentPage={() => setCurrentPage(1)}
+          />
+        </ProductGridArea>
+
+        {/* END ITEM GRID */}
+      </GridDisplay>
       <Div>
         {/* PAGINATION */}
         <PreviousButton
@@ -85,6 +149,18 @@ const ProductGrid = () => {
     </Wrapper>
   );
 };
+
+const ProductGridArea = styled.div`
+  grid-area: main;
+`;
+const SidebarGrid = styled.div`
+  grid-area: sidebar;
+`;
+const GridDisplay = styled.div`
+  display: grid;
+  grid-template-columns: 200px auto;
+  grid-template-areas: "sidebar main";
+`;
 const Wrapper = styled.div`
   min-height: var(--page-height);
 `;
