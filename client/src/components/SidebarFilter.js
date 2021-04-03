@@ -24,16 +24,19 @@ const SidebarFilter = ({ checked, setChecked, setCurrentPage }) => {
         if (filter.kind === "category") {
           return (
             <>
-              <EachInput key={index}>
-                <input
-                  onClick={() => handleToggle(filter)}
-                  type="checkbox"
-                  name="filter"
-                  value={filter.name}
-                />
+              <label for={filter.name}>
+                <EachInput key={index}>
+                  <input
+                    onClick={() => handleToggle(filter)}
+                    type="checkbox"
+                    name="filter"
+                    value={filter.name}
+                    id={filter.name}
+                  />
 
-                <label for={filter.name}>{filter.name}</label>
-              </EachInput>
+                  {filter.name}
+                </EachInput>
+              </label>
             </>
           );
         }
@@ -42,16 +45,19 @@ const SidebarFilter = ({ checked, setChecked, setCurrentPage }) => {
       {filters.map((filter, index) => {
         if (filter.kind === "parts") {
           return (
-            <EachInput key={index}>
-              <input
-                onClick={() => handleToggle(filter)}
-                type="checkbox"
-                name="filter"
-                value={filter.name}
-                defaultChecked={false}
-              />
-              <label for="filter"> {filter.name}</label>
-            </EachInput>
+            <label for={filter.name}>
+              <EachInput key={index}>
+                <input
+                  onClick={() => handleToggle(filter)}
+                  type="checkbox"
+                  name="filter"
+                  value={filter.name}
+                  defaultChecked={false}
+                  id={filter.name}
+                />
+                {filter.name}
+              </EachInput>
+            </label>
           );
         }
       })}
@@ -76,6 +82,7 @@ const Title = styled.h2`
   }
 `;
 const EachInput = styled.div`
+  user-select: none;
   font-weight: 600;
   padding: 10px 20px 10px 20px;
   text-decoration: none;
