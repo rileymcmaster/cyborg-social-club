@@ -14,8 +14,6 @@ const Signin = () => {
   const dispatch = useDispatch();
   let history = useHistory();
 
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
     let email = emailRef.current.value;
@@ -88,7 +86,7 @@ const Signin = () => {
         <h3>Exclusive Deals</h3>
         <p>Be first to know about new products and specials. </p>
         <h3>Free Shipping</h3>
-        <p>Enjoy free shipping on orders over $24.99. </p>
+        <p>Enjoy free shipping on orders over $99. </p>
 
         <h3>Cyborg Points Program</h3>
         <p>Get 1 Reward point per dollar spent with every purchse.</p>
