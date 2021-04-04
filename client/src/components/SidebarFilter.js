@@ -61,14 +61,6 @@ const SidebarFilter = ({ checked, setChecked, setCurrentPage }) => {
           );
         }
       })}
-      {/* This doesn't clear the checkboxes but it works */}
-      <Button
-        onClick={() => {
-          setChecked([]);
-        }}
-      >
-        Clear
-      </Button>
     </Wrapper>
   );
 };
@@ -99,7 +91,9 @@ const EachInput = styled.div`
 const Wrapper = styled.div`
   /* height: 800px; */
   padding-bottom: 20px;
-  /* width: 200px; */
+  /* padding-right: 20px; */
+  width: 200px;
+  height: 800px;
   display: flex;
   flex-direction: column;
   background-color: rgba(200, 200, 200, 0.2);

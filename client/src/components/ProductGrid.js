@@ -4,8 +4,11 @@ import GenerateProductGrid from "./GenerateProductGrid";
 import { useHistory } from "react-router-dom";
 import SidebarFilter from "./SidebarFilter";
 import ErrorPage from "./ErrorPage";
+import { useMediaQuery } from "./useMediaQuery";
 
 const ProductGrid = () => {
+  //check width of page
+  let isPageWide = useMediaQuery("(min-width: 900px)");
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -85,81 +88,93 @@ const ProductGrid = () => {
     <ErrorPage />
   ) : (
     <Wrapper>
-      <Div>
-        {/* PAGINATION */}
-        <PreviousButton
-          onClick={() => handlePageBefore()}
-          style={{
-            opacity: currentPage <= 1 ? "0%" : "100%",
-          }}
-        >
-          {previousPage}
-        </PreviousButton>
-        <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton
-          onClick={() => handlePageNext()}
-          style={{
-            opacity: currentPage >= 15 ? "0%" : "100%",
-          }}
-        >
-          {nextPage}
-        </NextButton>
-      </Div>
-      {/* END PAGINATION */}
       <GridDisplay>
-        <SidebarGrid>
-          <SidebarFilter
-            checked={checkedFilter}
-            setChecked={setCheckedFilter}
-          />
-        </SidebarGrid>
-        {/* ITEM GRID */}
+        {isPageWide ? (
+          <SidebarGrid>
+            <SidebarFilter
+              checked={checkedFilter}
+              setChecked={setCheckedFilter}
+            />
+          </SidebarGrid>
+        ) : (
+          <></>
+        )}
         <ProductGridArea>
+          <Div>
+            {/* PAGINATION */}
+            <PreviousButton
+              onClick={() => handlePageBefore()}
+              style={{
+                opacity: currentPage <= 1 ? "0%" : "100%",
+              }}
+            >
+              {previousPage}
+            </PreviousButton>
+            <CurrentButton>{currentPage}</CurrentButton>
+            <NextButton
+              onClick={() => handlePageNext()}
+              style={{
+                opacity: currentPage >= 15 ? "0%" : "100%",
+              }}
+            >
+              {nextPage}
+            </NextButton>
+          </Div>
+          {/* END PAGINATION */}
+
+          {/* ITEM GRID */}
+
           <GenerateProductGrid
             items={currentItems}
             loading={loading}
             setCurrentPage={() => setCurrentPage(1)}
           />
-        </ProductGridArea>
 
-        {/* END ITEM GRID */}
+          {/* END ITEM GRID */}
+
+          <Div>
+            {/* PAGINATION */}
+            <PreviousButton
+              onClick={() => handlePageBefore()}
+              style={{
+                opacity: currentPage <= 1 ? "0%" : "100%",
+              }}
+            >
+              {previousPage}
+            </PreviousButton>
+            <CurrentButton>{currentPage}</CurrentButton>
+            <NextButton
+              onClick={() => handlePageNext()}
+              style={{
+                opacity: currentPage >= 15 ? "0%" : "100%",
+              }}
+            >
+              {nextPage}
+            </NextButton>
+          </Div>
+          {/* </ProductList> */}
+          {/* )} */}
+        </ProductGridArea>
       </GridDisplay>
-      <Div>
-        {/* PAGINATION */}
-        <PreviousButton
-          onClick={() => handlePageBefore()}
-          style={{
-            opacity: currentPage <= 1 ? "0%" : "100%",
-          }}
-        >
-          {previousPage}
-        </PreviousButton>
-        <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton
-          onClick={() => handlePageNext()}
-          style={{
-            opacity: currentPage >= 15 ? "0%" : "100%",
-          }}
-        >
-          {nextPage}
-        </NextButton>
-      </Div>
-      {/* </ProductList> */}
-      {/* )} */}
     </Wrapper>
   );
 };
 
 const ProductGridArea = styled.div`
-  grid-area: main;
+  /* grid-area: main; */
 `;
 const SidebarGrid = styled.div`
-  grid-area: sidebar;
+  /* grid-area: sidebar; */
+  display: flex;
+  min-width: 200px;
+  margin-top: 50px;
 `;
 const GridDisplay = styled.div`
-  display: grid;
-  grid-template-columns: 200px auto;
-  grid-template-areas: "sidebar main";
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* grid-template-columns: 200px auto; */
+  /* grid-template-areas: "sidebar main"; */
 `;
 const Wrapper = styled.div`
   min-height: var(--page-height);

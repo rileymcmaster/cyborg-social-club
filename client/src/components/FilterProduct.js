@@ -31,7 +31,7 @@ const FilterProduct = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         // console.log("Data", data);
         setFilteredItems(data.data.results);
       })

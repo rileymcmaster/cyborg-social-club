@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { FiSearch } from "react-icons/fi";
+import { useMediaQuery } from "../useMediaQuery";
 
 //WILL NEED TO FIX THE ROUTE in onclick
 
-const SearchBar = () => {
+const SearchBar = ({ hideMenu }) => {
+  const [showIcon, setShowIcon] = useState(false);
+  let isPageWide = useMediaQuery("(min-width: 900px)");
   const history = useHistory();
   const [searchValue, setSearchValue] = useState("");
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
@@ -101,14 +104,18 @@ const SearchBar = () => {
   return (
     <>
       <Wrapper>
-        <SearchButton
-          onClick={() => {
-            history.push(`/category/${titleMatch[selectedSuggestionIndex]}`);
-            setSearchValue("");
-          }}
-        >
-          <FiSearch />
-        </SearchButton>
+        {isPageWide ? (
+          <SearchButton
+            onClick={() => {
+              history.push(`/category/${titleMatch[selectedSuggestionIndex]}`);
+              setSearchValue("");
+            }}
+          >
+            <FiSearch />
+          </SearchButton>
+        ) : (
+          <></>
+        )}
         <Input
           type="text"
           placeholder="Search"
@@ -129,6 +136,7 @@ const SearchBar = () => {
                 }
                 setCloseResults(true);
                 setSearchValue("");
+                hideMenu();
                 return;
               }
               case "ArrowUp": {
@@ -147,6 +155,7 @@ const SearchBar = () => {
               case "Escape": {
                 setCloseResults(true);
                 setSelectedSuggestionIndex(-1);
+                hideMenu();
                 return;
               }
             }
@@ -176,6 +185,7 @@ const SearchBar = () => {
                   onClick={() => {
                     history.push(`/category/${removeSpaces}`);
                     setSearchValue("");
+                    hideMenu();
                   }}
                 >
                   {category}
@@ -203,9 +213,13 @@ const SearchResults = styled.ul`
 `;
 const Input = styled.input`
   border: none;
+  width: 100%;
   outline: none;
   height: 40px;
   padding: 0 20px 0 5px;
+  &:focus {
+    box-shadow: 1px 1px 10px var(--primary-color), 0 0 50px var(--primary-color);
+  }
 `;
 
 const SearchButton = styled.button`
@@ -213,12 +227,15 @@ const SearchButton = styled.button`
   width: 40px;
   height: 40px;
   z-index: 99;
+  /* margin-left: auto; */
   right: 0;
+
   /* margin: -3px 0 0 -30px; */
   color: black;
   font-size: 1.5rem;
   border: none;
   outline: none;
+  background-color: transparent;
   &:active {
     font-size: 1rem;
   }
@@ -226,6 +243,7 @@ const SearchButton = styled.button`
 
 const Wrapper = styled.div`
   position: relative;
+  width: 100%;
 `;
 
 export default SearchBar;
