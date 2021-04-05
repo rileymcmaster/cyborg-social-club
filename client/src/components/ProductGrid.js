@@ -66,7 +66,11 @@ const ProductGrid = () => {
           filter.kind === "parts" &&
           filter.name === item.body_location
         ) {
-          filteredItems.push(item);
+          if (filteredItems.includes(item)) {
+            return;
+          } else {
+            filteredItems.push(item);
+          }
         }
       });
     });
