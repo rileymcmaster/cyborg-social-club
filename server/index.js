@@ -6,13 +6,18 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { getItemById } = require("../server/routes/handlers/items-handlers");
 const {
+  applyDiscount,
+} = require("../server/routes/handlers/discounts-handlers");
+
+const {
   getUserById,
   updateUserCart,
 } = require("../server/routes/handlers/users-handler");
 const itemsRouter = require("./routes/items");
 const companiesRouter = require("./routes/companies");
-const stripe = require("stripe")(process.env.STRIPE_KEY);
+const { saveOrder } = require("../server/routes/handlers/orders-handlers");
 require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
 const PORT = 4000;
 
@@ -40,6 +45,10 @@ express()
   ////// Sign in //////
   .post("/user", getUserById)
   .post("/updateusercart", updateUserCart)
+
+  //apply discount ///
+
+  .post("/applydiscount", applyDiscount)
 
   // send a payment to STRIPE API
   .post("/payment", async (req, res) => {
@@ -71,5 +80,9 @@ express()
       res.json({ message: "Payment failed", success: false });
     }
   })
+
+  //create an order
+
+  .post("/order", saveOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));

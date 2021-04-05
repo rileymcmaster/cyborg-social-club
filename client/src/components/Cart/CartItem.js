@@ -11,16 +11,19 @@ const CartItem = ({ product }) => {
   const formattedUnitPrice = Number(product.price.slice(1));
   const subtotalPrice = formattedUnitPrice * quantity;
   const formattedSubtotalPrice = parseFloat(subtotalPrice).toFixed(2);
-  
+
   const handlePlusClick = () => {
     setQuantity(quantity + 1);
+    dispatch(updateQuantity(product, product.quantity + 1));
   };
 
   const handleMinusClick = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      dispatch(updateQuantity(product, product.quantity - 1));
     }
   };
+  console.log(product);
 
   return (
     <>
@@ -59,7 +62,7 @@ const CartItem = ({ product }) => {
               margin: " 15px 0",
             }}
           >
-            Update
+            Update total
           </Button>
         </SelectQuantity>
         <Price>${formattedSubtotalPrice}</Price>

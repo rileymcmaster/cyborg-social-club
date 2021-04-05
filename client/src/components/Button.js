@@ -20,6 +20,7 @@ const Button = styled.button`
     color: white;
     background-color: grey;
     border: 1px solid grey;
+    cursor: not-allowed;
   }
   &:disabled:hover {
     color: white;

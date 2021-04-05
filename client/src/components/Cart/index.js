@@ -1,4 +1,4 @@
-import React, { createRef, useRef, useState } from "react";
+import React, { createRef, useEffect, useRef, useState } from "react";
 import Button from "../Button";
 import styled from "styled-components";
 import CartItem from "./CartItem";
@@ -14,32 +14,82 @@ import {
 import { Divider } from "./CartItem";
 import { useSelector } from "react-redux";
 
-const Cart = () => {
-  const [couponValue, setCouponValue] = useState(null);
+const Cart = ({ totalPrice, setTotalPrice, cart, setCart }) => {
+  const [couponCode, setCouponCode] = useState(null);
+  const [discountValue, setDiscountValue] = useState(0);
+  const [couponMessage, setCouponMessage] = useState("");
+  const test = useSelector((state) => state.cart);
+  console.log(test);
   const guestUserState = useSelector((state) => Object.values(state.cart));
+  console.log(guestUserState);
   const loggedInState = useSelector((state) => state.signin);
-const loggedInCart = Object.values(loggedInState.cart);
+  console.log(loggedInState);
+  const loggedInCart = Object.values(loggedInState.cart);
+  // setCart(loggedInCart);
 
-let cartMap = [];
+  let cartMap = [];
 
+  useEffect(() => {
+    let discountedPrice = totalPrice - discountValue;
+    let formattedDiscountedPrice = parseFloat(discountedPrice).toFixed(2);
+    setTotalPrice(formattedDiscountedPrice);
+  }, [discountValue]);
 
-  let totalPrice;
-
-  if (guestUserState.length !== 0) {
-    const prices = guestUserState.map((product) => Number(product.price.slice(1)));
-    const quantities = guestUserState.map((product) => Number(product.quantity));
+  if (guestUserState.length !== 0 && discountValue === 0) {
+    const prices = guestUserState.map((product) =>
+      Number(product.price.slice(1))
+    );
+    const quantities = guestUserState.map((product) =>
+      Number(product.quantity)
+    );
     const subtotals = prices.map((price, index) => price * quantities[index]);
 
-    totalPrice = subtotals.reduce((accumulator, currentValue) => {
-      return (accumulator = accumulator + currentValue);
-    });
-  } else {
-    totalPrice = 0;
+    const calculatedTotalPrice = subtotals.reduce(
+      (accumulator, currentValue) => {
+        return (accumulator = accumulator + currentValue);
+      }
+    );
+    const formattedTotalPrice = parseFloat(calculatedTotalPrice).toFixed(2);
+    setTotalPrice(formattedTotalPrice);
+  } else if (guestUserState.length === 0) {
+    setTotalPrice(0);
   }
 
-  const formattedTotalPrice = parseFloat(totalPrice).toFixed(2);
+  const handleCouponSubmit = () => {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ couponCode }),
+    };
 
-  return  (
+    if (totalPrice !== 0) {
+      fetch("applydiscount", requestOptions)
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.status);
+          if (res.status === 200) {
+            // console.log(res.value);
+            setDiscountValue(res.value);
+            setCouponMessage(
+              `You are one lucky Cyborg, you saved ${res.value}$ today!`
+            );
+            // console.log(discountValue);
+          } else if (res.status === 400) {
+            setCouponMessage(
+              "The coupon code you provide is either invalid or has expired."
+            );
+            console.log(couponMessage);
+          }
+        });
+    } else {
+      setCouponMessage(
+        "Please add items to your cart before applying your coupon."
+      );
+    }
+  };
+  return (
     <CartWrapper>
       <CartDetails>
         <CartHeader>
@@ -52,9 +102,15 @@ let cartMap = [];
           </CartHeadings>
         </CartHeader>
         <div>
-          {loggedInState.isSignedIn ? loggedInCart.map((product)=> {return <CartItem product={product} /> }) : guestUserState.map((product) => {
-            return <CartItem product={product} />;
-          })}
+          {loggedInState.isSignedIn
+            ? loggedInCart.map((product) => {
+                console.log(product);
+                return <CartItem product={product} />;
+              })
+            : guestUserState.map((product) => {
+                console.log(product);
+                return <CartItem product={product} />;
+              })}
         </div>
         <CartFooter>
           <h2>Items related to your order</h2>
@@ -69,16 +125,15 @@ let cartMap = [];
             color="green"
             style={{ marginRight: "20px" }}
           />
-          <p style={{ fontSize: "15px" }}>
-            Free shipping within Canada for orders over $99.
-          </p>
+          <p style={{ fontSize: "15px" }}>Free shipping within Canada.</p>
         </Info>
         <CartTotal>
           <div>Total:</div>
-          <div>$CAD {formattedTotalPrice} </div>
+          <div>$CAD {totalPrice} </div>
         </CartTotal>
         <Discount>
           <h4>Discount code</h4>
+          {<Notification>{couponMessage} </Notification>}
           <div
             style={{
               display: "flex",
@@ -90,12 +145,13 @@ let cartMap = [];
             <input
               type="text"
               onChange={(ev) => {
-                setCouponValue(ev.target.value);
+                setCouponCode(ev.target.value);
               }}
             />
             <Button
-              disabled={couponValue ? false : true}
+              disabled={couponCode ? (discountValue ? true : false) : true}
               style={{ width: "30%", margin: "0" }}
+              onClick={handleCouponSubmit}
             >
               Apply
             </Button>
@@ -201,4 +257,7 @@ const Logos = styled.div`
   justify-content: space-between;
 `;
 
+const Notification = styled.div`
+  background: lightgray;
+`;
 export default Cart;
