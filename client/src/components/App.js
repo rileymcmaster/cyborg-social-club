@@ -4,12 +4,12 @@ import Header from "./Header/";
 import Signin from "./Signin";
 import Products from "./Products";
 import Footer from "./Footer";
-import Form from "./Form";
+import CheckoutPage from "../components/Checkout/CheckoutPage";
 import GlobalStyles from "../GlobalStyles";
 import ProductGrid from "./ProductGrid";
 import ProductPage from "./ProductPage";
 import HomePage from "./HomePage";
-import SignUp from './SignUp';
+import SignUp from "./SignUp";
 
 import FilterProduct from "./FilterProduct";
 import Cart from "./Cart";
@@ -52,7 +52,7 @@ function App() {
             <FilterProduct />
           </Route>
           <Route exact path="/form">
-            <Form />
+            <CheckoutPage />
           </Route>
           <Route exact path="/sign-up">
             <SignUp />

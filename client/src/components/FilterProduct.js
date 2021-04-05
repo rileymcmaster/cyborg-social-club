@@ -4,32 +4,39 @@ import { useParams } from "react-router-dom";
 import GenerateProductGrid from "./GenerateProductGrid";
 
 const FilterProduct = () => {
-  const [filteredItems, setFilteredItems] = useState([]);
+  const [filteredItems, setFilteredItems] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [loading, setLoading] = useState(false);
+  const [pageItems, setPageItems] = useState();
+  const [pageItemsIndex, setPageItemsIndex] = useState(0);
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
 
+  // const maxResults = 24;
+  // let resultsArray = [];
+  // for (
+  //   let i = (currentPage - 1) * maxResults;
+  //   i < (currentPage - 1) * maxResults + maxResults;
+  //   i++
+  // ) {
+  //   resultsArray.push(i);
+  // }
+  // console.log(resultsArray);
+
   const urlCategory = useParams().category;
 
   useEffect(() => {
-    setCurrentPage(1);
-    setLoading(true);
     fetch(
-      // `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=24`
-      `/items/category/${urlCategory.toLowerCase()}`
+      `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=24`
     )
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data);
+        console.log(data.data);
         // console.log("Data", data);
         setFilteredItems(data.data.results);
       })
       .catch((error) => console.log("ERROR", error));
-    setLoading(false);
-  }, [useParams()]);
+  }, [useParams(), currentPage]);
 
   ///PAGINATION attempt
   // useEffect(() => {
@@ -55,13 +62,9 @@ const FilterProduct = () => {
     setCurrentPage(currentPage - 1);
   };
   // console.log(filteredItems);
-
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <Wrapper>
-      {filteredItems && filteredItems.length > 0 && currentItems ? (
+      {filteredItems && filteredItems.length > 0 ? (
         <>
           {urlCategory === "PetsandAnimals" ? (
             <Title>Search for : Pets and Animals</Title>
@@ -89,11 +92,7 @@ const FilterProduct = () => {
               {nextPage}
             </NextButton>
           </Div>
-          <GenerateProductGrid
-            items={currentItems}
-            loading={loading}
-            setCurrentPage={() => setCurrentPage(1)}
-          />
+          <GenerateProductGrid items={filteredItems} />
         </>
       ) : filteredItems && urlCategory === "undefined" ? (
         <Title>No search results</Title>
