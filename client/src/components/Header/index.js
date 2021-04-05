@@ -70,6 +70,9 @@ const Header = () => {
           <></>
         )}
       </MenuDiv>
+      <NavigationLink to={"/sign-in"}>
+        <CurrentUser />
+      </NavigationLink>
       <NavigationLink to={"/cart"}>
         <ShoppingCartIcon />
       </NavigationLink>
