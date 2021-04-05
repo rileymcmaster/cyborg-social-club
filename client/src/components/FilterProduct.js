@@ -105,11 +105,11 @@ const FilterProduct = () => {
   );
 };
 
-const Pagination = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
+// const Pagination = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 const Wrapper = styled.div`
   min-height: var(--page-height);

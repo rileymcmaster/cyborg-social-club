@@ -8,7 +8,7 @@ import ErrorPage from "./ErrorPage";
 const ProductGrid = () => {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(24);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
