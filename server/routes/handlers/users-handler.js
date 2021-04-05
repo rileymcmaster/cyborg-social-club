@@ -1,4 +1,5 @@
 const users = require("../../data/user.json");
+const User = require("../../models/user");
 
 const getUserById = (req, res) => {
   const foundUser = users.find((user) => user.email === req.body.email);
@@ -44,25 +45,26 @@ const updateUserCart = (req, res) => {
 
 const addUser = (req, res) => {
   console.log(req.body);
-  const foundUser = users.find((user) => user.email === req.body.email);
+
+  const foundUser = User.findOne({ email: req.body.email });
 
   if (!foundUser) {
-    users.push({
-      firstName: `${req.body.firstName}`,
-      lastName: `${req.body.lastName}`,
-      email: `${req.body.email}`,
-      password: `${req.body.password}`,
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
       isSignedIn: true,
-      cart: {},
     });
+    user.save();
 
     res.status(200).json({
       status: 200,
       user: req.body,
     });
   } else {
-    res.status(404).json({
-      status: 404,
+    res.status(400).json({
+      status: 400,
       msg: "User already exists!",
     });
   }
