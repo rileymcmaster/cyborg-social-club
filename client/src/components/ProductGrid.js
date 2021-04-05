@@ -17,6 +17,7 @@ const ProductGrid = () => {
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
+  let lastPage = Math.ceil(items.length / itemsPerPage);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +40,7 @@ const ProductGrid = () => {
   // ^^this was dependent on currentPage. Might have to put it back
 
   const handlePageNext = () => {
-    if (currentPage >= items.length) {
+    if (currentPage === lastPage) {
       return;
     }
     setCurrentPage(currentPage + 1);
@@ -118,7 +119,7 @@ const ProductGrid = () => {
             <NextButton
               onClick={() => handlePageNext()}
               style={{
-                opacity: currentPage >= 15 ? "0%" : "100%",
+                opacity: currentPage === lastPage ? "0%" : "100%",
               }}
             >
               {nextPage}

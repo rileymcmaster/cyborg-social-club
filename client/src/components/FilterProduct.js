@@ -11,7 +11,7 @@ const FilterProduct = () => {
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
-
+  let lastPage = Math.ceil(filteredItems.length / itemsPerPage);
   const urlCategory = useParams().category;
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const FilterProduct = () => {
   // }, []);
 
   const handlePageNext = () => {
-    if (currentPage >= filteredItems.length) {
+    if (currentPage === lastPage) {
       return;
     }
     setCurrentPage(currentPage + 1);
@@ -83,7 +83,7 @@ const FilterProduct = () => {
               // disabled={filteredItems.length <= 24}
               onClick={() => handlePageNext()}
               style={{
-                opacity: currentPage >= filteredItems.length ? "0%" : "100%",
+                opacity: currentPage === lastPage ? "0%" : "100%",
               }}
             >
               {nextPage}
