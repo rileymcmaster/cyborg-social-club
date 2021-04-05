@@ -11,12 +11,13 @@ const ProductGrid = () => {
   let isPageWide = useMediaQuery("(min-width: 900px)");
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(24);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
+  let lastPage = Math.ceil(items.length / itemsPerPage);
 
   useEffect(() => {
     setLoading(true);
@@ -39,7 +40,7 @@ const ProductGrid = () => {
   // ^^this was dependent on currentPage. Might have to put it back
 
   const handlePageNext = () => {
-    if (currentPage >= items.length) {
+    if (currentPage === lastPage) {
       return;
     }
     setCurrentPage(currentPage + 1);
@@ -118,7 +119,7 @@ const ProductGrid = () => {
             <NextButton
               onClick={() => handlePageNext()}
               style={{
-                opacity: currentPage >= 15 ? "0%" : "100%",
+                opacity: currentPage === lastPage ? "0%" : "100%",
               }}
             >
               {nextPage}
