@@ -1,14 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { signIn } from "../actions";
+import { signUp } from "../actions";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Button from "./Button";
 
 const SignUp = () => {
   const state = useSelector((state) => state.signin);
+  const firstNameRef = useRef();
+  const lastNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const dispatch = useDispatch();
   let history = useHistory();
 
@@ -18,11 +21,15 @@ const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let firstName = firstNameRef.current.value;
+    let lastName = lastNameRef.current.value;
     let email = emailRef.current.value;
     let password = passwordRef.current.value;
+    let confirmPassword = passwordConfirmRef.current.value;
+
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({firstName, lastName, email, password, confirmPassword }),
       headers: { "Content-Type": "application/json" },
     };
 
@@ -30,10 +37,10 @@ const SignUp = () => {
       .then((res) => res.json())
       .then((json) => {
         if (json.status === 200) {
-          dispatch(signIn(json.user));
+          dispatch(signUp(json.user));
           return history.push("/");
         } else if (json.status === 404) {
-          return window.alert("user does not exist");
+          return window.alert("Cannot Add User");
         }
       });
   };
@@ -47,6 +54,7 @@ const SignUp = () => {
             <b>First name</b>
           </label>
           <input
+          ref={firstNameRef}
             type="text"
             placeholder="First name"
             name="first-name"
@@ -56,6 +64,7 @@ const SignUp = () => {
             <b>Last name</b>
           </label>
           <input
+           ref={lastNameRef}
             type="text"
             placeholder="Last Name"
             name="last-name"
@@ -88,7 +97,7 @@ const SignUp = () => {
             <b>Confirm Password</b>
           </label>
           <input
-            ref={passwordRef}
+            ref={passwordConfirmRef}
             type="password"
             onChange={handleChange}
             placeholder="Confirm Password"
@@ -97,7 +106,7 @@ const SignUp = () => {
           />
 
           <div>
-            <Button type="submit" onClick="submit" style={{marginTop: "10px"}}>
+            <Button type="submit" onClick={handleSubmit} style={{marginTop: "10px"}}>
               Sign Up
             </Button>
           </div>

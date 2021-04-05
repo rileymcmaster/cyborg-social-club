@@ -5,7 +5,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { getItemById } = require("../server/routes/handlers/items-handlers");
-const { getUserById, updateUserCart } = require("../server/routes/handlers/users-handler");
+const { getUserById, updateUserCart, addUser } = require("../server/routes/handlers/users-handler");
 const itemsRouter = require("./routes/items");
 const companiesRouter = require("./routes/companies");
 
@@ -35,6 +35,7 @@ express()
   ////// Sign in //////
   .post("/user", getUserById)
   .post("/updateusercart", updateUserCart)
+  .post("/add-user", addUser)
 
   // REST endpoints?
   .get("/bacon", (req, res) => res.status(200).json("🥓"))
