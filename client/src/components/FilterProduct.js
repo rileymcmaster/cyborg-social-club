@@ -4,10 +4,10 @@ import { useParams } from "react-router-dom";
 import GenerateProductGrid from "./GenerateProductGrid";
 
 const FilterProduct = () => {
-  const [filteredItems, setFilteredItems] = useState(null);
+  const [filteredItems, setFilteredItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageItems, setPageItems] = useState();
-  const [pageItemsIndex, setPageItemsIndex] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
@@ -15,17 +15,21 @@ const FilterProduct = () => {
   const urlCategory = useParams().category;
 
   useEffect(() => {
+    setCurrentPage(1);
+    setLoading(true);
     fetch(
-      `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=24`
+      // `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=24`
+      `/items/category/${urlCategory.toLowerCase()}`
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         // console.log("Data", data);
         setFilteredItems(data.data.results);
       })
       .catch((error) => console.log("ERROR", error));
-  }, [useParams(), currentPage]);
+    setLoading(false);
+  }, [useParams()]);
 
   ///PAGINATION attempt
   // useEffect(() => {
@@ -51,9 +55,13 @@ const FilterProduct = () => {
     setCurrentPage(currentPage - 1);
   };
   // console.log(filteredItems);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <Wrapper>
-      {filteredItems && filteredItems.length > 0 ? (
+      {filteredItems && filteredItems.length > 0 && currentItems ? (
         <>
           {urlCategory === "PetsandAnimals" ? (
             <Title>Search for : Pets and Animals</Title>
@@ -81,7 +89,11 @@ const FilterProduct = () => {
               {nextPage}
             </NextButton>
           </Div>
-          <GenerateProductGrid items={filteredItems} />
+          <GenerateProductGrid
+            items={currentItems}
+            loading={loading}
+            setCurrentPage={() => setCurrentPage(1)}
+          />
         </>
       ) : filteredItems && urlCategory === "undefined" ? (
         <Title>No search results</Title>
