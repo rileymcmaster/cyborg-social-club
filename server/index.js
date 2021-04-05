@@ -5,7 +5,11 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { getItemById } = require("../server/routes/handlers/items-handlers");
-const { getUserById, updateUserCart, addUser } = require("../server/routes/handlers/users-handler");
+const {
+  getUserById,
+  updateUserCart,
+  addUser,
+} = require("../server/routes/handlers/users-handler");
 const {
   applyDiscount,
 } = require("../server/routes/handlers/discounts-handlers");

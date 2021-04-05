@@ -167,19 +167,20 @@ const ProductGrid = () => {
 
 const ProductGridArea = styled.div`
   /* grid-area: main; */
+  margin: 0 auto;
+  background-color: blue;
 `;
 const SidebarGrid = styled.div`
   /* grid-area: sidebar; */
   display: flex;
   min-width: 200px;
   margin-top: 50px;
+  margin-right: auto;
 `;
 const GridDisplay = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  /* grid-template-columns: 200px auto; */
-  /* grid-template-areas: "sidebar main"; */
+  justify-content: space-around;
 `;
 const Wrapper = styled.div`
   min-height: var(--page-height);
