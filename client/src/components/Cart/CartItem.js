@@ -4,6 +4,7 @@ import Button from "../Button";
 import { updateQuantity, removeProduct } from "../../actions";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { useMediaQuery } from "../../components/useMediaQuery";
 
 const CartItem = ({ product }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const CartItem = ({ product }) => {
   const formattedUnitPrice = Number(product.price.slice(1));
   const subtotalPrice = formattedUnitPrice * quantity;
   const formattedSubtotalPrice = parseFloat(subtotalPrice).toFixed(2);
+  let isPageWide = useMediaQuery("(min-width: 900px)");
 
   const handlePlusClick = () => {
     setQuantity(quantity + 1);
@@ -25,7 +27,7 @@ const CartItem = ({ product }) => {
   };
   console.log(product);
 
-  return (
+  return isPageWide ? (
     <>
       <CartItemWrapper>
         <ProductInfo>
@@ -52,7 +54,7 @@ const CartItem = ({ product }) => {
             ></input>
             <button onClick={handlePlusClick}>+</button>
           </Input>
-          <Button
+          {/* <Button
             onClick={() => {
               dispatch(updateQuantity(product, quantity));
             }}
@@ -63,11 +65,67 @@ const CartItem = ({ product }) => {
             }}
           >
             Update total
-          </Button>
+          </Button> */}
         </SelectQuantity>
         <Price>${formattedSubtotalPrice}</Price>
       </CartItemWrapper>
       <DeleteProduct>
+        <Button
+          style={{
+            background: "none",
+            textDecoration: "underline",
+            textAlign: "left",
+            marginLeft: "0",
+          }}
+          onClick={() => dispatch(removeProduct(product.id))}
+        >
+          Remove
+        </Button>
+      </DeleteProduct>
+      <Divider />
+    </>
+  ) : (
+    //MOBILE
+    <>
+      <CartItemWrapper style={{ flexDirection: "column" }}>
+        <ProductInfo style={{ flexDirection: "column", marginBottom: "10px" }}>
+          <Link to={`/item/${product.id}`}>
+            <ProductImage src={product.imageSrc}></ProductImage>
+          </Link>
+          <div>
+            <div style={{ width: "300px" }}>
+              <Link to={`/item/${product.id}`}>{product.name}</Link>
+            </div>
+            <div style={{ color: "gray" }}>SKU: {product.id}</div>
+            <div style={{ marginTop: "2em", marginBottom: "30px" }}>
+              Price: {product.price}
+            </div>
+          </div>
+        </ProductInfo>
+        <SelectQuantity style={{ marginBottom: "30px" }}>
+          <h1 style={{ marginBottom: "10px" }}>Quantity</h1>
+          <Input>
+            <button onClick={handleMinusClick}>-</button>
+            <input
+              type="text"
+              value={quantity}
+              onChange={(ev) => {
+                setQuantity(Number(ev.target.value));
+              }}
+            ></input>
+            <button onClick={handlePlusClick}>+</button>
+          </Input>
+        </SelectQuantity>
+        <h1 style={{ marginBottom: "10px" }}>Subtotal</h1>
+        <Price style={{ marginBottom: "10px" }}>
+          ${formattedSubtotalPrice}
+        </Price>
+      </CartItemWrapper>
+      <DeleteProduct
+        style={{
+          justifyContent: "flex-start",
+        }}
+      >
         <Button
           style={{
             background: "none",
