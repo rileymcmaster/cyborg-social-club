@@ -5,13 +5,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const { getItemById } = require("../server/routes/handlers/items-handlers");
+const { getUserById, updateUserCart, addUser } = require("../server/routes/handlers/users-handler");
 const {
   applyDiscount,
 } = require("../server/routes/handlers/discounts-handlers");
-const {
-  getUserById,
-  updateUserCart,
-} = require("../server/routes/handlers/users-handler");
 const itemsRouter = require("./routes/items");
 const companiesRouter = require("./routes/companies");
 const { saveOrder } = require("../server/routes/handlers/orders-handlers");
@@ -43,6 +40,7 @@ express()
   ////// Sign in //////
   .post("/user", getUserById)
   .post("/updateusercart", updateUserCart)
+  .post("/add-user", addUser)
 
   //apply discount ///
 

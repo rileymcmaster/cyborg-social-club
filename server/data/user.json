@@ -5,7 +5,6 @@
     "lastName": "S",
     "email": "dans@gmail.com",
     "password": "abc123",
-    "phoneNumber": "5146665555",
     "isSignedIn": false,
     "cart": {
       "6544": {
@@ -32,7 +31,6 @@
     "lastName": "Doe",
     "email": "johndoe@gmail.com",
     "password": "hello123",
-    "phoneNumber": "5143255555",
     "isSignedIn": false,
     "cart": {
       "6565": {

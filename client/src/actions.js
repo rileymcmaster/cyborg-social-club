@@ -27,3 +27,8 @@ export const signOut = (user) => {
     type: "SIGN_OUT",
   };
 };
+
+export const signUp = (user) => ({
+  type: "SIGN_UP",
+  user,
+});
