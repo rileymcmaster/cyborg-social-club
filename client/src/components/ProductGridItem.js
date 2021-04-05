@@ -26,13 +26,14 @@ const ProductGridItem = ({ id, name, price, imageSrc, numInStock }) => {
           .then((json) => {
             if (json.status === 200) {
               console.log("hello");
-              dispatch(addCartProduct({ id, name, price, imageSrc }));
+              dispatch(addCartProduct(cartItem));
               return;
             } else if (json.status === 404) {
               return window.alert("user does not exist");
             }
           });
       } else {
+        console.log("disptaching");
         dispatch(addCartProduct({ id, name, price, imageSrc }));
       }
     }

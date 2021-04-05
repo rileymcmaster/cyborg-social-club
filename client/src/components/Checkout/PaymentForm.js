@@ -52,7 +52,7 @@ const Field = ({
   </FormRow>
 );
 
-const PaymentForm = () => {
+const PaymentForm = ({ totalPrice, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [success, setSuccess] = useState(false);
@@ -110,7 +110,7 @@ const PaymentForm = () => {
 
         method: "POST",
         body: JSON.stringify({
-          amount: 1000,
+          amount: totalPrice,
           id,
           billingDetails,
         }),
@@ -135,7 +135,47 @@ const PaymentForm = () => {
 
     setProcessing(false);
   };
+  if (success) {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
 
+      method: "POST",
+      body: JSON.stringify({
+        customer: {
+          id: 1,
+          firstName: orderDetails.firstname,
+          lastName: orderDetails.lastname,
+          email: billingDetails.email,
+          phoneNumber: billingDetails.phone,
+          shippingaddress: {
+            street: orderDetails.line1,
+            unit: orderDetails.line2,
+            city: orderDetails.city,
+            province: orderDetails.province,
+            country: orderDetails.country,
+            postal_code: orderDetails.postal_code,
+          },
+
+          order: {
+            // id: id,
+            total: totalPrice,
+            items: {
+              cart,
+            },
+          },
+        },
+      }),
+    };
+    fetch("/order", requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        return json;
+      });
+  }
   const reset = () => {
     setError(null);
     setProcessing(false);

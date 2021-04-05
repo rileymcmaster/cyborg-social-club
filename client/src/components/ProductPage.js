@@ -11,12 +11,15 @@ const ProductPage = () => {
   const [quantity, setQuantity] = React.useState(1);
   //should we remove this and just disable button?
   const handleAddToCart = () => {
+    // console.log(item._id);
     const id = item._id;
     const name = item.name;
     const price = item.price;
     const imageSrc = item.imageSrc;
     if (item.numInStock > 0) {
+      console.log("dispatch 2");
       dispatch(addCartProduct({ id, name, price, imageSrc }));
+      dispatch(updateQuantity({ id, name, price, imageSrc }, quantity));
     }
   };
   let { id } = useParams();
@@ -39,7 +42,7 @@ const ProductPage = () => {
         console.log(data.data);
       });
   }, [id]);
-console.log(item);
+  console.log(item);
   return (
     <>
       {item ? (
@@ -49,12 +52,7 @@ console.log(item);
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
             <AddToCartDiv>
-              <Button
-                disabled={item.numInStock <= 0}
-                onClick={() => {
-                  dispatch(addCartProduct(item));
-                }}
-              >
+              <Button disabled={item.numInStock <= 0} onClick={handleAddToCart}>
                 {item.numInStock <= 0 ? "Out of Stock" : "Add to Cart"}
               </Button>
               <MainInput>

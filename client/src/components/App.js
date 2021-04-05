@@ -27,6 +27,9 @@ function App() {
   //     });
   // }, []);
 
+  const [cart, setCart] = useState({});
+  const [totalPrice, setTotalPrice] = useState(0);
+
   return (
     <>
       <GlobalStyles />
@@ -40,19 +43,24 @@ function App() {
             <Products />
           </Route>
           <Route exact path="/cart">
-            <Cart />
+            <Cart
+              cart={cart}
+              setCart={setCart}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+            />
           </Route>
           <Route exact path="/item/:id">
             <ProductPage />
           </Route>
           <Route exact path="/sign-in">
-            <Signin />
+            <Signin cart={cart} />
           </Route>
           <Route exact path="/category/:category">
             <FilterProduct />
           </Route>
           <Route exact path="/form">
-            <CheckoutPage />
+            <CheckoutPage totalPrice={totalPrice} cart={cart} />
           </Route>
           <Route exact path="/sign-up">
             <SignUp />

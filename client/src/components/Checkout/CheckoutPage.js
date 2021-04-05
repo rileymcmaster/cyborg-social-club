@@ -11,7 +11,7 @@ const PUBLIC_KEY =
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-const Form = () => {
+const Form = ({ totalPrice, cart }) => {
   return (
     <Body>
       <EntireForm>
@@ -19,7 +19,11 @@ const Form = () => {
 
         <div style={{ width: "100%" }}>
           <Elements stripe={stripeTestPromise} style={{ width: "100%" }}>
-            <PaymentForm style={{ width: "100%" }} />
+            <PaymentForm
+              style={{ width: "100%" }}
+              totalPrice={totalPrice}
+              cart={cart}
+            />
           </Elements>
         </div>
 
@@ -33,7 +37,7 @@ const Form = () => {
             <img src="" alt="product" />
             <h3>productName</h3>
           </span>
-          <h4>40$</h4>
+          <h4>{totalPrice}$</h4>
         </ItemReview>
         {/* <CouponCode>
           <input type="number" placeholder="Coupon Code" />
@@ -43,7 +47,7 @@ const Form = () => {
         <SubtotalContainer>
           <span>
             <h4>Subtotal </h4>
-            <h4>40$ </h4>
+            <h4>{totalPrice}$ </h4>
           </span>
           <span>
             <h4>Shipping </h4>
@@ -52,7 +56,7 @@ const Form = () => {
         </SubtotalContainer>
         <TotalsReview>
           <h2>Total </h2>
-          <h2>CAD 40$</h2>
+          <h2>CAD {totalPrice}$</h2>
         </TotalsReview>
       </ReviewContainer>
     </Body>
