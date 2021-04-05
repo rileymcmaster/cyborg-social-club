@@ -25,10 +25,9 @@ const FilterProduct = () => {
 
   const urlCategory = useParams().category;
 
-  let limit = 24;
   useEffect(() => {
     fetch(
-      `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=${limit}`
+      `/items/category/${urlCategory.toLowerCase()}?page=${currentPage}&limit=24`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -62,7 +61,7 @@ const FilterProduct = () => {
     }
     setCurrentPage(currentPage - 1);
   };
-  console.log(filteredItems);
+  // console.log(filteredItems);
   return (
     <Wrapper>
       {filteredItems && filteredItems.length > 0 ? (
