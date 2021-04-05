@@ -15,26 +15,25 @@ const ProductGridItem = ({ id, name, price, imageSrc, numInStock }) => {
     if (numInStock > 0) {
       if (userState.isSignedIn) {
         let email = userState.email;
-        let cartItem = {  id, name, price, imageSrc };
+        let cartItem = { id, name, price, imageSrc };
         const requestOptions = {
-          method: 'POST',
-          body: JSON.stringify({email, cartItem}),
-          headers: {"Content-Type": "application/json"},
-    
-        }
-        fetch("/updateusercart", requestOptions ).then((res)=> res.json()).then((json)=> {
-          if (json.status === 200) {
-            console.log("hello")
-            dispatch(addCartProduct({ id, name, price, imageSrc }))
-            return 
-          } else if (json.status === 404) {
-            return window.alert("user does not exist");
-          }
-    
-    
-          
-        })
+          method: "POST",
+          body: JSON.stringify({ email, cartItem }),
+          headers: { "Content-Type": "application/json" },
+        };
+        fetch("/updateusercart", requestOptions)
+          .then((res) => res.json())
+          .then((json) => {
+            if (json.status === 200) {
+              console.log("hello");
+              dispatch(addCartProduct(cartItem));
+              return;
+            } else if (json.status === 404) {
+              return window.alert("user does not exist");
+            }
+          });
       } else {
+        console.log("disptaching");
         dispatch(addCartProduct({ id, name, price, imageSrc }));
       }
     }

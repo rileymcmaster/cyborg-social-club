@@ -93,7 +93,7 @@ const SignUp = () => {
             name="password"
             required
           />
-           <label for="password">
+          <label for="password">
             <b>Confirm Password</b>
           </label>
           <input
@@ -154,12 +154,10 @@ const FormContainer = styled.div`
     margin-top: 4px;
     margin-right: 3px;
     margin-bottom: 4px;
-   
   }
   label {
-      padding: 5px;
+    padding: 5px;
   }
-
 `;
 
 export default SignUp;

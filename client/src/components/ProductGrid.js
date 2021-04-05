@@ -1,28 +1,46 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
-import { useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import SidebarFilter from "./SidebarFilter";
+import ErrorPage from "./ErrorPage";
+import { useMediaQuery } from "./useMediaQuery";
 
 const ProductGrid = () => {
-  const [items, setItems] = useState(null);
+  //check width of page
+  let isPageWide = useMediaQuery("(min-width: 900px)");
+  const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(24);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   let nextPage = currentPage + 1;
   let previousPage = currentPage - 1;
+  let lastPage = Math.ceil(items.length / itemsPerPage);
 
   useEffect(() => {
+    setLoading(true);
     // console.log("starting fetch in product grid");
-    fetch(`/items?page=${currentPage}&limit=24`)
+    //BACKEND PAGINATION VVV
+    // fetch(`/items?page=${currentPage}&limit=24`)
+    //FRONTEND PAGINATION VVV
+    fetch(`/items`)
       .then((res) => res.json())
       .then((data) => {
         // console.log(data);
         setItems(data.data.results);
+      })
+      .catch((error) => {
+        console.log("ERROR", error);
+        setError(true);
       });
-  }, [currentPage]);
-  // console.log(items);
+    setLoading(false);
+  }, []);
+  // ^^this was dependent on currentPage. Might have to put it back
 
   const handlePageNext = () => {
-    if (currentPage >= items.length) {
+    if (currentPage === lastPage) {
       return;
     }
     setCurrentPage(currentPage + 1);
@@ -34,42 +52,144 @@ const ProductGrid = () => {
     setCurrentPage(currentPage - 1);
   };
 
-  return (
+  //FILTER
+  const [checkedFilter, setCheckedFilter] = useState([]);
+  let filteredItems = [];
+  if (items && checkedFilter) {
+    items.filter((item) => {
+      // console.log("item", item.body_location);
+      checkedFilter.find((filter) => {
+        //CATEGORY
+        if (filter.kind === "category" && filter.name === item.category) {
+          filteredItems.push(item);
+        } else if (
+          //PARTS
+          filter.kind === "parts" &&
+          filter.name === item.body_location
+        ) {
+          if (filteredItems.includes(item)) {
+            return;
+          } else {
+            filteredItems.push(item);
+          }
+        }
+      });
+    });
+  }
+  //RESET TO FIRST PAGE when filters are changed
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [checkedFilter]);
+
+  //GET CURRENT ITEMS PER PAGE
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems =
+    filteredItems.length > 0
+      ? filteredItems.slice(indexOfFirstItem, indexOfLastItem)
+      : items.slice(indexOfFirstItem, indexOfLastItem);
+
+  return error ? (
+    <ErrorPage />
+  ) : (
     <Wrapper>
-      <Div>
-        {/* PAGINATION */}
-        <PreviousButton onClick={() => handlePageBefore()}>
-          {previousPage}
-        </PreviousButton>
-        <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-      </Div>
-      {/* END PAGINATION */}
-      {/* ITEM GRID */}
-      <GenerateProductGrid items={items} />
-      {/* END ITEM GRID */}
-      <Div>
-        {/* PAGINATION */}
-        <PreviousButton onClick={() => handlePageBefore()}>
-          {previousPage}
-        </PreviousButton>
-        <CurrentButton>{currentPage}</CurrentButton>
-        <NextButton onClick={() => handlePageNext()}>{nextPage}</NextButton>
-      </Div>
-      {/* </ProductList> */}
-      {/* )} */}
+      <GridDisplay>
+        {isPageWide ? (
+          <SidebarGrid>
+            <SidebarFilter
+              checked={checkedFilter}
+              setChecked={setCheckedFilter}
+            />
+          </SidebarGrid>
+        ) : (
+          <></>
+        )}
+        <ProductGridArea>
+          <Div>
+            {/* PAGINATION */}
+            <PreviousButton
+              onClick={() => handlePageBefore()}
+              style={{
+                opacity: currentPage <= 1 ? "0%" : "100%",
+              }}
+            >
+              {previousPage}
+            </PreviousButton>
+            <CurrentButton>{currentPage}</CurrentButton>
+            <NextButton
+              onClick={() => handlePageNext()}
+              style={{
+                opacity: currentPage === lastPage ? "0%" : "100%",
+              }}
+            >
+              {nextPage}
+            </NextButton>
+          </Div>
+          {/* END PAGINATION */}
+
+          {/* ITEM GRID */}
+
+          <GenerateProductGrid
+            items={currentItems}
+            loading={loading}
+            setCurrentPage={() => setCurrentPage(1)}
+          />
+
+          {/* END ITEM GRID */}
+
+          <Div>
+            {/* PAGINATION */}
+            <PreviousButton
+              onClick={() => handlePageBefore()}
+              style={{
+                opacity: currentPage <= 1 ? "0%" : "100%",
+              }}
+            >
+              {previousPage}
+            </PreviousButton>
+            <CurrentButton>{currentPage}</CurrentButton>
+            <NextButton
+              onClick={() => handlePageNext()}
+              style={{
+                opacity: currentPage >= 15 ? "0%" : "100%",
+              }}
+            >
+              {nextPage}
+            </NextButton>
+          </Div>
+          {/* </ProductList> */}
+          {/* )} */}
+        </ProductGridArea>
+      </GridDisplay>
     </Wrapper>
   );
 };
+
+const ProductGridArea = styled.div`
+  /* grid-area: main; */
+`;
+const SidebarGrid = styled.div`
+  /* grid-area: sidebar; */
+  display: flex;
+  min-width: 200px;
+  margin-top: 50px;
+`;
+const GridDisplay = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* grid-template-columns: 200px auto; */
+  /* grid-template-areas: "sidebar main"; */
+`;
 const Wrapper = styled.div`
   min-height: var(--page-height);
 `;
-const ProductList = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-`;
+// const ProductList = styled.div`
+//   display: flex;
+//   flex-wrap: wrap;
+//   align-items: center;
+//   justify-content: center;
+// `;
 
 const Div = styled.div`
   display: flex;
@@ -87,7 +207,6 @@ const PreviousButton = styled.button`
   opacity: 90%;
   padding: 5px 10px 5px 10px;
   font-size: 10px;
-  cursor: pointer;
   outline: none;
   &:hover {
     border: 3px solid;
@@ -116,7 +235,6 @@ const NextButton = styled.button`
   opacity: 90%;
   padding: 5px 10px 5px 10px;
   font-size: 10px;
-  cursor: pointer;
   outline: none;
   &:hover {
     border: 3px solid;

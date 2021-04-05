@@ -1,17 +1,18 @@
 const items = require("../../data/items.json");
 const companies = require("../../data/companies.json");
 
-const getItems = (req, res) => {
+// Reusable paginator
+const paginator = (req, res, givenItems) => {
   const page = req.query.page ? parseInt(req.query.page) : 1;
-  const limit = req.query.limit ? parseInt(req.query.limit) : items.length;
-  const lastPage = Math.ceil(items.length / limit);
 
+  const limit = req.query.limit ? parseInt(req.query.limit) : givenItems.length;
+  // const lastPage = Math.ceil(givenItems.length / limit);
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
   const results = {};
 
-  if (endIndex > items.length) {
+  if (endIndex > givenItems.length) {
     results.next = {
       page: page + 1,
       limit: limit,
@@ -25,22 +26,23 @@ const getItems = (req, res) => {
     };
   }
   // console.log(startIndex, endIndex, lastPage);
-  results.results = items.slice(startIndex, endIndex);
+  results.results = givenItems.slice(startIndex, endIndex);
   // console.log(results);
 
   // console.log("params", req.params);
   res.status(200).json({
     status: 200,
-    data: { results: results.results, lastPage },
+    data: { results: results.results },
   });
 };
 
-// const getItems = (req, res) => {
-//   res.status(200).json({
-//     status: 200,
-//     data: items,
-//   });
-// };
+////////////////
+
+const getItems = (req, res) => {
+  paginator(req, res, items);
+};
+
+//////////////////
 
 const getItemById = (req, res) => {
   // console.log("params", req.params);
@@ -60,22 +62,28 @@ const getItemsByCategory = (req, res) => {
   // console.log("params", req.params);
 
   const filterItems = items.filter((item) => {
+    // console.log(item);
+
     //category
     let removeSpacesCat = item.category.toLowerCase().split(" ").join("");
     //body part
     let removeSpacesBody = item.body_location.toLowerCase().split(" ").join("");
     //MATCH THE COMPANY ID
+
+    const givenCategory = req.params.category.toLowerCase();
     let companyIdMatch = companies.filter((company) => {
+      const companyName = company.name.toLowerCase();
+
       if (
-        req.params.category.toLowerCase() === company.name.toLowerCase() ||
-        company.name.toLowerCase().includes(req.params.category.toLowerCase())
+        givenCategory === companyName ||
+        companyName.includes(givenCategory)
       ) {
         return company;
       }
     });
     if (
-      removeSpacesCat === req.params.category ||
-      removeSpacesBody === req.params.category
+      removeSpacesCat === givenCategory ||
+      removeSpacesBody === givenCategory
     ) {
       return item;
     } else if (
@@ -85,19 +93,18 @@ const getItemsByCategory = (req, res) => {
       return item;
     }
   });
-  // ////////////////
-  ////////////
-  //////////
-  ////////
-  if (filterItems) {
-    res.status(202).json({ data: filterItems });
-  } else {
-    res.status(404).json({
-      msg: "not in the database",
-      error: "Nothing found",
-      data: req.params.category,
-    });
-  }
+
+  paginator(req, res, filterItems);
+
+  // if (filterItems) {
+  //   res.status(202).json({ data: filterItems });
+  // } else {
+  //   res.status(404).json({
+  //     msg: "not in the database",
+  //     error: "Nothing found",
+  //     data: req.params.category,
+  //   });
+  // }
 };
 
 module.exports = { getItems, getItemById, getItemsByCategory };
