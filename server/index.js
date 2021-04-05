@@ -8,7 +8,6 @@ const { getItemById } = require("../server/routes/handlers/items-handlers");
 const {
   applyDiscount,
 } = require("../server/routes/handlers/discounts-handlers");
-
 const {
   getUserById,
   updateUserCart,
@@ -18,9 +17,8 @@ const companiesRouter = require("./routes/companies");
 const { saveOrder } = require("../server/routes/handlers/orders-handlers");
 require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_KEY);
-
+const mongoose = require("mongoose");
 const PORT = 4000;
-
 express()
   .use(function (req, res, next) {
     res.header(
@@ -86,3 +84,11 @@ express()
   .post("/order", saveOrder)
 
   .listen(PORT, () => console.info(`Listening on port ${PORT}`));
+
+//connect to mongoDB
+const dbURI = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@cluster0-shard-00-00.dqm7b.mongodb.net:27017,cluster0-shard-00-01.dqm7b.mongodb.net:27017,cluster0-shard-00-02.dqm7b.mongodb.net:27017/cyborgstore?ssl=true&replicaSet=atlas-5bivjn-shard-0&authSource=admin&retryWrites=true&w=majority`;
+
+mongoose
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then((result) => console.log("Connected to Mongo"))
+  .catch((err) => console.log(err));
