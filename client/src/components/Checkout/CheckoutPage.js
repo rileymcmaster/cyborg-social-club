@@ -1,89 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "./Button";
+import Button from "../Button";
 import { Link } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import PaymentForm from "./PaymentForm";
+
+const PUBLIC_KEY =
+  "pk_test_51IcC3GDgvXmdvLhUqpJcHvZAycGlqNajSZNx9fVeCqV33UK4hAXCY1gvNvAfsn909PEwipP4bC84UDkXRUIdnM1I00ugdQXllH";
+
+const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
 const Form = () => {
   return (
     <Body>
       <EntireForm>
-        <header> LOGO</header>
-        <h1> Contact information</h1>
-        <FormContainer>
-          <input type="email" name="email" placeholder="Email" />
-        </FormContainer>
-        <h1>Shipping address</h1>
-        <FormContainer>
-          <span>
-            <input
-              required
-              type="text"
-              name="first-name"
-              placeholder="First Name"
-            />
-            <input
-              required
-              type="text"
-              name="last-name"
-              placeholder="Last Name"
-            />
-          </span>
-          <input required type="address" name="address" placeholder="Address" />
-          <input
-            type="address"
-            name="address-2"
-            placeholder="Apartment, suite, etc. (optional)"
-          />
-          <input required type="city" name="city" placeholder="City" />
-          <span>
-            <input
-              required
-              type="country"
-              name="country"
-              placeholder="Country"
-            />
+        <h1 style={{ "font-size": "22px", color: "black" }}>Checkout</h1>
 
-            <input
-              required
-              type="text"
-              name="province"
-              placeholder="Province"
-            />
-            <input
-              required
-              type="postal"
-              name="postal-code"
-              placeholder="Postal code"
-            />
-          </span>
-        </FormContainer>
-        <h1>Payment</h1>
+        <div style={{ width: "100%" }}>
+          <Elements stripe={stripeTestPromise} style={{ width: "100%" }}>
+            <PaymentForm style={{ width: "100%" }} />
+          </Elements>
+        </div>
 
-        <FormContainer>
-          <input
-            required
-            id="ccn"
-            type="number"
-            min="15"
-            inputmode="numeric"
-            pattern="[0-9\s]{13,19}"
-            autocomplete="cc-number"
-            maxlength="19"
-            placeholder="Card number"
-          />
-          <input required type="text" placeholder="Name on card" />
-          <span>
-            <input
-              required
-              type="month"
-              placeholder="Expiration date (MM/YY)"
-            />
-
-            <input required type="number" placeholder="Security code" />
-          </span>
-        </FormContainer>
         <SubmitContainer>
-          <Button>Pay Now</Button>
           <Link to="/products"> Return Shopping</Link>
         </SubmitContainer>
       </EntireForm>
@@ -95,10 +35,10 @@ const Form = () => {
           </span>
           <h4>40$</h4>
         </ItemReview>
-        <CouponCode>
+        {/* <CouponCode>
           <input type="number" placeholder="Coupon Code" />
           <Button>Apply</Button>
-        </CouponCode>
+        </CouponCode> */}
 
         <SubtotalContainer>
           <span>
@@ -120,52 +60,42 @@ const Form = () => {
 };
 const Body = styled.div`
   display: flex;
-  background-color: var(--accent-bg-color);
 `;
 
 const EntireForm = styled.div`
-  width: 50%;
+  padding: 3em;
+
+  width: 75%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  height: 100%;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  background-color: white;
+  border-right: 1px solid rgb(0 0 0 / 4%);
+  box-shadow: inset -1px -4px 10px 3px rgb(0 0 0 / 8%);
 
   form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-radius: 7px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
     margin: 20px;
-    background-color: rgba(0, 0, 0, 0.05);
+    width: 100%;
   }
 `;
 
 const FormContainer = styled.form`
   display: flex;
-  flex-direction: column;
-  padding: 15px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 2em;
   width: 90%;
-  background-color: white;
 
   input {
     height: 50px;
-    border-radius: 7px;
-    max-width: 90%;
     margin-top: 4px;
     margin-right: 3px;
     margin-bottom: 4px;
     width: 100%;
-  }
-  span {
-    display: flex;
-    justify-content: space-evenly;
-    min-width: 90%;
+    border: none;
+    border-bottom: 1px solid lightgray;
   }
 `;
 
@@ -230,7 +160,7 @@ const CouponCode = styled.div`
 
   input {
     height: 50px;
-    border-radius: 7px;
+    border: none;
     max-width: 90%;
     margin-top: 4px;
     margin-right: 3px;
