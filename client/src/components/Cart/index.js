@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import { Divider } from "./CartItem";
 import { useSelector } from "react-redux";
+import { useMediaQuery } from "../../components/useMediaQuery";
 
 const Cart = ({ totalPrice, setTotalPrice, cart, setCart }) => {
   const [couponCode, setCouponCode] = useState(null);
@@ -25,6 +26,7 @@ const Cart = ({ totalPrice, setTotalPrice, cart, setCart }) => {
   const loggedInState = useSelector((state) => state.signin);
   console.log(loggedInState);
   const loggedInCart = Object.values(loggedInState.cart);
+  let isPageWide = useMediaQuery("(min-width: 900px)");
   // setCart(loggedInCart);
 
   let cartMap = [];
@@ -89,7 +91,7 @@ const Cart = ({ totalPrice, setTotalPrice, cart, setCart }) => {
       );
     }
   };
-  return (
+  return isPageWide ? (
     <CartWrapper>
       <CartDetails>
         <CartHeader>
@@ -182,6 +184,96 @@ const Cart = ({ totalPrice, setTotalPrice, cart, setCart }) => {
         </Info>
       </OrderSummary>
     </CartWrapper>
+  ) : (
+    //MOBILE
+    <CartWrapper style={{ flexDirection: "column" }}>
+      <CartDetails>
+        <CartHeader>
+          <h1>Your Cart</h1>
+          <div>You have {guestUserState.length} items in your cart</div>
+          <CartHeadings>
+            <Heading>Product</Heading>
+          </CartHeadings>
+        </CartHeader>
+        <div>
+          {loggedInState.isSignedIn
+            ? loggedInCart.map((product) => {
+                console.log(product);
+                return <CartItem product={product} />;
+              })
+            : guestUserState.map((product) => {
+                console.log(product);
+                return <CartItem product={product} />;
+              })}
+        </div>
+        <CartFooter>{/* <h2>Items related to your order</h2> */}</CartFooter>
+      </CartDetails>
+      <OrderSummary>
+        <h2>Order Summary</h2>
+        <Divider />
+        <Info style={{ display: "flex" }}>
+          <FaShippingFast
+            size={50}
+            color="green"
+            style={{ marginRight: "20px" }}
+          />
+          <p style={{ fontSize: "15px" }}>Free shipping within Canada.</p>
+        </Info>
+        <CartTotal>
+          <div>Total:</div>
+          <div>$CAD {totalPrice} </div>
+        </CartTotal>
+        <Discount>
+          <h4>Discount code</h4>
+          {<Notification>{couponMessage} </Notification>}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginTop: "0.5em",
+            }}
+          >
+            <input
+              type="text"
+              onChange={(ev) => {
+                setCouponCode(ev.target.value);
+              }}
+            />
+            <Button
+              disabled={couponCode ? (discountValue ? true : false) : true}
+              style={{ width: "30%", margin: "0" }}
+              onClick={handleCouponSubmit}
+            >
+              Apply
+            </Button>
+          </div>
+        </Discount>
+        <Link
+          to="/form"
+          style={{ margin: "0", width: "100%", fontSize: "18px" }}
+        >
+          Checkout
+        </Link>
+        <Info>
+          <h4>Need help?</h4>
+          <a href="#">FAQ </a>
+          <div>Live Chat with us </div>
+          <div>Call us 1 (888) 899-0660</div>
+          <div style={{ marginTop: "2em" }}>We Accept</div>
+          <Logos>
+            <SiVisa size={30} />
+            <FaCcMastercard size={30} />
+            <FaCcAmex size={30} />
+            <FaPaypal size={30} />
+            <FaApplePay size={30} />
+          </Logos>
+          <div style={{ fontSize: "14px", marginTop: "2em" }}>
+            All prices shown in Canadian (CAD) dollars.
+          </div>
+        </Info>
+      </OrderSummary>
+    </CartWrapper>
   );
 };
 
@@ -198,6 +290,7 @@ const CartDetails = styled.ul`
 
 const CartHeader = styled.div`
   border-bottom: 1px solid #000;
+  width: 60vw;
 `;
 
 const CartHeadings = styled.div`
