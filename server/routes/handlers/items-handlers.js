@@ -6,7 +6,7 @@ const paginator = (req, res, givenItems) => {
   const page = req.query.page ? parseInt(req.query.page) : 1;
 
   const limit = req.query.limit ? parseInt(req.query.limit) : givenItems.length;
-  const lastPage = Math.ceil(givenItems.length / limit);
+  // const lastPage = Math.ceil(givenItems.length / limit);
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
 
@@ -32,13 +32,17 @@ const paginator = (req, res, givenItems) => {
   // console.log("params", req.params);
   res.status(200).json({
     status: 200,
-    data: { results: results.results, lastPage },
+    data: { results: results.results },
   });
 };
+
+////////////////
 
 const getItems = (req, res) => {
   paginator(req, res, items);
 };
+
+//////////////////
 
 const getItemById = (req, res) => {
   // console.log("params", req.params);

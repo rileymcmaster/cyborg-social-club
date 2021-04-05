@@ -79,7 +79,7 @@ const HomePage = () => {
             placeholder="Email Address"
             style={{
               height: "50px",
-              width: "20vw",
+              width: "200px",
               outline: "none",
               border: "2px solid var(--primary-color)",
             }}
@@ -129,10 +129,9 @@ const CategoryDiv = styled.div`
 `;
 
 const TopBrands = styled(Link)`
-  width: 10vw;
   height: 100%;
   margin: 30px;
-  padding: 30px;
+  padding: 10px;
   display: flex;
   text-align: center;
   justify-content: center;
