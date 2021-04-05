@@ -79,7 +79,7 @@ const HomePage = () => {
             placeholder="Email Address"
             style={{
               height: "50px",
-              width: "250px",
+              width: "200px",
               outline: "none",
               border: "2px solid var(--primary-color)",
             }}
