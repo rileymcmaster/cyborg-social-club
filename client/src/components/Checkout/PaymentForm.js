@@ -395,7 +395,6 @@ const FormGroup = styled.fieldset`
   will-change: opacity, transform;
   border-radius: 4px;
   width: 90%;
-}
 `;
 
 const ErrorMessage = styled.div``;

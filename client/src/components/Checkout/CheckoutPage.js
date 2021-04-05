@@ -5,16 +5,60 @@ import { Link } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import PaymentForm from "./PaymentForm";
+import { useMediaQuery } from "../../components/useMediaQuery";
 
 const PUBLIC_KEY =
   "pk_test_51IcC3GDgvXmdvLhUqpJcHvZAycGlqNajSZNx9fVeCqV33UK4hAXCY1gvNvAfsn909PEwipP4bC84UDkXRUIdnM1I00ugdQXllH";
-
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
 const Form = () => {
-  return (
-    <Body>
-      <EntireForm>
+  let isPageWide = useMediaQuery("(min-width: 900px)");
+
+  return isPageWide ? (
+    <>
+      <Body>
+        <EntireForm>
+          <h1 style={{ "font-size": "22px", color: "black" }}>Checkout</h1>
+
+          <div style={{ width: "100%" }}>
+            <Elements stripe={stripeTestPromise} style={{ width: "100%" }}>
+              <PaymentForm style={{ width: "100%" }} />
+            </Elements>
+          </div>
+
+          <SubmitContainer>
+            <Link to="/products"> Return Shopping</Link>
+          </SubmitContainer>
+        </EntireForm>
+        <ReviewContainer>
+          <ItemReview>
+            <span>
+              <img src="" alt="product" />
+              <h3>productName</h3>
+            </span>
+            <h4>40$</h4>
+          </ItemReview>
+          <SubtotalContainer>
+            <span>
+              <h4>Subtotal </h4>
+              <h4>40$ </h4>
+            </span>
+            <span>
+              <h4>Shipping </h4>
+              <h4>Free </h4>
+            </span>
+          </SubtotalContainer>
+          <TotalsReview>
+            <h2>Total </h2>
+            <h2>CAD 40$</h2>
+          </TotalsReview>
+        </ReviewContainer>
+      </Body>
+    </>
+  ) : (
+    //MOBILE
+    <Body style={{ flexDirection: "column" }}>
+      <EntireForm style={{ width: "100%" }}>
         <h1 style={{ "font-size": "22px", color: "black" }}>Checkout</h1>
 
         <div style={{ width: "100%" }}>
@@ -27,7 +71,7 @@ const Form = () => {
           <Link to="/products"> Return Shopping</Link>
         </SubmitContainer>
       </EntireForm>
-      <ReviewContainer>
+      <ReviewContainer style={{ width: "100%" }}>
         <ItemReview>
           <span>
             <img src="" alt="product" />
@@ -35,11 +79,6 @@ const Form = () => {
           </span>
           <h4>40$</h4>
         </ItemReview>
-        {/* <CouponCode>
-          <input type="number" placeholder="Coupon Code" />
-          <Button>Apply</Button>
-        </CouponCode> */}
-
         <SubtotalContainer>
           <span>
             <h4>Subtotal </h4>
@@ -58,6 +97,7 @@ const Form = () => {
     </Body>
   );
 };
+
 const Body = styled.div`
   display: flex;
 `;
