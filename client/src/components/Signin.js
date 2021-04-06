@@ -11,6 +11,8 @@ import { FiAlertTriangle } from "react-icons/fi";
 import { useMediaQuery } from "../components/useMediaQuery";
 
 const Signin = () => {
+  const cart = useSelector((state) => state.cart);
+
   const emailRef = useRef();
   const passwordRef = useRef();
   const dispatch = useDispatch();
@@ -24,7 +26,7 @@ const Signin = () => {
     let password = passwordRef.current.value;
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, cart }),
       headers: { "Content-Type": "application/json" },
     };
 

@@ -50,7 +50,8 @@ const addUser = (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
-      isSignedIn: true,
+      isSignedIn: req.body.isSignedIn,
+      cart: red.body.cart,
     });
     user.save();
 

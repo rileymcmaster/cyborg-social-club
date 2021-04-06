@@ -16,18 +16,6 @@ import Cart from "./Cart";
 import ErrorPage from "./ErrorPage";
 
 function App() {
-  // const [companies, setCompanies] = useState(null);
-  // //determine where the fetch will go
-  // useEffect(() => {
-  //   fetch("/companies")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setCompanies(data.data);
-  //     });
-  // }, []);
-
-  const [cart, setCart] = useState({});
   const [totalPrice, setTotalPrice] = useState(0);
 
   return (
@@ -43,24 +31,19 @@ function App() {
             <Products />
           </Route>
           <Route exact path="/cart">
-            <Cart
-              cart={cart}
-              setCart={setCart}
-              totalPrice={totalPrice}
-              setTotalPrice={setTotalPrice}
-            />
+            <Cart totalPrice={totalPrice} setTotalPrice={setTotalPrice} />
           </Route>
           <Route exact path="/item/:id">
             <ProductPage />
           </Route>
           <Route exact path="/sign-in">
-            <Signin cart={cart} />
+            <Signin />
           </Route>
           <Route exact path="/category/:category">
             <FilterProduct />
           </Route>
           <Route exact path="/form">
-            <CheckoutPage totalPrice={totalPrice} cart={cart} />
+            <CheckoutPage totalPrice={totalPrice} />
           </Route>
           <Route exact path="/sign-up">
             <SignUp />

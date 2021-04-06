@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import styled from "styled-components";
 import Button from "../Button";
+import { useSelector } from "react-redux";
 
 const CARD_OPTIONS = {
   iconStyle: "solid",
@@ -52,14 +53,57 @@ const Field = ({
   </FormRow>
 );
 
-const PaymentForm = ({ totalPrice, cart }) => {
+const PaymentForm = ({ totalPrice }) => {
+  const cart = useSelector((state) => state.cart);
+
+  const [success, setSuccess] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState("");
+
+  useEffect(() => {
+    const requestOptions = {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+
+      method: "POST",
+      body: JSON.stringify({
+        firstName: orderDetails.firstName,
+        lastName: orderDetails.lastName,
+        email: billingDetails.email,
+        phone: billingDetails.phone,
+        shippingAddress: {
+          street: orderDetails.line1,
+          unit: orderDetails.line2,
+          city: orderDetails.city,
+          province: orderDetails.province,
+          country: orderDetails.country,
+          postal_code: orderDetails.postal_code,
+        },
+        order: {
+          total: totalPrice,
+          items: {
+            cart: cart,
+          },
+        },
+      }),
+    };
+    fetch("/order", requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        return json;
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
+  }, [success && paymentMethod && paymentMethod.length !== 0]);
+  console.log(totalPrice);
   const stripe = useStripe();
   const elements = useElements();
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [cardComplete, setCardComplete] = useState(false);
   const [processing, setProcessing] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState(null);
   const [billingDetails, setBillingDetails] = useState({
     email: "",
     phone: "",
@@ -67,8 +111,8 @@ const PaymentForm = ({ totalPrice, cart }) => {
   });
 
   const [orderDetails, setOrderDetails] = useState({
-    firstname: "",
-    lastname: "",
+    firstName: "",
+    lastName: "",
     line1: "",
     line2: "",
     city: "",
@@ -110,12 +154,13 @@ const PaymentForm = ({ totalPrice, cart }) => {
 
         method: "POST",
         body: JSON.stringify({
-          amount: { totalPrice },
+          amount: `${totalPrice * 100}`,
           id,
           billingDetails,
         }),
       };
 
+      console.log(Number(totalPrice) * 100);
       try {
         setPaymentMethod(payload.paymentMethod);
         const response = await fetch("/payment", requestOptions);
@@ -135,47 +180,7 @@ const PaymentForm = ({ totalPrice, cart }) => {
 
     setProcessing(false);
   };
-  if (success) {
-    const requestOptions = {
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
 
-      method: "POST",
-      body: JSON.stringify({
-        customer: {
-          id: 1,
-          firstName: orderDetails.firstname,
-          lastName: orderDetails.lastname,
-          email: billingDetails.email,
-          phoneNumber: billingDetails.phone,
-          shippingaddress: {
-            street: orderDetails.line1,
-            unit: orderDetails.line2,
-            city: orderDetails.city,
-            province: orderDetails.province,
-            country: orderDetails.country,
-            postal_code: orderDetails.postal_code,
-          },
-
-          order: {
-            // id: id,
-            total: totalPrice,
-            items: {
-              cart,
-            },
-          },
-        },
-      }),
-    };
-    fetch("/order", requestOptions)
-      .then((res) => res.json())
-      .then((json) => {
-        console.log(json);
-        return json;
-      });
-  }
   const reset = () => {
     setError(null);
     setProcessing(false);
@@ -190,10 +195,7 @@ const PaymentForm = ({ totalPrice, cart }) => {
   return paymentMethod ? (
     <Result>
       <h2 role="alert">Payment successful</h2>
-      <p>
-        Thanks for your order. Your order confirmation number is
-        {paymentMethod.id}
-      </p>
+      <p>Thanks for your order. It will arrive in 4 business days.</p>
       <Button type="button" onClick={reset}>
         <svg width="32px" height="32px" viewBox="0 0 32 32">
           <path
@@ -217,7 +219,7 @@ const PaymentForm = ({ totalPrice, cart }) => {
           autoComplete="given-name"
           value={orderDetails.firstname}
           onChange={(e) => {
-            setOrderDetails({ ...orderDetails, firstname: e.target.value });
+            setOrderDetails({ ...orderDetails, firstName: e.target.value });
           }}
         />
         <Field
@@ -229,7 +231,7 @@ const PaymentForm = ({ totalPrice, cart }) => {
           autoComplete="family-name"
           value={orderDetails.lastname}
           onChange={(e) => {
-            setOrderDetails({ ...orderDetails, lastname: e.target.value });
+            setOrderDetails({ ...orderDetails, lastName: e.target.value });
           }}
         />
         <Field

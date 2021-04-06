@@ -15,12 +15,11 @@ import { Divider } from "./CartItem";
 import { useSelector } from "react-redux";
 import { useMediaQuery } from "../../components/useMediaQuery";
 
-const Cart = ({ totalPrice, setTotalPrice, cart, setCart }) => {
+const Cart = ({ totalPrice, setTotalPrice }) => {
   const [couponCode, setCouponCode] = useState(null);
   const [discountValue, setDiscountValue] = useState(0);
   const [couponMessage, setCouponMessage] = useState("");
-  const test = useSelector((state) => state.cart);
-  console.log(test);
+  const cart = useSelector((state) => state.cart);
   const guestUserState = useSelector((state) => Object.values(state.cart));
   console.log(guestUserState);
   const loggedInState = useSelector((state) => state.signin);
