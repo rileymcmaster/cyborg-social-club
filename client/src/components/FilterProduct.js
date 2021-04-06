@@ -28,7 +28,10 @@ const FilterProduct = () => {
         setFilteredItems(data.data.results);
         setLoading(false);
       })
-      .catch((error) => console.log("ERROR", error));
+      .catch((error) => {
+        setLoading(false);
+        console.log("ERROR", error);
+      });
   }, [useParams()]);
 
   const handlePageNext = () => {
@@ -53,8 +56,7 @@ const FilterProduct = () => {
         <CenterDiv>
           <Loading />
         </CenterDiv>
-      ) : !loading &&
-        filteredItems.length > 0 &&
+      ) : filteredItems.length > 0 &&
         currentItems &&
         urlCategory !== "undefined" ? (
         <>

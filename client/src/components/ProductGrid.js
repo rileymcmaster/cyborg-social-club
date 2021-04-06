@@ -34,12 +34,13 @@ const ProductGrid = () => {
       .then((data) => {
         // console.log(data);
         setItems(data.data.results);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log("ERROR", error);
         setError(true);
       });
-    setLoading(false);
   }, []);
   // ^^this was dependent on currentPage. Might have to put it back
 
@@ -95,7 +96,9 @@ const ProductGrid = () => {
 
   return loading ? (
     <Wrapper>
-      <Loading />
+      <CenterDiv>
+        <Loading />
+      </CenterDiv>
     </Wrapper>
   ) : error ? (
     <ErrorPage />
@@ -168,7 +171,9 @@ const ProductGrid = () => {
     </Wrapper>
   );
 };
-
+const CenterDiv = styled.div`
+  margin: auto;
+`;
 const ProductGridArea = styled.div`
   display: block;
   margin-right: auto;
@@ -185,6 +190,9 @@ const GridDisplay = styled.div`
 `;
 const Wrapper = styled.div`
   min-height: var(--page-height);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Div = styled.div`
