@@ -73,13 +73,13 @@ const Form = ({ totalPrice }) => {
         </SubmitContainer>
       </EntireForm>
       <ReviewContainer style={{ width: "100%" }}>
-        <ItemReview>
+        {/* <ItemReview>
           <span>
             <img src="" alt="product" />
             <h3>productName</h3>
           </span>
           <h4>{totalPrice}$</h4>
-        </ItemReview>
+        </ItemReview> */}
         <SubtotalContainer>
           <span>
             <h4>Subtotal </h4>
