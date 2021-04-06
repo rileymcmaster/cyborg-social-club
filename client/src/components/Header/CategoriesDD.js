@@ -1,51 +1,51 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
+import { filters } from "../Filters";
+import { singleFilter } from "../../actions";
 
 //PETS AND ANIMALS IS BROKEN.
 //it doesn't like the spaces for some reason
 //will come back to it.
 
 const CategoriesDD = () => {
-  const [items, setItems] = useState(null);
-  useEffect(() => {
-    fetch("/items")
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        setItems(data.data.results);
-      });
-  }, []);
-
-  //FIND UNIQUE CATEGORIES
-  let categoriesArray = [];
-  if (items) {
-    items.map((item) => {
-      categoriesArray.push(item.category);
-    });
-  }
-  const onlyUniqueValues = (value, index, self) => {
-    return self.indexOf(value) === index;
+  const dispatch = useDispatch();
+  const [openMenu, setOpenMenu] = useState(false);
+  const toggleMenu = () => {
+    setOpenMenu(!openMenu);
   };
-  const uniqueCategories = categoriesArray.filter(onlyUniqueValues);
+
+  const handleToggle = (filterObject) => {
+    dispatch(singleFilter(filterObject));
+    setOpenMenu(false);
+  };
 
   //CATEGORIES
-  return items ? (
-    <Dropdown title="Categories">
-      {uniqueCategories.map((item) => {
-        const removeSpaces = item.split(" ").join("");
-        return (
-          <DropdownLink to={`/category/${removeSpaces}`}>{item}</DropdownLink>
-        );
+  return (
+    <Dropdown
+      title="Categories"
+      toggleMenu={() => toggleMenu()}
+      openMenu={openMenu}
+    >
+      {filters.map((filter, index) => {
+        if (filter.kind === "category") {
+          return (
+            <DropdownLink key={index} onClick={() => handleToggle(filter)}>
+              {filter.name}
+            </DropdownLink>
+          );
+        }
+        // console.log("FILTER", filter);
       })}
     </Dropdown>
-  ) : (
-    <Dropdown title="" />
   );
 };
 
-const DropdownLink = styled(NavLink)`
+const DropdownLink = styled.div`
+  user-select: none;
+  cursor: pointer;
   width: 100%;
   padding: 10px 0;
   text-align: center;

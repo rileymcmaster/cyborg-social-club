@@ -1,62 +1,40 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
+import { filters } from "../Filters";
+import { singleFilter } from "../../actions";
 
 const BodyPartsDD = () => {
-  //SET ITEMS. should be replaced with global states when that is ready
-  const [items, setItems] = useState(null);
-  useEffect(() => {
-    fetch("/items")
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data);
-        setItems(data.data.results);
-      });
-  }, []);
-
-  //FIND UNIQUE CATEGORIES
-  let categoriesArray = [];
-  if (items) {
-    items.map((item) => {
-      categoriesArray.push(item.body_location);
-    });
-  }
-  const onlyUniqueValues = (value, index, self) => {
-    return self.indexOf(value) === index;
+  const dispatch = useDispatch();
+  const [openMenu, setOpenMenu] = useState(false);
+  const toggleMenu = () => {
+    setOpenMenu(!openMenu);
   };
-  const uniqueCategories = categoriesArray.sort().filter(onlyUniqueValues);
+  const handleToggle = (filterObject) => {
+    dispatch(singleFilter(filterObject));
+    setOpenMenu(false);
+  };
 
-  //CATEGORIES
-  return items ? (
-    <Dropdown title="Parts">
-      {uniqueCategories.map((item) => {
-        //might need to set a value?? or set the url somehow
-        return <DropdownLink to={`/category/${item}`}>{item}</DropdownLink>;
+  return (
+    <Dropdown title="Parts" toggleMenu={() => toggleMenu()} openMenu={openMenu}>
+      {filters.map((filter, index) => {
+        if (filter.kind === "parts") {
+          return (
+            <DropdownLink key={index} onClick={() => handleToggle(filter)}>
+              {filter.name}
+            </DropdownLink>
+          );
+        }
       })}
     </Dropdown>
-  ) : (
-    <Dropdown title="" />
   );
 };
 
-const Menu = styled.button`
-  text-decoration: none;
-  outline: none;
-  border: 2px solid;
-  border-color: (--primary-color);
-  width: 150px;
-  height: 50px;
-  color: var(--primary-color);
-  background-color: var(--secondary-color);
-  &:hover {
-    border-color: (--secondary-color);
-    color: var(--secondary-color);
-    background-color: var(--primary-color);
-  }
-`;
-
-const DropdownLink = styled(NavLink)`
+const DropdownLink = styled.div`
+  user-select: none;
+  cursor: pointer;
   width: 100%;
   padding: 10px 0;
   text-align: center;
