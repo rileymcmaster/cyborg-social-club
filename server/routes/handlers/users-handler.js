@@ -36,14 +36,12 @@ const updateUserCart = (req, res) => {
         quantity: 1,
       };
     }
-    console.log(foundUser);
-    console.log(users);
+   
     return res.status(200).json({ status: 200, msg: "success" });
   }
 };
 
 const addUser = (req, res) => {
-  console.log(req.body);
   const foundUser = User.findOne({ email: req.body.email });
 
   if (!foundUser) {
