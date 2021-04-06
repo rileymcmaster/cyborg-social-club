@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import GenerateProductGrid from "./GenerateProductGrid";
 import Loading from "./Loading";
+import ErrorPage from "./ErrorPage";
 
 const FilterProduct = () => {
   const [filteredItems, setFilteredItems] = useState([]);
@@ -24,24 +25,11 @@ const FilterProduct = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data);
-        // console.log("Data", data);
         setFilteredItems(data.data.results);
+        setLoading(false);
       })
       .catch((error) => console.log("ERROR", error));
-    setLoading(false);
   }, [useParams()]);
-
-  ///PAGINATION attempt
-  // useEffect(() => {
-  //   if (filteredItems) {
-  //     resultsArray.map((result) => {
-  //       // console.log(filteredItems[result]);
-  //       // console.log("result", result);
-  //       setPageItems(...pageItems, filteredItems(result));
-  //     });
-  //   }
-  // }, []);
 
   const handlePageNext = () => {
     if (currentPage === lastPage) {
@@ -55,14 +43,20 @@ const FilterProduct = () => {
     }
     setCurrentPage(currentPage - 1);
   };
-  // console.log(filteredItems);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
   return (
     <Wrapper>
-      {filteredItems && filteredItems.length > 0 && currentItems ? (
+      {loading ? (
+        <CenterDiv>
+          <Loading />
+        </CenterDiv>
+      ) : !loading &&
+        filteredItems.length > 0 &&
+        currentItems &&
+        urlCategory !== "undefined" ? (
         <>
           {urlCategory === "PetsandAnimals" ? (
             <Title>Search for : Pets and Animals</Title>
@@ -96,25 +90,22 @@ const FilterProduct = () => {
             setCurrentPage={() => setCurrentPage(1)}
           />
         </>
-      ) : filteredItems && urlCategory === "undefined" ? (
-        <Title>No search results</Title>
-      ) : filteredItems && filteredItems.length === 0 ? (
-        <Title>No products found. Try again</Title>
       ) : (
-        <Loading />
+        <Title>No products found. Try again</Title>
       )}
     </Wrapper>
   );
 };
 
-// const Pagination = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
+const CenterDiv = styled.div`
+  margin: auto;
+`;
 
 const Wrapper = styled.div`
   min-height: var(--page-height);
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 `;
 const Title = styled.h1`
   padding: 10px;

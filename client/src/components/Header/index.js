@@ -24,7 +24,7 @@ const Header = () => {
     <Wrapper>
       <FirstRow>
         <SearchDiv>
-          <SearchBar />
+          <SearchBar hideMenu={hideMenu} />
         </SearchDiv>
         <NavigationLink to={"/"}>
           <Title>
