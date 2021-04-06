@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import SidebarFilter from "./SidebarFilter";
 import ErrorPage from "./ErrorPage";
 import { useMediaQuery } from "./useMediaQuery";
+import Loading from "./Loading";
 
 const ProductGrid = () => {
   //check width of page
@@ -89,7 +90,11 @@ const ProductGrid = () => {
       ? filteredItems.slice(indexOfFirstItem, indexOfLastItem)
       : items.slice(indexOfFirstItem, indexOfLastItem);
 
-  return error ? (
+  return loading ? (
+    <Wrapper>
+      <Loading />
+    </Wrapper>
+  ) : error ? (
     <ErrorPage />
   ) : (
     <Wrapper>
