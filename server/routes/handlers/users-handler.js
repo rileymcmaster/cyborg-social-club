@@ -1,8 +1,7 @@
-const users = require("../../data/user.json");
 const User = require("../../models/user");
 
 const getUserById = (req, res) => {
-  const foundUser = users.find((user) => user.email === req.body.email);
+  const foundUser = User.findOne({ email: req.body.email });
 
   if (foundUser) {
     res.status(200).json({
@@ -18,7 +17,7 @@ const getUserById = (req, res) => {
 };
 
 const updateUserCart = (req, res) => {
-  const foundUser = users.find((user) => user.email === req.body.email);
+  const foundUser = User.findOne({ email: req.body.email });
 
   if (!foundUser) {
     return res.status(404).json({
@@ -45,7 +44,6 @@ const updateUserCart = (req, res) => {
 
 const addUser = (req, res) => {
   console.log(req.body);
-
   const foundUser = User.findOne({ email: req.body.email });
 
   if (!foundUser) {
