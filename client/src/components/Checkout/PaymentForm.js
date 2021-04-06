@@ -110,7 +110,7 @@ const PaymentForm = ({ totalPrice, cart }) => {
 
         method: "POST",
         body: JSON.stringify({
-          amount: totalPrice,
+          amount: { totalPrice },
           id,
           billingDetails,
         }),

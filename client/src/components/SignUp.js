@@ -29,7 +29,13 @@ const SignUp = () => {
 
     const requestOptions = {
       method: "POST",
-      body: JSON.stringify({firstName, lastName, email, password, confirmPassword }),
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+      }),
       headers: { "Content-Type": "application/json" },
     };
 
@@ -39,8 +45,8 @@ const SignUp = () => {
         if (json.status === 200) {
           dispatch(signUp(json.user));
           return history.push("/");
-        } else if (json.status === 404) {
-          return window.alert("Cannot Add User");
+        } else if (json.status === 400) {
+          return window.alert("This user already exists");
         }
       });
   };
@@ -54,7 +60,7 @@ const SignUp = () => {
             <b>First name</b>
           </label>
           <input
-          ref={firstNameRef}
+            ref={firstNameRef}
             type="text"
             placeholder="First name"
             name="first-name"
@@ -64,7 +70,7 @@ const SignUp = () => {
             <b>Last name</b>
           </label>
           <input
-           ref={lastNameRef}
+            ref={lastNameRef}
             type="text"
             placeholder="Last Name"
             name="last-name"
@@ -106,7 +112,11 @@ const SignUp = () => {
           />
 
           <div>
-            <Button type="submit" onClick={handleSubmit} style={{marginTop: "10px"}}>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              style={{ marginTop: "10px" }}
+            >
               Sign Up
             </Button>
           </div>
