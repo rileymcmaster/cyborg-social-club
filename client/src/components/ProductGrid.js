@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SidebarFilter from "./SidebarFilter";
 import ErrorPage from "./ErrorPage";
 import { useMediaQuery } from "./useMediaQuery";
@@ -10,6 +11,8 @@ import Loading from "./Loading";
 const ProductGrid = () => {
   //check width of page
   let isPageWide = useMediaQuery("(min-width: 900px)");
+  //check filters
+  const filterState = useSelector((state) => state.filter);
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(24);
@@ -59,7 +62,7 @@ const ProductGrid = () => {
   if (items && checkedFilter) {
     items.filter((item) => {
       // console.log("item", item.body_location);
-      checkedFilter.find((filter) => {
+      Object.values(filterState).find((filter) => {
         //CATEGORY
         if (filter.kind === "category" && filter.name === item.category) {
           filteredItems.push(item);
@@ -101,10 +104,7 @@ const ProductGrid = () => {
       <GridDisplay>
         {isPageWide ? (
           <SidebarGrid>
-            <SidebarFilter
-              checked={checkedFilter}
-              setChecked={setCheckedFilter}
-            />
+            <SidebarFilter />
           </SidebarGrid>
         ) : (
           <></>

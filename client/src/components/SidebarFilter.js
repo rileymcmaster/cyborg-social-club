@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { filters } from "./Filters";
-import Button from "./Button";
+import { addFilter, removeFilter } from "../actions";
 
-const SidebarFilter = ({ checked, setChecked, setCurrentPage }) => {
+const SidebarFilter = () => {
+  const dispatch = useDispatch();
+  const filterState = useSelector((state) => state.filter);
+  const filterStateKeys = Object.keys(filterState);
+
   const handleToggle = (value) => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-    if (currentIndex === -1) {
-      newChecked.push(value);
+    if (filterStateKeys.includes(value.name)) {
+      dispatch(removeFilter(value));
     } else {
-      newChecked.splice(currentIndex, 1);
+      dispatch(addFilter(value));
     }
-    setChecked(newChecked);
   };
 
-  //   console.log("checked", checked);
   return (
     <Wrapper>
       <Title>CATEGORY</Title>
@@ -32,6 +32,7 @@ const SidebarFilter = ({ checked, setChecked, setCurrentPage }) => {
                     name="filter"
                     value={filter.name}
                     id={filter.name}
+                    checked={filterStateKeys.includes(filter.name)}
                   />
 
                   {filter.name}
@@ -52,8 +53,8 @@ const SidebarFilter = ({ checked, setChecked, setCurrentPage }) => {
                   type="checkbox"
                   name="filter"
                   value={filter.name}
-                  defaultChecked={false}
                   id={filter.name}
+                  checked={filterStateKeys.includes(filter.name)}
                 />
                 {filter.name}
               </EachInput>

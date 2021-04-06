@@ -32,3 +32,19 @@ export const signUp = (user) => ({
   type: "SIGN_UP",
   user,
 });
+
+//filters
+export const addFilter = (filter) => ({
+  type: "ADD_FILTER",
+  filter,
+});
+
+export const removeFilter = (filter) => ({
+  type: "REMOVE_FILTER",
+  filter,
+});
+
+export const singleFilter = (filter) => ({
+  type: "SINGLE_FILTER",
+  filter,
+});
