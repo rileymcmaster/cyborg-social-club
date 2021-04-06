@@ -59,18 +59,4 @@ const DropdownLink = styled.div`
   }
 `;
 
-const DropdownMenu = styled.div`
-  width: 100%;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-`;
-
-const DropdownWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
 export default CategoriesDD;
