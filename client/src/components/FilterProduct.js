@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import GenerateProductGrid from "./GenerateProductGrid";
+import Loading from "./Loading";
 
 const FilterProduct = () => {
   const [filteredItems, setFilteredItems] = useState([]);
@@ -100,7 +101,7 @@ const FilterProduct = () => {
       ) : filteredItems && filteredItems.length === 0 ? (
         <Title>No products found. Try again</Title>
       ) : (
-        <div>LOADING</div>
+        <Loading />
       )}
     </Wrapper>
   );

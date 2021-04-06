@@ -157,7 +157,6 @@ const ProductGrid = () => {
               {nextPage}
             </NextButton>
           </Div>
-          {/* </ProductList> */}
           {/* )} */}
         </ProductGridArea>
       </GridDisplay>
@@ -166,13 +165,10 @@ const ProductGrid = () => {
 };
 
 const ProductGridArea = styled.div`
-  /* grid-area: main; */
-  margin: 0 auto;
-  background-color: blue;
+  display: block;
+  margin-right: auto;
 `;
 const SidebarGrid = styled.div`
-  /* grid-area: sidebar; */
-  display: flex;
   min-width: 200px;
   margin-top: 50px;
   margin-right: auto;
@@ -180,17 +176,11 @@ const SidebarGrid = styled.div`
 const GridDisplay = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
 `;
 const Wrapper = styled.div`
   min-height: var(--page-height);
 `;
-// const ProductList = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   align-items: center;
-//   justify-content: center;
-// `;
 
 const Div = styled.div`
   display: flex;

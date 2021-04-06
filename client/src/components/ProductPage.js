@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import { addCartProduct, updateQuantity } from "../actions";
 import { useDispatch } from "react-redux";
+import Loading from "./Loading";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
@@ -112,7 +113,9 @@ const ProductPage = () => {
           </ProductDiv2>
         </ProductDiv>
       ) : (
-        <div>Loading...</div>
+        <ProductDiv>
+          <Loading />
+        </ProductDiv>
       )}
     </>
   );
