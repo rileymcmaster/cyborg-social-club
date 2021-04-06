@@ -7,6 +7,7 @@ const schema = new Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   isSignedIn: { type: Boolean, required: true },
+  cart: { type: Object, required: true },
 });
 
 module.exports = mongoose.model("User", schema, "users");

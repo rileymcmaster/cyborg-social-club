@@ -11,8 +11,8 @@ const PUBLIC_KEY =
   "pk_test_51IcC3GDgvXmdvLhUqpJcHvZAycGlqNajSZNx9fVeCqV33UK4hAXCY1gvNvAfsn909PEwipP4bC84UDkXRUIdnM1I00ugdQXllH";
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
 
-const Form = ({ totalPrice, cart }) => {
-  
+const Form = ({ totalPrice }) => {
+  console.log(totalPrice);
   let isPageWide = useMediaQuery("(min-width: 900px)");
 
   return isPageWide ? (
@@ -23,7 +23,7 @@ const Form = ({ totalPrice, cart }) => {
 
           <div style={{ width: "100%" }}>
             <Elements stripe={stripeTestPromise} style={{ width: "100%" }}>
-              <PaymentForm style={{ width: "100%" }} />
+              <PaymentForm style={{ width: "100%" }} totalPrice={totalPrice} />
             </Elements>
           </div>
 
@@ -32,17 +32,17 @@ const Form = ({ totalPrice, cart }) => {
           </SubmitContainer>
         </EntireForm>
         <ReviewContainer>
-          <ItemReview>
+          {/* <ItemReview>
             <span>
               <img src="" alt="product" />
               <h3>productName</h3>
             </span>
             <h4>40$</h4>
-          </ItemReview>
+          </ItemReview> */}
           <SubtotalContainer>
             <span>
               <h4>Subtotal </h4>
-              <h4>40$ </h4>
+              <h4>{totalPrice}$ </h4>
             </span>
             <span>
               <h4>Shipping </h4>
@@ -51,7 +51,7 @@ const Form = ({ totalPrice, cart }) => {
           </SubtotalContainer>
           <TotalsReview>
             <h2>Total </h2>
-            <h2>CAD 40$</h2>
+            <h2>CAD {totalPrice}$</h2>
           </TotalsReview>
         </ReviewContainer>
       </Body>
@@ -64,11 +64,7 @@ const Form = ({ totalPrice, cart }) => {
 
         <div style={{ width: "100%" }}>
           <Elements stripe={stripeTestPromise} style={{ width: "100%" }}>
-            <PaymentForm
-              style={{ width: "100%" }}
-              totalPrice={totalPrice}
-              cart={cart}
-            />
+            <PaymentForm style={{ width: "100%" }} totalPrice={totalPrice} />
           </Elements>
         </div>
 

@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import Button from "./Button";
 
 const SignUp = () => {
+  const cart = useSelector((state) => state.cart);
   const state = useSelector((state) => state.signin);
   const firstNameRef = useRef();
   const lastNameRef = useRef();
@@ -35,6 +36,8 @@ const SignUp = () => {
         email,
         password,
         confirmPassword,
+        cart,
+        isSignedIn: true,
       }),
       headers: { "Content-Type": "application/json" },
     };

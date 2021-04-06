@@ -64,7 +64,6 @@ express()
       const payment = await stripe.paymentIntents.create({
         amount,
         currency: "CAD",
-        description: "Order 78393",
         payment_method: id,
         confirm: true,
         customer: customer.id,
