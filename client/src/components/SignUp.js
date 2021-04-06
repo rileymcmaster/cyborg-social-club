@@ -4,6 +4,7 @@ import { signUp } from "../actions";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import Button from "./Button";
+import { FiAlertTriangle } from "react-icons/fi";
 
 const SignUp = () => {
   const state = useSelector((state) => state.signin);
@@ -14,6 +15,7 @@ const SignUp = () => {
   const passwordConfirmRef = useRef();
   const dispatch = useDispatch();
   let history = useHistory();
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -26,6 +28,7 @@ const SignUp = () => {
     let email = emailRef.current.value;
     let password = passwordRef.current.value;
     let confirmPassword = passwordConfirmRef.current.value;
+    
 
     const requestOptions = {
       method: "POST",
@@ -39,6 +42,11 @@ const SignUp = () => {
       headers: { "Content-Type": "application/json" },
     };
 
+    if (password =! confirmPassword) {
+      setConfirmPasswordError(true);
+      return 
+    } else {
+
     fetch("/add-user", requestOptions)
       .then((res) => res.json())
       .then((json) => {
@@ -49,11 +57,35 @@ const SignUp = () => {
           return window.alert("This user already exists");
         }
       });
-  };
+  }};
   return (
     <Body>
       <FormContainer>
         <h1>Create an Account</h1>
+
+<AuthErrorMsg
+            style={
+              confirmPasswordError === true
+                ? { border: " solid red ", borderRadius: "7px" }
+                : { backgroundColor: "white" }
+            }
+          >
+            {confirmPasswordError === false ? (
+              <span>
+                <p></p>
+              </span>
+            ) : (
+              <span>
+                <ErrorMessage style={{ color: "white" }}>
+                  <FiAlertTriangle style={{ height: "40px", width: "40px" }} />
+                </ErrorMessage>
+                <p>
+                  {" "}
+                  The passwords provided do not match! 
+                </p>
+              </span>
+            )}
+          </AuthErrorMsg>
 
         <form onSubmit={handleSubmit}>
           <label for="first-name">
@@ -168,6 +200,32 @@ const FormContainer = styled.div`
   label {
     padding: 5px;
   }
+`;
+const AuthErrorMsg = styled.div`
+  display: flex;
+
+  min-width: 380px;
+  max-width: 70%;
+  min-height: 80px;
+  max-height: 80px;
+  margin-bottom: 10px;
+  color: var(--secondary-color);
+  text-align: center;
+
+  span {
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const ErrorMessage = styled.div`
+  display: flex;
+  color: white;
+  width: 20%;
+  height: 100%;
+  background-color: red;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default SignUp;
