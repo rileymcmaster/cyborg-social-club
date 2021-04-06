@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import SidebarFilter from "./SidebarFilter";
 import ErrorPage from "./ErrorPage";
 import { useMediaQuery } from "./useMediaQuery";
+import Loading from "./Loading";
 
 const ProductGrid = () => {
   //check width of page
@@ -89,7 +90,11 @@ const ProductGrid = () => {
       ? filteredItems.slice(indexOfFirstItem, indexOfLastItem)
       : items.slice(indexOfFirstItem, indexOfLastItem);
 
-  return error ? (
+  return loading ? (
+    <Wrapper>
+      <Loading />
+    </Wrapper>
+  ) : error ? (
     <ErrorPage />
   ) : (
     <Wrapper>
@@ -157,7 +162,6 @@ const ProductGrid = () => {
               {nextPage}
             </NextButton>
           </Div>
-          {/* </ProductList> */}
           {/* )} */}
         </ProductGridArea>
       </GridDisplay>
@@ -166,30 +170,22 @@ const ProductGrid = () => {
 };
 
 const ProductGridArea = styled.div`
-  /* grid-area: main; */
+  display: block;
+  margin-right: auto;
 `;
 const SidebarGrid = styled.div`
-  /* grid-area: sidebar; */
-  display: flex;
   min-width: 200px;
   margin-top: 50px;
+  margin-right: auto;
 `;
 const GridDisplay = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  /* grid-template-columns: 200px auto; */
-  /* grid-template-areas: "sidebar main"; */
+  justify-content: center;
 `;
 const Wrapper = styled.div`
   min-height: var(--page-height);
 `;
-// const ProductList = styled.div`
-//   display: flex;
-//   flex-wrap: wrap;
-//   align-items: center;
-//   justify-content: center;
-// `;
 
 const Div = styled.div`
   display: flex;

@@ -7,4 +7,19 @@ const getCompanies = (req, res) => {
   });
 };
 
-module.exports = { getCompanies };
+const getCompanyById = (req, res) => {
+  console.log("REQ1", req.body.id);
+  console.log("REQ2", req.params);
+
+  const findCompany = companies.find((company) => {
+    return Number(company._id) === Number(req.params.id);
+  });
+
+  if (findCompany) {
+    res.status(202).json({ data: findCompany });
+  } else {
+    res.status(404).json({ msg: "not in the database" });
+  }
+};
+
+module.exports = { getCompanies, getCompanyById };

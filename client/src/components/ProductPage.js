@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import styled from "styled-components";
 import Button from "./Button";
 import { addCartProduct, updateQuantity } from "../actions";
 import { useDispatch } from "react-redux";
+import Loading from "./Loading";
 
 const ProductPage = () => {
   const dispatch = useDispatch();
   const [item, setItem] = React.useState(null);
   const [quantity, setQuantity] = React.useState(1);
+  const [company, setCompany] = useState(null);
   //should we remove this and just disable button?
   const handleAddToCart = () => {
     // console.log(item._id);
@@ -34,21 +36,30 @@ const ProductPage = () => {
     }
   };
 
-  React.useEffect(() => {
-    fetch(`/item/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setItem(data.data);
-        console.log(data.data);
-      });
-  }, [id]);
-  console.log(item);
+  useEffect(() => {
+    const loadAllData = async () => {
+      //find item
+      const itemDetails = await fetch(`/item/${id}`);
+      const itemDetailsObject = await itemDetails.json();
+      // console.log("itemDetailsObject", itemDetailsObject);
+      const currentCompanyId = itemDetailsObject.data.companyId;
+      setItem(itemDetailsObject.data);
+      //find company
+      const companyDetails = await fetch(`/companies/${currentCompanyId}`);
+      const companyDetailsObject = await companyDetails.json();
+      // console.log("companyDetailsObject", companyDetailsObject);
+      setCompany(companyDetailsObject.data);
+    };
+    loadAllData();
+  }, []);
+
   return (
     <>
-      {item ? (
+      {item && company ? (
         <ProductDiv>
           <ProductImg src={item.imageSrc} />
           <ProductDiv2>
+            <Name>{company.name}</Name>
             <Name>{item.name}</Name>
             <Price>{item.price}</Price>
             <AddToCartDiv>
@@ -102,7 +113,9 @@ const ProductPage = () => {
           </ProductDiv2>
         </ProductDiv>
       ) : (
-        <div>Loading...</div>
+        <ProductDiv>
+          <Loading />
+        </ProductDiv>
       )}
     </>
   );
