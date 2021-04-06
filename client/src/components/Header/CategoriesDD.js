@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import { filters } from "../Filters";
 import { singleFilter } from "../../actions";
@@ -12,12 +12,15 @@ import { singleFilter } from "../../actions";
 
 const CategoriesDD = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  //toggle the menu
   const [openMenu, setOpenMenu] = useState(false);
   const toggleMenu = () => {
     setOpenMenu(!openMenu);
   };
-
-  const handleToggle = (filterObject) => {
+  //
+  const handleFilter = (filterObject) => {
+    history.push("/products");
     dispatch(singleFilter(filterObject));
     setOpenMenu(false);
   };
@@ -32,7 +35,7 @@ const CategoriesDD = () => {
       {filters.map((filter, index) => {
         if (filter.kind === "category") {
           return (
-            <DropdownLink key={index} onClick={() => handleToggle(filter)}>
+            <DropdownLink key={index} onClick={() => handleFilter(filter)}>
               {filter.name}
             </DropdownLink>
           );

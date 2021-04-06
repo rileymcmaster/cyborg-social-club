@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import Dropdown from "./Dropdown";
 
 const CategoriesDD = () => {
+  const dispatch = useDispatch();
+  const [openMenu, setOpenMenu] = useState(false);
+  const toggleMenu = () => {
+    setOpenMenu(!openMenu);
+  };
+  const handleToggle = (filterObject) => {
+    // dispatch(singleFilter(filterObject));
+    setOpenMenu(false);
+  };
   const [companies, setCompanies] = useState(null);
   useEffect(() => {
     fetch("/companies")
@@ -15,7 +25,11 @@ const CategoriesDD = () => {
   }, []);
 
   return companies ? (
-    <Dropdown title="Brands">
+    <Dropdown
+      title="Brands"
+      toggleMenu={() => toggleMenu()}
+      openMenu={openMenu}
+    >
       {companies.map((company) => {
         return (
           <DropdownLink to={`/category/${company.name}`}>
@@ -23,12 +37,6 @@ const CategoriesDD = () => {
           </DropdownLink>
         );
       })}
-      {/* FIGURE OUT THE BRAND LAYOUT HERE */}
-      {/* choose a couple brands with the most products and show their logo? */}
-      {/* <DropdownLink to={"/"}>Link 1</DropdownLink> */}
-      {/* <DropdownLink to={"/"}>Link 2</DropdownLink> */}
-      {/* <DropdownLink to={"/"}>Link 3</DropdownLink> */}
-      {/* <DropdownLink to={"/"}>Link 4</DropdownLink> */}
     </Dropdown>
   ) : (
     <Dropdown title="" />

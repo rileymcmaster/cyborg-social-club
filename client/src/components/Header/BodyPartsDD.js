@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Dropdown from "./Dropdown";
 import { filters } from "../Filters";
 import { singleFilter } from "../../actions";
 
 const BodyPartsDD = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [openMenu, setOpenMenu] = useState(false);
   const toggleMenu = () => {
     setOpenMenu(!openMenu);
   };
-  const handleToggle = (filterObject) => {
+  const handleFilter = (filterObject) => {
+    history.push("/products");
     dispatch(singleFilter(filterObject));
     setOpenMenu(false);
   };
@@ -22,7 +24,7 @@ const BodyPartsDD = () => {
       {filters.map((filter, index) => {
         if (filter.kind === "parts") {
           return (
-            <DropdownLink key={index} onClick={() => handleToggle(filter)}>
+            <DropdownLink key={index} onClick={() => handleFilter(filter)}>
               {filter.name}
             </DropdownLink>
           );
