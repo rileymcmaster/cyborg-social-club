@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import SearchBar from "./SearchBar";
+import { filters } from "../Filters";
+import { singleFilter } from "../../actions";
 
 const BurgerMenu = ({ hideMenu }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [showCategories, setShowCategories] = useState(false);
   const [showParts, setShowParts] = useState(false);
+
+  //changes filter and redirects to product page
+  const handleFilter = (filterObject) => {
+    history.push("/products");
+    dispatch(singleFilter(filterObject));
+    hideMenu();
+  };
 
   return (
     <Wrapper>
@@ -24,27 +36,18 @@ const BurgerMenu = ({ hideMenu }) => {
       </Category>
       {showCategories ? (
         <CategoryWrapper>
-          <NavigationLink onClick={hideMenu} to={"/category/Fitness"}>
-            <EachCategory>Fitness</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Medical"}>
-            <EachCategory>Medical</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Lifestyle"}>
-            <EachCategory>Lifestyle</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Entertainment"}>
-            <EachCategory>Entertainment</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Industrial"}>
-            <EachCategory>Industrial</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/PetsandAnimals"}>
-            <EachCategory>Pets and Animals</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Gaming"}>
-            <EachCategory>Gaming</EachCategory>
-          </NavigationLink>
+          {filters.map((filter, index) => {
+            if (filter.kind === "category") {
+              return (
+                <NavigationLink
+                  key={index}
+                  onClick={() => handleFilter(filter)}
+                >
+                  <EachCategory>{filter.name}</EachCategory>
+                </NavigationLink>
+              );
+            }
+          })}
         </CategoryWrapper>
       ) : (
         <></>
@@ -60,33 +63,18 @@ const BurgerMenu = ({ hideMenu }) => {
       </Category>
       {showParts ? (
         <CategoryWrapper>
-          <NavigationLink onClick={hideMenu} to={"/category/Arms"}>
-            <EachCategory>Arms</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Chest"}>
-            <EachCategory>Chest</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Feet"}>
-            <EachCategory>Feet</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Hands"}>
-            <EachCategory>Hands</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Head"}>
-            <EachCategory>Head</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Neck"}>
-            <EachCategory>Neck</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Torso"}>
-            <EachCategory>Torso</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Waist"}>
-            <EachCategory>Waist</EachCategory>
-          </NavigationLink>
-          <NavigationLink onClick={hideMenu} to={"/category/Wrist"}>
-            <EachCategory>Wrist</EachCategory>
-          </NavigationLink>
+          {filters.map((filter, index) => {
+            if (filter.kind === "parts") {
+              return (
+                <NavigationLink
+                  key={index}
+                  onClick={() => handleFilter(filter)}
+                >
+                  <EachCategory>{filter.name}</EachCategory>
+                </NavigationLink>
+              );
+            }
+          })}
         </CategoryWrapper>
       ) : (
         <></>
@@ -94,7 +82,7 @@ const BurgerMenu = ({ hideMenu }) => {
     </Wrapper>
   );
 };
-const NavigationLink = styled(NavLink)`
+const NavigationLink = styled.div`
   text-decoration: none;
 `;
 const CategoryWrapper = styled.div`

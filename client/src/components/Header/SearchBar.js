@@ -7,15 +7,11 @@ import { useMediaQuery } from "../useMediaQuery";
 //WILL NEED TO FIX THE ROUTE in onclick
 
 const SearchBar = ({ hideMenu }) => {
-  const [showIcon, setShowIcon] = useState(false);
   let isPageWide = useMediaQuery("(min-width: 900px)");
   const history = useHistory();
   const [searchValue, setSearchValue] = useState("");
   const [selectedSuggestionIndex, setSelectedSuggestionIndex] = useState(0);
   const [closeResults, setCloseResults] = useState(false);
-
-  ///Search results aren't marked if they are category, bodypart, or company.
-  // They are just combined but I would like to do that later :)
 
   const [items, setItems] = useState(null);
   const [companies, setCompanies] = useState(null);
@@ -35,7 +31,7 @@ const SearchBar = ({ hideMenu }) => {
       setCloseResults(true);
     };
   }, []);
-  //or style a select instead of "li"
+
   useEffect(() => {
     const clickToClose = () => {
       setCloseResults(true);

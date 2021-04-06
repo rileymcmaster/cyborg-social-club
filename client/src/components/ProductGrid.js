@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import GenerateProductGrid from "./GenerateProductGrid";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
 import SidebarFilter from "./SidebarFilter";
 import ErrorPage from "./ErrorPage";
 import { useMediaQuery } from "./useMediaQuery";
@@ -10,6 +11,8 @@ import Loading from "./Loading";
 const ProductGrid = () => {
   //check width of page
   let isPageWide = useMediaQuery("(min-width: 900px)");
+  //check filters
+  const filterState = useSelector((state) => state.filter);
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(24);
@@ -31,12 +34,13 @@ const ProductGrid = () => {
       .then((data) => {
         // console.log(data);
         setItems(data.data.results);
+        setLoading(false);
       })
       .catch((error) => {
+        setLoading(false);
         console.log("ERROR", error);
         setError(true);
       });
-    setLoading(false);
   }, []);
   // ^^this was dependent on currentPage. Might have to put it back
 
@@ -59,7 +63,7 @@ const ProductGrid = () => {
   if (items && checkedFilter) {
     items.filter((item) => {
       // console.log("item", item.body_location);
-      checkedFilter.find((filter) => {
+      Object.values(filterState).find((filter) => {
         //CATEGORY
         if (filter.kind === "category" && filter.name === item.category) {
           filteredItems.push(item);
@@ -92,7 +96,9 @@ const ProductGrid = () => {
 
   return loading ? (
     <Wrapper>
-      <Loading />
+      <CenterDiv>
+        <Loading />
+      </CenterDiv>
     </Wrapper>
   ) : error ? (
     <ErrorPage />
@@ -101,10 +107,7 @@ const ProductGrid = () => {
       <GridDisplay>
         {isPageWide ? (
           <SidebarGrid>
-            <SidebarFilter
-              checked={checkedFilter}
-              setChecked={setCheckedFilter}
-            />
+            <SidebarFilter />
           </SidebarGrid>
         ) : (
           <></>
@@ -168,7 +171,9 @@ const ProductGrid = () => {
     </Wrapper>
   );
 };
-
+const CenterDiv = styled.div`
+  margin: auto;
+`;
 const ProductGridArea = styled.div`
   display: block;
   margin-right: auto;
@@ -185,6 +190,9 @@ const GridDisplay = styled.div`
 `;
 const Wrapper = styled.div`
   min-height: var(--page-height);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Div = styled.div`

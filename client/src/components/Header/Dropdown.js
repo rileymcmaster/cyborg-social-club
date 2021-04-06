@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link, NavLink } from "react-router-dom";
 
-const Dropdown = ({ title, children }) => {
-  const [openMenu, setOpenMenu] = useState(false);
-  const toggleMenu = () => {
-    setOpenMenu(!openMenu);
-  };
+const Dropdown = ({ title, children, toggleMenu, openMenu }) => {
+  // const [openMenu, setOpenMenu] = useState(false);
+  // const toggleMenu = () => {
+  //   setOpenMenu(!openMenu);
+  // };
 
   return (
-    <DropdownWrapper onMouseLeave={() => toggleMenu()}>
-      <Menu onMouseOver={() => toggleMenu()}>{title}</Menu>
+    <DropdownWrapper onMouseLeave={toggleMenu}>
+      <Menu onMouseOver={toggleMenu}>{title}</Menu>
       {openMenu ? <DropdownMenu>{children}</DropdownMenu> : <></>}
     </DropdownWrapper>
   );
