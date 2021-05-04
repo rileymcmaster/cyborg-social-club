@@ -1,82 +1,31 @@
-# Wearables E-Commerce Project
+<h1>🤖 Cyborg Social Club - Wearables E-Commerce Project </h1>
 
-[See the list of TEAMS](__documentation/TEAMS.md)
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802415/homepage_ycb1bk.png" width="800px">
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802401/ecommerce_homepage_gif_wqvu8y.gif" width="800px">
 
-You will make use of _everything_ that you have learned thus far in the bootcamp to build an e-commerce app that will showcase all of the provided _wearables_ items.
+<h2>  Who we are </h2>
+Cyborg Social Club is a fictional store where we sell futuristic tech. The goal of this project is to build from scratch a fully functional e-commerce store, working with both the front and back-end. The focus was good teamwork, strong communication and a good workflow. 
 
-The stack is React.Js, Redux, Node.Js, and styled-components.
+<h2> Contributors </h2> </h2>
 
-Your node server should be RESTful and follow REST principles, at least to the extent we learned during the bootcamp.
+<p>Hajar El Mouddene: https://github.com/Hajarelmouddene</p>
+<p>Riley McMaster: https://github.com/rileymcmaster</p>
+<p>Daniel Sciortino: https://github.com/daniel-sciortino</p>
+<p>Sarah Ghossen: https://github.com/sarahghossen</p>
 
----
+<h2>  Technologies used </h2>
 
-**✋ You CANNOT use any external UI libraries, including, but not limited to, Material UI, Bootstrap.**
+<p align="left"> <a href="https://expressjs.com" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://nodejs.org" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://redux.js.org" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/> </a> </p>
 
----
-
-## Getting Started
-
-<img src="./server/assets/software-dev-path.jpg" style="width: 100%;" />
-
-You have your assignment and your team. What should you do first? This will vary for every team, and even every team member.
-
-**The important thing is to NOT just jump in and start coding!**
-
-There probably shouldn't be any coding until very near the end of the first day.
-
-## Meet your Product Manager!
-
-Each team has been assigned a product manager. This person is in charge of answering questions, guiding you and basically preventing everything from falling apart!
-
-This person should be present for some of your team meetings, but not all. PMs are super busy people and have multiple projects, people to manage. 😉
-
-## Planning
-
-1. You will break into 3 groups (with your assigned PM.)
-2. Your PM will answer any initial questions, and give you more information, as required.
-3. Breakout into a separate meeting with just your team. _Your PM will bounce from team to team to make sure you're on track._
-4. Time to use the [Kickoff Meeting Agenda](__documentation/KICKOFF_MEETING_AGENDA.md)
-
-### First team meeting
-
-It could also be a good/fun idea to give yourselves an original team name. :)
-
-Your first team meeting should start with the [Kickoff Meeting Agenda](__documentation/KICKOFF_MEETING_AGENDa.md).
-
-[Successful Software Project Delivery in 10 Steps](https://www.appnovation.com/blog/successful-software-project-delivery-10-steps).
-
-💡 How a project starts is indicative of how it will end.
-
-## Teamwork
-
-The most important aspect of this project is the ability to work in a team. No matter your contribution to the project, you should understand the **FULL** codebase. This will require that you
-
-- **review** each other's code
-- **ask** questions when you don't understand
-- **comment** your code extensively. _Always go for clarity over brevity._
-
-## GitHub
-
-### GitHub Projects
-- Team lead fork repo
-- Team members clone from team lead
-- Make sure you check 'Issues' and 'Projects' under Settings
-- Create project
-- Create columns: To do, Doing, In review, Done
-- Create issues (features)
-- Drag issues into board and assign
-
-### Git
-- git pull : pull the latest update (usually on master branch)
-- git branch : to see which branch you're on
-- git branch BRANCH_NAME : create new branch with name BRANCH_NAME
-- git checkout BRANCH_NAME : checkout branch with name BRANCH_NAME
-- git merge master : merge latest master to your current branch
-- git status : to see status of your branch
-- git log : to see all commits to master (q to quit)
-
-#### To fix merge conflicts
-- usually happens when you git merge master into your branch
-- fix merge conflicts in VSCode, stage, commit, then push
-
-see the [GITHUB Document](__documentation/GITHUB.md)
+<h2>  Feautures
+<h3> View All Products</h3>
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802414/view_all_products_gsa1o7.png" width="800px"/>
+<h3> Filtering Products by Category and Parts</h3>
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802413/filtered_products_m1ztdo.png" width="200px">
+<h3> View Cart</h3>
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802408/checkout_rqxc9i.png" width="800px">
+<h3> Checkout</h3>
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802408/checkoutform_vh6dfq.png" width="800px">
+<h3>Sign In/Sign Up</h3>
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802413/signin_jlmzbd.png" width="800px">
+<img src="https://res.cloudinary.com/ddd1g1rw8/image/upload/v1619802413/signup_gj0jx9.png" width="800px">
